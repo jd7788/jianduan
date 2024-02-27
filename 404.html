@@ -1,58 +1,1232 @@
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Microsoft Teams Meeting Room</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://statics.teams.cdn.office.net/sdk/v1.6.0/js/MicrosoftTeams.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <h1 class="text-center">Welcome to Microsoft Teams Meeting Room</h1>
-        <p class="text-center">Please enter your meeting ID and password to join the meeting.</p>
-        <form id="meeting-form" class="form-inline justify-content-center">
-            <div class="form-group">
-                <label for="meeting-id">Meeting ID:</label>
-                <input type="text" id="meeting-id" class="form-control" placeholder="Enter meeting ID" required>
-            </div>
-            <div class="form-group">
-                <label for="meeting-password">Password:</label>
-                <input type="password" id="meeting-password" class="form-control" placeholder="Enter password" required>
-            </div>
-            <button type="submit" id="join-button" class="btn btn-primary">Join Meeting</button>
-        </form>
-    </div>
-    <script>
-        // Initialize the Microsoft Teams SDK
-        microsoftTeams.initialize();
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>爱赞美 - 分享好听的基督教赞美诗歌</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="爱赞美、福音诗歌、赞美诗，赞美诗歌，圣歌，雅歌，基督教音乐，基督教歌谱曲谱歌谱诗歌本，歌词，试听，下载，赞美之泉，基督教网站，基督教" />
+    <meta name="description" content="爱赞美（zanmei.ai）是一个提供在线听歌的非盈利性音乐平台。" />
+    <link rel="shortcut icon" href="https://static.zanmei.ai/favicon.ico"/>
+    <link rel="apple-touch-icon-precomposed" sizes=72x72 href="https://static.zanmei.ai/favicon-72.webp">
+    <link rel="apple-touch-icon-precomposed" sizes=144x144 href="https://static.zanmei.ai/favicon-144.webp">
+    <link rel="apple-touch-icon-precomposed" href="https://static.zanmei.ai/favicon-256.webp">
+    <link type="text/css" rel="stylesheet" href="https://static.zanmei.ai/styles/??main.css,sys.css,topmenu/topmenu.css,artDialog5/skins/simple.css,fontawsome5/css/all.min.css?v=080" media="screen" />
 
-        // Get the meeting form element
-        var meetingForm = document.getElementById("meeting-form");
+    <script type="text/javascript" src="https://static.zanmei.ai/scripts/??jquery-1.12.4.min.js,sys.js,core.js,jquery.autocomplete.js,search.autosuggest.js,artDialog5/artDialog.min.js,corep.js?v=080"></script>
+                                <!--[if lt IE 7]>
+    <link type="text/css" rel="stylesheet" href="https://static.zanmei.ai/styles/artDialog5/skins/simple.css" media="screen" />
+    <![endif]-->
+    <script type="text/javascript">
+        var zmsurl = {
+            sta: 'https://static.zanmei.ai',
+            www: 'https://www.zanmei.ai',
+            user: 'https://user.zanmei.ai'
+        };
+        //usage: ' + zmsurl.sta + '
 
-        // Add an event listener for the submit event
-        meetingForm.addEventListener("submit", function(event) {
-            // Prevent the default form submission behavior
-            event.preventDefault();
-
-            // Get the meeting ID and password from the input elements
-            var meetingId = document.getElementById("meeting-id").value;
-            var meetingPassword = document.getElementById("meeting-password").value;
-
-            // Validate the meeting ID and password
-            if (meetingId && meetingPassword) {
-                // Join the meeting using the SDK method
-                microsoftTeams.meeting.join({
-                    meetingLink: meetingId,
-                    password: meetingPassword
-                }, function(error) {
-                    // Handle any errors
-                    if (error) {
-                        alert("Failed to join the meeting: " + error);
-                    }
-                });
-            } else {
-                // Show an alert if the meeting ID or password is missing
-                alert("Please enter a valid meeting ID and password.");
-            }
+        $(function () {
+            zmsp.bindCollection('.play-latest', 'last');
         });
     </script>
+    <style>
+
+    </style>
+        <link type="text/css" rel="stylesheet" href="https://static.zanmei.ai/styles/index-v2.css?v=03" media="screen" />
+            <style>
+        .albums li{
+            padding: 0 12px 10px 0;
+        }
+        .albums img, .boxes img{width: 180px; height: 180px;}
+        .albums li:last-of-type, .boxes li:last-of-type{
+            padding-right: 0;
+        }
+        .albums li:first-of-type{
+            padding-left: 12px;
+        }
+        .albums .play-icon{
+            margin-top: 72px;
+            margin-left: 72px;
+        }
+        .boxes li{
+            padding: 0 12px 0 0;
+        }
+        .boxes li:first-of-type{
+            padding-left: 12px;
+        }
+        .boxes .play-box {
+            background-image: none;
+            position: absolute;
+            color: #ffffff;
+            font-size: 28px;
+            margin-top: 145px;
+            margin-left: 136px;
+            opacity: .75;
+            filter: alpha(opacity=75);
+            -webkit-transition: all linear .2s;
+            -moz-transition: all linear .2s;
+            -ms-transition: all linear .2s;
+            transition: all linear .2s;
+        }
+
+        .boxes .play-box:hover {
+            background-image: none;
+            opacity: 1;
+            filter: alpha(opacity=1);
+        }
+    </style>
+
+</head>
+<body>
+<!--[if lt IE 9]>
+<div class="browser-warning">
+    你的浏览器可能无法正常浏览本站，推荐使用 <a href="https://www.firefox.com.cn/" target="_blank" title="下载 Firefox 浏览器">Firefox</a> 浏览器<a href="javascript:void(0);" class="close-btn">&times;</a>
+</div>
+<![endif]-->
+
+<a name="gotop"></a>
+    <div class="container">
+        <div class="header-out">
+        <div class="header">
+            <div class="top">
+                <a class="logo" href="https://www.zanmei.ai" aria-label="爱赞美"><img alt="logo" height="40" src="https://static.zanmei.ai/logos/aizanmei-logo.webp" /></a>
+                <div class="ajaxsearch">
+                <form method="get" id="searchform" action="https://www.zanmei.ai/search/search" onSubmit="if (document.getElementById('autocomplete').value == '' || document.getElementById('autocomplete').value == '输入关键字搜索...') { alert('请输入搜索关键字！'); return false; }">
+                <input type="text" class="keyword" id="autocomplete" name="autocomplete" value="输入关键字搜索..." onfocus="if (this.value == '输入关键字搜索...') { this.value = ''; this.style.color = '#333333'; }" onblur="if (this.value == '') {  this.value = '输入关键字搜索...'; this.style.color = '#898989'; }" />
+                	<select name="type" aria-label="搜索类型">
+                	  <option value="11">音乐人</option>
+                	  <option value="12">专辑</option>
+                	  <option value="13" selected="selected">歌曲</option>
+                      <option value="17">MV</option>
+                	  <option value="-13">歌词</option>
+                	  <!--option value="14">歌单</option-->
+                	  <option value="18">歌谱</option>
+                	</select>
+                    <button class="submit" id="search" type="submit" aria-label="搜索" ><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+                <div class="search_history" id="search_history">
+                    <div class="history_content">
+                        <div class="history_title">
+                            <span style="font-size:16px;margin-right: 20px; color: #555;">搜索历史</span>
+                            <span id="empty"><i class="far fa-trash-alt fa-sm"></i> 清空</span>
+                        </div>
+                        <div id="history">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sign">
+                    <div id="zms_login_yes" style="display: none;">
+                        <div>
+                        <div class="imrcmain0 imgl l" style="width:60px;">
+                        <div class="imcm imde" id="imouter0">
+                        <ul id="imenus0">
+                          <li class="imatm"  style="width:65px;"><a href="https://user.zanmei.ai"><img alt="" width="40" height="40" src="https://static.zanmei.ai/images/noavatar.jpg" id="zms_login_avatar" style="border: solid 2px #e4e4e4; background: white; padding: 2px; border-radius: 50%;" /></a>
+                            <div class="imsc" style="z-index: 10000;">
+                            <div class="imsubc" style="width:130px;top:0px;left:-50px;">
+                                <ul style="">
+                                  <li><a href="https://user.zanmei.ai"><i class="fas fa-user"></i> &nbsp; 会员中心</a></li>
+                                  <li><a href="https://user.zanmei.ai/account/index"><i class="fas fa-cog"></i> &nbsp; 账户设置</a></li>
+<!--novideo                                  <li><a href="--><!--"><i class="fas fa-home"></i> &nbsp; 我的主页</a></li>-->
+                                  <li><a href="https://user.zanmei.ai/box/index"><i class="fas fa-headphones"></i> &nbsp; 我的歌单</a></li>
+                                  <li><a href="https://user.zanmei.ai/fav/index"><i class="fas fa-heart"></i> &nbsp; 我的收藏</a></li>
+                                  <!--li><a href="https://user.zanmei.ai/list/index"><i class="fas fa-play-circle"></i> &nbsp; 我的播单</a></li-->
+                                  <li><a href="https://user.zanmei.ai/songbook/index"><i class="fas fa-book-reader"></i> &nbsp; 我的歌本</a></li>
+                                  <!--li><a href=""><i class="fas fa-comments"></i> &nbsp; 我的评论</a></li-->
+                                  <li><a href="https://user.zanmei.ai/tab/index"><i class="fas fa-music"></i> &nbsp; 我的歌谱</a></li>
+                                  <li><a href="https://www.zanmei.ai/user/logout"><i class="fas fa-sign-out-alt"></i> &nbsp; 退出登录</a></li>
+                                </ul>
+                            </div>
+                            </div>
+                            </li>
+                        </ul>
+                        </div>
+                        </div>
+<!--novideo                        <div class="l">或 <a href="--><!--">退出登录</a></div>-->
+                        </div>
+                    </div>
+                    <div id="zms_login_no" style="" >
+                        <a href="https://www.zanmei.ai/user/login" class="l"><button class="nbtn bg_primary"><span>登录</span></button></a> <a href="https://www.zanmei.ai/user/register"><button class="nbtn" style="background: none;"><span>注册</span></button></a>
+<!--novideo                        <div>忘记密码了？<a href="--><!--">找回密码</a></div>-->
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+
+        <div class="channel-out">
+            <div class="channel">
+                <ul>
+                    <li class="on"><a href="https://www.zanmei.ai/"><span>发现</span></a></li>
+                    <li><a href="https://www.zanmei.ai/music/"><span>乐库</span></a></li>
+                    <!--li><a href="https://www.zanmei.ai/top/"><span>排行榜</span></a></li-->
+                    <li><a href="https://www.zanmei.ai/box/"><span>歌单</span></a></li>
+                    <li><a href="https://www.zanmei.ai/tab/"><span>歌谱</span></a></li>
+
+                    <li><a href="//zanmei.app" target="_blank"><span>客户端</span></a></li>
+                    <!--li><a href="https://www.zanmei.ai/user/"><span>会员</span></a></li-->
+                                                                            </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        </div>
+
+        
+        <div class="topshadow"></div>
+
+        <div class="mainbody">
+<div id="index">
+    <div id="recom" style="margin-bottom: 10px;">
+        <div class="title">
+            <h2 style="width: 100px; float: left;">精选歌单</h2>
+            <div class="title-link"><a
+                        href="javascript:void(0)" class="play-instrument org_link" rel=""><i class="fas fa-play"></i> 安静知道 | 灵修音乐模式</a><span>|</span><a href="/box/">更多 »</a></div>
+        </div>
+        <div class="line"></div>
+
+        <div class="boxes">
+            <ul>
+                <li>
+                    <a class="play-box" title="播放整个歌单" href="javascript:void(0)" rel="63f98c45e46da0e7ab0986f8"><i class="fas fa-play-circle"></i></a><a href="/box/861672.html" title="2月27日"><img src="https://file.zanmei.ai/box/2023/02/25/63f98c45e46da0e7ab0986f8.jpg.webp" /></a>               <div class="hidden">
+                        <a href="/box/861672.html" title="2月27日"><i class="far fa-calendar-alt" style="text-indent: 0px;"></i> 今日推荐歌单</a></div>
+                </li>
+                                        <li>
+                            <a class="play-box" title="播放整个歌单" href="javascript:void(0)" rel="65cacf3857ae3e306904340e"><i class="fas fa-play-circle"></i></a><a href="/box/874891.html" title="枯骨复活，成为耶和华的大军队"><img src="https://file.zanmei.ai/box/2024/02/13/65cacf3857ae3e306904340e.jpg.webp"/></a>               <div class="hidden">
+                                <a href="/box/874891.html" title="枯骨复活，成为耶和华的大军队">枯骨复活，成为耶和华的大军队</a></div>
+                            <!--p class="gray"><i class="fas fa-headphones-alt"></i> </p-->
+                        </li>
+                                            <li>
+                            <a class="play-box" title="播放整个歌单" href="javascript:void(0)" rel="65c38371b530094ad4067185"><i class="fas fa-play-circle"></i></a><a href="/box/874753.html" title="等候神的必从新得力"><img src="https://file.zanmei.ai/box/2024/02/07/65c38371b530094ad4067185.jpg.webp"/></a>               <div class="hidden">
+                                <a href="/box/874753.html" title="等候神的必从新得力">等候神的必从新得力</a></div>
+                            <!--p class="gray"><i class="fas fa-headphones-alt"></i> </p-->
+                        </li>
+                                            <li>
+                            <a class="play-box" title="播放整个歌单" href="javascript:void(0)" rel="65a82aeb162982eb9d01f80e"><i class="fas fa-play-circle"></i></a><a href="/box/873983.html" title="坚定信靠，跟随到底"><img src="https://file.zanmei.ai/box/2024/01/18/65a82aeb162982eb9d01f80e.jpg.webp"/></a>               <div class="hidden">
+                                <a href="/box/873983.html" title="坚定信靠，跟随到底">坚定信靠，跟随到底</a></div>
+                            <!--p class="gray"><i class="fas fa-headphones-alt"></i> </p-->
+                        </li>
+                                            <li>
+                            <a class="play-box" title="播放整个歌单" href="javascript:void(0)" rel="6599992db4db1798f60cb5b0"><i class="fas fa-play-circle"></i></a><a href="/box/873497.html" title="一无挂虑，踏上信心的旅途"><img src="https://file.zanmei.ai/box/2024/01/07/6599992db4db1798f60cb5b0.jpg.webp"/></a>               <div class="hidden">
+                                <a href="/box/873497.html" title="一无挂虑，踏上信心的旅途">一无挂虑，踏上信心的旅途</a></div>
+                            <!--p class="gray"><i class="fas fa-headphones-alt"></i> </p-->
+                        </li>
+                                </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="c"></div>
+    <div id="recom">
+        <div class="title">
+            <h2 style="width: 100px; float: left;">推荐专辑</h2>
+            <div class="title-link"><a
+                        href="/album/0_0_402_0_0_0_1.html">传统圣乐</a><span>|</span><a
+                        href="/album/1206_0_0_0_0_0_1.html">伴奏集</a><span>|</span><a
+                        href="/album/0_0_409_0_0_0_1.html">纯音乐</a><span>|</span><a
+                        href="/album/0_0_414_0_0_0_1.html">中国风</a><span>|</span><a
+                        href="/album/recommend/0_0_0_0_0_0_1.html">更多 »</a></div>
+        </div>
+        <div class="line"></div>
+        <div class="albums">
+    <ul>
+                <li>
+                            <a class="play-icon" title="播放整张专辑" href="javascript:void(0)" rel="65d5b58e7e32204d060adad8"></a>
+                 <a title="凡事都有可能" href="/album/all-things-are-possible.html"><img src="https://file.zanmei.ai/album/2024/02/21/65d5b58e7e32204d060adad8.jpg.webp" /></a>                     <div>
+            <a href="/album/all-things-are-possible.html" title="凡事都有可能">凡事都有可能</a></div>
+            <p><a href="/artist/jesus-fashion-family.html" class="gray_link">Jesus Fashion Family</a></p>
+        </li>
+                <li>
+                            <a class="play-icon" title="播放整张专辑" href="javascript:void(0)" rel="65bb7759202eef97d40e1346"></a>
+                 <a title="Sun" href="/album/3761.html"><img src="https://file.zanmei.ai/album/2024/02/01/65bb7759202eef97d40e1346.jpg.webp" /></a>                     <div>
+            <a href="/album/3761.html" title="Sun">Sun</a></div>
+            <p><a href="/artist/703.html" class="gray_link">上敬拜</a></p>
+        </li>
+                <li>
+                            <a class="play-icon" title="播放整张专辑" href="javascript:void(0)" rel="65a12a58e3d2bd52790fda21"></a>
+                 <a title="牧者心牧者情" href="/album/3747.html"><img src="https://file.zanmei.ai/album/2024/01/12/65a12a58e3d2bd52790fda21.jpg.webp" /></a>                     <div>
+            <a href="/album/3747.html" title="牧者心牧者情">牧者心牧者情</a></div>
+            <p><a href="/artist/474.html" class="gray_link">子心</a></p>
+        </li>
+                <li>
+                            <a class="play-icon" title="播放整张专辑" href="javascript:void(0)" rel="6593f7b2ae0541310a024157"></a>
+                 <a title="所以我来了" href="/album/3743.html"><img src="https://file.zanmei.ai/album/2024/01/02/6593f7b2ae0541310a024157.jpg.webp" /></a>                     <div>
+            <a href="/album/3743.html" title="所以我来了">所以我来了</a></div>
+            <p><a href="/artist/throne-worship.html" class="gray_link">宝座乐团</a></p>
+        </li>
+                <li>
+                            <a class="play-icon" title="播放整张专辑" href="javascript:void(0)" rel="65bfac928a36355c5a0796ab"></a>
+                 <a title="助我进深歌（EP）" href="/album/3762.html"><img src="https://file.zanmei.ai/album/2024/02/04/65bfac928a36355c5a0796ab.jpg.webp" /></a>                     <div>
+            <a href="/album/3762.html" title="助我进深歌（EP）">助我进深歌（EP）</a></div>
+            <p><a href="/artist/516.html" class="gray_link">分享圣乐团</a></p>
+        </li>
+            </ul>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        zmsp.bindCollection('a.play-icon', 'album');
+    });
+</script>
+    </div>
+    <div class="c"></div>
+
+    <div id="main">
+        <div id="left">
+            <!--推荐单曲，歌谱，文章-->
+            <div id="recommends">
+                <div class="reco-box" id="songs" style="margin-left: 5px;">
+                    <h3><a class="play_songs" href="javascript:void(0)" rel="songs_321120" title="播放选中的歌曲"><i
+                                    class="far fa-play-circle fa-md"></i> 播放全部</a>推荐歌曲</h3>
+                    <ul class="song-list">
+                                                                            <li class="clearfix  first">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65d5c4f54d489c0eac0d98ac"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65d5c4f54d489c0eac0d98ac"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">1</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65d5c4f54d489c0eac0d98ac" checked="checked"/>
+                        <a href="/song/52159.html"
+                           title="若不是你"
+                        >若不是你</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65d4dc09e2146d77cf06b7fc"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65d4dc09e2146d77cf06b7fc"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">2</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65d4dc09e2146d77cf06b7fc" checked="checked"/>
+                        <a href="/song/52156.html"
+                           title="夜晚也有蓝天白云"
+                        >夜晚也有蓝天白云</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65cb959d2d7a2d54d510bded"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65cb959d2d7a2d54d510bded"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">3</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65cb959d2d7a2d54d510bded" checked="checked"/>
+                        <a href="/song/52138.html"
+                           title="祂眷顾啼叫的小乌鸦"
+                        >祂眷顾啼叫的小乌鸦</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65c4d30d05fdae1da903ac57"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65c4d30d05fdae1da903ac57"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">4</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65c4d30d05fdae1da903ac57" checked="checked"/>
+                        <a href="/song/52135.html"
+                           title="发光如星"
+                        >发光如星</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65c1f7fc9675bd68fa045c83"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65c1f7fc9675bd68fa045c83"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">5</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65c1f7fc9675bd68fa045c83" checked="checked"/>
+                        <a href="/song/52133.html"
+                           title="吾家有爱因为你"
+                        >吾家有爱因为你</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65be99ea9675bd68fa0414f2"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65be99ea9675bd68fa0414f2"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">6</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65be99ea9675bd68fa0414f2" checked="checked"/>
+                        <a href="/song/52124.html"
+                           title="给孩子的劝勉与祝福"
+                        >给孩子的劝勉与祝福</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65b414f049573831800d741f"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65b414f049573831800d741f"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">7</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65b414f049573831800d741f" checked="checked"/>
+                        <a href="/song/52087.html"
+                           title="暖春"
+                        >暖春</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65ae8fe7502beb9397018ab0"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65ae8fe7502beb9397018ab0"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">8</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65ae8fe7502beb9397018ab0" checked="checked"/>
+                        <a href="/song/52083.html"
+                           title="学像耶稣"
+                        >学像耶稣</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="658dc656e43c6e764905aac5"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="658dc656e43c6e764905aac5"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">9</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="658dc656e43c6e764905aac5" checked="checked"/>
+                        <a href="/song/52038.html"
+                           title="稳妥"
+                        >稳妥</a>
+                    </span>
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="65a5536e162982eb9d019efe"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="65a5536e162982eb9d019efe"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">10</span>
+                                <span class="song-name"><input type="checkbox" style="display: none;"
+                                                               name="songs_321120"
+                                                               value="65a5536e162982eb9d019efe" checked="checked"/>
+                        <a href="/song/52081.html"
+                           title="破茧"
+                        >破茧</a>
+                    </span>
+                            </li>
+                                            </ul>
+                </div>
+
+                <div class="reco-box" id="hotalbum">
+                    <h3><a href="/album/recommend/0_0_0_0_0_0_1.html">更多 »</a>热门专辑</h3>
+                    <ul>
+                                                    <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="6593f7b2ae0541310a024157"></a>
+            <a href="/album/3743.html">
+                        <img src="https://file.zanmei.ai/album/2024/01/02/6593f7b2ae0541310a024157.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                                <span><a href="/album/3743.html"
+                                         title="所以我来了">所以我来了</a><br/>
+            <a href="/artist/throne-worship.html"
+               title="宝座乐团"
+               class="gray_link">宝座乐团</a></span>
+                                <div class="clear"></div>
+                            </dl>
+                                                    <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="658c9760ca1d54991f0231b7"></a>
+            <a href="/album/3741.html">
+                        <img src="https://file.zanmei.ai/album/2023/12/28/658c9760ca1d54991f0231b7.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                                <span><a href="/album/3741.html"
+                                         title="求提升我">求提升我</a><br/>
+            <a href="/artist/heavenly-music.html"
+               title="属天音乐事工"
+               class="gray_link">属天音乐事工</a></span>
+                                <div class="clear"></div>
+                            </dl>
+                                                    <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="657ef2bd3bfa69e2040a4abd"></a>
+            <a href="/album/3733.html">
+                        <img src="https://file.zanmei.ai/album/2023/12/17/657ef2bd3bfa69e2040a4abd.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                                <span><a href="/album/3733.html"
+                                         title="生命凯歌">生命凯歌</a><br/>
+            <a href="/artist/xu-fei.html"
+               title="iKING国度音乐事工"
+               class="gray_link">iKING国度音乐事工</a></span>
+                                <div class="clear"></div>
+                            </dl>
+                                                    <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="656b0ef555984264c50c0535"></a>
+            <a href="/album/live-like-this.html">
+                        <img src="https://file.zanmei.ai/album/2023/12/02/656b0ef555984264c50c0535.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                                <span><a href="/album/live-like-this.html"
+                                         title="就这样活着">就这样活着</a><br/>
+            <a href="/artist/li-hong-zhuo.html"
+               title="李宏卓"
+               class="gray_link">李宏卓</a></span>
+                                <div class="clear"></div>
+                            </dl>
+                                                    <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="65bac16e8a36355c5a072716"></a>
+            <a href="/album/3760.html">
+                        <img src="https://file.zanmei.ai/album/2024/02/01/65bac16e8a36355c5a072716.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                                <span><a href="/album/3760.html"
+                                         title="Moon">Moon</a><br/>
+            <a href="/artist/703.html"
+               title="上敬拜"
+               class="gray_link">上敬拜</a></span>
+                                <div class="clear"></div>
+                            </dl>
+                                            </ul>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="reco-box" id="articles">
+                    <h3><a class="play_songs" href="javascript:void(0)" rel="songs_253194"
+                           title="播放选中的歌曲"><i
+                                    class="far fa-play-circle fa-md"></i> 播放全部</a>热门新歌</h3>
+                    <ul class="song-list">
+                                                                            <li class="clearfix  first">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="6505843fe68311f4d00e52ea"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="6505843fe68311f4d00e52ea"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">1</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="6505843fe68311f4d00e52ea" checked="checked"/>
+                        <a href="/song/51821.html"
+                           title="玻璃海上的敬拜"
+                        >玻璃海上的敬拜</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="6500cf885fe71b14c708d8c9"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="6500cf885fe71b14c708d8c9"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">2</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="6500cf885fe71b14c708d8c9" checked="checked"/>
+                        <a href="/song/51809.html"
+                           title="因为有爱"
+                        >因为有爱</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="658dc656e43c6e764905aac5"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="658dc656e43c6e764905aac5"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">3</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="658dc656e43c6e764905aac5" checked="checked"/>
+                        <a href="/song/52038.html"
+                           title="稳妥"
+                        >稳妥</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="653ba679e2e51f3cb602ddaa"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="653ba679e2e51f3cb602ddaa"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">4</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="653ba679e2e51f3cb602ddaa" checked="checked"/>
+                        <a href="/song/51897.html"
+                           title="找阿爸"
+                        >找阿爸</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="6505843fe68311f4d00e52ee"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="6505843fe68311f4d00e52ee"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">5</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="6505843fe68311f4d00e52ee" checked="checked"/>
+                        <a href="/song/51825.html"
+                           title="医治河涌流"
+                        >医治河涌流</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="651b319452ca0deafd0ff5d3"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="651b319452ca0deafd0ff5d3"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">6</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="651b319452ca0deafd0ff5d3" checked="checked"/>
+                        <a href="/song/51856.html"
+                           title="与祢的时光"
+                        >与祢的时光</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="654caf50dd0b1920f1048767"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="654caf50dd0b1920f1048767"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">7</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="654caf50dd0b1920f1048767" checked="checked"/>
+                        <a href="/song/51909.html"
+                           title="燃烧我"
+                        >燃烧我</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="6547178cb40b6b6265018644"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="6547178cb40b6b6265018644"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">8</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="6547178cb40b6b6265018644" checked="checked"/>
+                        <a href="/song/51903.html"
+                           title="数一数主恩典"
+                        >数一数主恩典</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="6554b9cf6b652b9e130cb004"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="6554b9cf6b652b9e130cb004"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">9</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="6554b9cf6b652b9e130cb004" checked="checked"/>
+                        <a href="/song/51933.html"
+                           title="谁摸了主的衣裳"
+                        >谁摸了主的衣裳</a>
+                    </span>
+
+                            </li>
+                                                    <li class="clearfix ">
+                    <span class="fun-icon">
+                        <span class="music-icon-hook">
+                            <a class="list-micon icon-play" data-action="play" title="播放歌曲" href="javascript:void(0)"
+                               rel="650aed69de2ab6efb009e5ac"><i></i></a>
+			                <i class="module-line music-icon-line"></i>
+                            <a class="list-micon icon-add" data-action="add" title="添加至列表" href="javascript:void(0)"
+                               rel="650aed69de2ab6efb009e5ac"><i></i></a>
+			            </span>
+                    </span>
+                                <span class="num">10</span>
+                                <span class="song-name">
+                            <input type="checkbox" style="display: none;" name="songs_253194"
+                                   value="650aed69de2ab6efb009e5ac" checked="checked"/>
+                        <a href="/song/51835.html"
+                           title="献上为你"
+                        >献上为你</a>
+                    </span>
+
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+
+        </div>
+        <div id="right">
+            <div id="newalbum">
+                <h1><a href="/album">更多 »</a>最新专辑</h1>
+                <ul>
+                                            <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="65d1dc2b29135bd910044e51"></a>
+            <a target="_blank" href="/album/3767.html">
+                        <img src="https://file.zanmei.ai/album/2024/02/18/65d1dc2b29135bd910044e51.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                            <span><a href="/album/3767.html"
+                                     title="如今更爱主（EP）">如今更爱主（EP）</a><br/>
+            <a href="/artist/654.html"
+               title="众水之声"
+               class="gray_link">众水之声</a></span>
+                            <div class="clear"></div>
+                        </dl>
+                                            <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="65c3410616ac5f1e3906d249"></a>
+            <a target="_blank" href="/album/3764.html">
+                        <img src="https://file.zanmei.ai/album/2024/02/07/65c3410616ac5f1e3906d249.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                            <span><a href="/album/3764.html"
+                                     title="等候着祢（EP）">等候着祢（EP）</a><br/>
+            <a href="/artist/mustard-seed-music.html"
+               title="Mustard Seed Music"
+               class="gray_link">Mustard Seed Music</a></span>
+                            <div class="clear"></div>
+                        </dl>
+                                            <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="65bac16e8a36355c5a072716"></a>
+            <a target="_blank" href="/album/3760.html">
+                        <img src="https://file.zanmei.ai/album/2024/02/01/65bac16e8a36355c5a072716.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                            <span><a href="/album/3760.html"
+                                     title="Moon">Moon</a><br/>
+            <a href="/artist/703.html"
+               title="上敬拜"
+               class="gray_link">上敬拜</a></span>
+                            <div class="clear"></div>
+                        </dl>
+                                            <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="65baa9df5fa3a1834205aff2"></a>
+            <a target="_blank" href="/album/3759.html">
+                        <img src="https://file.zanmei.ai/album/2024/02/01/65baa9df5fa3a1834205aff2.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                            <span><a href="/album/3759.html"
+                                     title="奉主的名来祝福你（EP）">奉主的名来祝福你（EP）</a><br/>
+            <a href="/artist/404.html"
+               title="姜彬&盼盼"
+               class="gray_link">姜彬&盼盼</a></span>
+                            <div class="clear"></div>
+                        </dl>
+                                            <dl>
+    	    <span>
+            <a class="play-icon" title="播放这张专辑" href="javascript:void(0)" rel="65baa63c202eef97d40dfcea"></a>
+            <a target="_blank" href="/album/3758.html">
+                        <img src="https://file.zanmei.ai/album/2024/02/01/65baa63c202eef97d40dfcea.jpg.webp"
+                             width="45" height="45">
+				    </a></span>
+                            <span><a href="/album/3758.html"
+                                     title="更新改变我（EP）">更新改变我（EP）</a><br/>
+            <a href="/artist/404.html"
+               title="姜彬&盼盼"
+               class="gray_link">姜彬&盼盼</a></span>
+                            <div class="clear"></div>
+                        </dl>
+                                    </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="c"></div>
+
+    <div id="recvideo">
+        <div class="title"><h2 style="width: 200px; float: left;">精选视频</h2>
+            <div class="title-link"><a href="/video/1702_0_1.html">赞美会</a><span>|</span><a
+                        href="/video/1704_0_1.html">赞美舞蹈</a><span>|</span><a
+                        href="/video/1707_0_1.html">经典圣诗</a><span>|</span><a
+                        href="/video/1703_0_1.html">现场Live</a><span>|</span><a
+                        href="/video/topic/prayer-music.html">灵修音乐</a><span>|</span><a
+                        href="/video/1701_0_1.html">字幕投影</a><span>|</span><a href="/video">更多 »</a></div>
+        </div>
+        <div class="line"></div>
+        <div class="videolist">
+            <ul>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/topic/player/kua-music.html?v=9987"
+                               title="点击观看视频火热的爱 ft. 张康利"></a>
+                            <a href="/video/topic/player/kua-music.html?v=9987" title="点击观看视频火热的爱 ft. 张康利"><img
+                                        src="https://file.zanmei.ai/video/2024/02/26/65dca4903a9e76387504c420.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/02/26/65dca4903a9e76387504c420.jpg.webp"></a>
+                            <span class="duration">06:22</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/topic/player/kua-music.html?v=9987" title="点击观看"
+                               class="vtitle">火热的爱 ft. 张康利</a>
+                            <br/><a href="https://www.zanmei.ai/artist/kua-global/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">KUA GLOBAL 跨越</a>
+                            <!--br />11次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9985.html"
+                               title="点击观看视频凡事都有可能"></a>
+                            <a href="/video/9985.html" title="点击观看视频凡事都有可能"><img
+                                        src="https://file.zanmei.ai/video/2024/02/25/65dab9e3abe97ed043018f2f.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/02/25/65dab9e3abe97ed043018f2f.jpg.webp"></a>
+                            <span class="duration">06:26</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9985.html" title="点击观看"
+                               class="vtitle">凡事都有可能</a>
+                            <br/><a href="https://www.zanmei.ai/artist/jesus-fashion-family/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">Jesus Fashion Family</a>
+                            <!--br />115次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9979.html"
+                               title="点击观看视频巴底买之歌"></a>
+                            <a href="/video/9979.html" title="点击观看视频巴底买之歌"><img
+                                        src="https://file.zanmei.ai/video/2024/02/24/65d9bc0ef062b6b63201f715.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/02/24/65d9bc0ef062b6b63201f715.jpg.webp"></a>
+                            <span class="duration">03:48</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9979.html" title="点击观看"
+                               class="vtitle">巴底买之歌</a>
+                            <br/><a href="https://www.zanmei.ai/artist/inland/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">华人创作</a>
+                            <!--br />186次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9970.html"
+                               title="点击观看视频沐主恩年"></a>
+                            <a href="/video/9970.html" title="点击观看视频沐主恩年"><img
+                                        src="https://file.zanmei.ai/video/2024/02/17/65d020ec47b6b0517f059109.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/02/17/65d020ec47b6b0517f059109.jpg.webp"></a>
+                            <span class="duration">03:53</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9970.html" title="点击观看"
+                               class="vtitle">沐主恩年</a>
+                            <br/><a href="https://www.zanmei.ai/artist/classic-collection/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">经典单曲</a>
+                            <!--br />543次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9968.html"
+                               title="点击观看视频祝福你年老的时候强壮如少年 ft. 姜涵"></a>
+                            <a href="/video/9968.html" title="点击观看视频祝福你年老的时候强壮如少年 ft. 姜涵"><img
+                                        src="https://file.zanmei.ai/video/2024/02/13/65cb3199202eef97d40f2a8f.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/02/13/65cb3199202eef97d40f2a8f.jpg.webp"></a>
+                            <span class="duration">03:19</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9968.html" title="点击观看"
+                               class="vtitle">祝福你年老的时候强壮如少年 ft. 姜涵</a>
+                            <br/><a href="https://www.zanmei.ai/artist/jia-nan-shi-ge/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">迦南诗歌</a>
+                            <!--br />1.12k次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9967.html"
+                               title="点击观看视频新年蒙恩"></a>
+                            <a href="/video/9967.html" title="点击观看视频新年蒙恩"><img
+                                        src="https://file.zanmei.ai/video/2024/02/12/65c9b1a8f8379f4e8e0ff62b.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/02/12/65c9b1a8f8379f4e8e0ff62b.jpg.webp"></a>
+                            <span class="duration">03:15</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9967.html" title="点击观看"
+                               class="vtitle">新年蒙恩</a>
+                            <br/><a href="https://www.zanmei.ai/artist/classic-collection/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">经典单曲</a>
+                            <!--br />738次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9955.html"
+                               title="点击观看视频吾家有爱因为你"></a>
+                            <a href="/video/9955.html" title="点击观看视频吾家有爱因为你"><img
+                                        src="https://file.zanmei.ai/video/2024/02/06/65c2182c202eef97d40e9a6f.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/02/06/65c2182c202eef97d40e9a6f.jpg.webp"></a>
+                            <span class="duration">05:07</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9955.html" title="点击观看"
+                               class="vtitle">吾家有爱因为你</a>
+                            <br/><a href="https://www.zanmei.ai/artist/sowers-music/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">颂宣音乐</a>
+                            <!--br />881次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9947.html"
+                               title="点击观看视频我有平安在我心"></a>
+                            <a href="/video/9947.html" title="点击观看视频我有平安在我心"><img
+                                        src="https://file.zanmei.ai/video/2024/02/05/65bfe35c16ac5f1e39068fc6.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/02/05/65bfe35c16ac5f1e39068fc6.jpg.webp"></a>
+                            <span class="duration">04:30</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9947.html" title="点击观看"
+                               class="vtitle">我有平安在我心</a>
+                            <br/><a href="https://www.zanmei.ai/artist/703/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">上敬拜</a>
+                            <!--br />714次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9933.html"
+                               title="点击观看视频「暖春」新春赞美诗歌"></a>
+                            <a href="/video/9933.html" title="点击观看视频「暖春」新春赞美诗歌"><img
+                                        src="https://file.zanmei.ai/video/2024/01/27/65b42a3c11a5c373ad0540bc.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/01/27/65b42a3c11a5c373ad0540bc.jpg.webp"></a>
+                            <span class="duration">04:48</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9933.html" title="点击观看"
+                               class="vtitle">「暖春」新春赞美诗歌</a>
+                            <br/><a href="https://www.zanmei.ai/artist/mustard-seed-music/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">Mustard Seed Music</a>
+                            <!--br />1.02k次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="vthumb">
+                            <a class="videoplay-icon-index" href="/video/9925.html"
+                               title="点击观看视频与主共舞"></a>
+                            <a href="/video/9925.html" title="点击观看视频与主共舞"><img
+                                        src="https://file.zanmei.ai/video/2024/01/25/65b17b17641eac5f5903e7ee.jpg.webp" class="lazy"
+                                        data-original="https://file.zanmei.ai/video/2024/01/25/65b17b17641eac5f5903e7ee.jpg.webp"></a>
+                            <span class="duration">04:35</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="content">
+                            <a href="/video/9925.html" title="点击观看"
+                               class="vtitle">与主共舞</a>
+                            <br/><a href="https://www.zanmei.ai/artist/throne-worship/video.html"
+                                    class="gray_link" style="font-size: 12px;"
+                                    title="查看该音乐人所有视频">宝座乐团</a>
+                            <!--br />923次观看 <span>发布于</span-->
+                        </div>
+                    </li>
+                            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript" charset="utf-8">
+    // var mySwiper = new Swiper('#swiper1', {
+    //     autoplay: {
+    //         delay: 6000,
+    //         stopOnLastSlide: false,
+    //         disableOnInteraction: true,
+    //     },
+    //     loop: true,
+    //
+    //     pagination: {
+    //         el: '.swiper-pagination',
+    //         clickable: true
+    //     },
+    //
+    // })
+    //
+    // var mySwiper2 = new Swiper('#swiper2', {
+    //     autoplay: {
+    //         delay: 4000,
+    //         stopOnLastSlide: false,
+    //         disableOnInteraction: true,
+    //     },
+    //     direction: 'vertical',
+    //     pagination: {
+    //         el: '.swiper-pagination',
+    //         clickable: true,
+    //     },
+    //     loop: true
+    // })
+
+
+    $(function () {
+        // zmsp.bindCollection('.indexplay', 'album');
+        // zmsp.bindCollection('.play1', 'album');
+        // zmsp.bind('.playsong', 'play');
+        zmsp.bind('a.icon-play', 'play');
+        zmsp.bind('a.icon-add', 'list');
+        // zmsp.bindCollection('a.play-icon', 'album');
+        zmsp.bindCollection('a.play-box', 'box');
+        zmsp.bindCollection('a.play-instrument', 'instrument');
+        zmsp.bindSelected('a.play_songs', 'play');
+    });
+
+    window.onload = function () {
+        var dl = document.getElementsByTagName("dl");
+        if (dl.length < 1) return false;
+        for (var i = 0; i < dl.length; i++) {
+            if (dl[i].className.indexOf("over") == -1) {
+                dl[0].className = "over";
+            }
+            dl[i].onmouseover = function () {
+                for (var j = 0; j < dl.length; j++) {
+                    dl[j].className = "";
+                }
+                this.className = "over";
+            }
+        }
+    }
+</script>
+</div>
+
+<div class="footer">
+    <div class="bom">
+        <dl>
+            <dt>爱赞美</dt>
+            <dd><a href="https://www.zanmei.ai/site/about.html">关于我们</a>
+            </dd>
+            <dd>
+                <a href="https://www.zanmei.ai/site/contact.html">联系我们</a>
+            </dd>
+            <dd><a href="https://www.zanmei.ai/site/release.html"
+                   style="color: #ff7722;">歌曲上架</a></dd>
+        </dl>
+        <dl>
+            <dt>歌库</dt>
+            <dd><a href="https://www.zanmei.ai/artist/">音乐人</a></dd>
+            <dd><a href="https://www.zanmei.ai/album/">专辑</a></dd>
+            <dd><a href="https://www.zanmei.ai/song/">歌曲</a></dd>
+            <dd><a href="https://www.zanmei.ai/box/">歌单</a></dd>
+            <dd><a href="https://www.zanmei.ai/tab/">歌谱</a></dd>
+        </dl>
+        <dl>
+            <dt>排行榜</dt>
+            <dd>
+                <a href="https://www.zanmei.ai/top/artist">音乐人排行</a>
+            </dd>
+            <dd><a href="https://www.zanmei.ai/top/album">专辑排行</a>
+            </dd>
+            <dd><a href="https://www.zanmei.ai/top/today">歌曲排行</a>
+            </dd>
+            <dd><a href="https://www.zanmei.ai/top/tab">歌谱排行</a>
+            </dd>
+            <dd><a href="https://www.zanmei.ai/top/">更多...</a></dd>
+        </dl>
+        <dl>
+            <dt>其它...</dt>
+            <!--<dd><a href="https://www.zanmei.ai/worshipschool/">音乐教室</a></dd>-->
+            <dd><a href="//zanmei.app">客户端</a></dd>
+            <dd><a href="https://www.zanmei.ai/help/">帮助中心</a></dd>
+            <dd><a href="javascript:zms.feedback();">意见或建议</a></dd>
+        </dl>
+        <dl>
+            <dt>客户端</dt>
+            <dd style="height:68px;">
+                <div class="l mr5">
+                    <a href="//izanmei.net/c"><img alt="apps" height="60" src="https://static.zanmei.ai/images/izm_app_qrcode.png"></a>
+                </div>
+                <strong>安卓</strong>手机<br />扫码安装或<br/>点击下载安装
+            </dd>
+            <dd>
+                        <span class="fa-stack fa-md">
+  <i class="fas fa-circle fa-stack-2x" style="color:#a3c444"></i>
+  <i class="fab fa-android fa-stack-1x fa-inverse"></i>
+</span>
+                <a href="https://static.zanmei.ai/apps/izm_1.0.0.apk">Android版</a>
+            </dd>
+
+            <!--
+            <dd class="pt5">
+                        <span class="fa-stack fa-md">
+  <i class="fas fa-circle fa-stack-2x" style="color:#3f474d"></i>
+  <i class="fab fa-apple fa-stack-1x fa-inverse"></i>
+</span>
+                <a href="#">iOS 版</a></dd>
+            <dd class="pt5">
+                        <span class="fa-stack fa-md">
+  <i class="fas fa-circle fa-stack-2x" style="color:#00b0ec"></i>
+  <i class="fab fa-windows fa-stack-1x fa-inverse"></i>
+</span>
+                <a href="">Windows 版</a></dd>
+                -->
+
+        </dl>
+        <div class="clear"></div>
+        <div class="copyright">请 <a href="https://www.firefox.com.cn/download/thanks/" target="_blank">点此下载</a>
+            安装更快更安全的Firefox浏览器访问本站<br/>
+            Copyright
+            © 2024 zanmei.ai            . All Rights Reserved.
+            <div>
+                
+            </div>
+                                </div>
+        <a name="gobottom">&nbsp;</a>
+    </div>
+</div>
+</div>
+<div id="gototop">
+    <div id="zms_client" class="zms_client"><a href="javascript:void(0)" aria-label="手机访问">手机访问
+            <div class="zms_clienth"></div>
+        </a></div>
+    <div id="zms_feedback"><a href="javascript:zms.feedback();" class='zms_feedback' aria-label="用户反馈">反馈</a>
+    </div>
+    <a id="zms_top" href="javascript:void(0)" aria-label="返回顶部"></a>
+</div>
+
+
+<script type="text/javascript">
+    function b() {
+        h = $(window).height(),
+            t = $(document).scrollTop(),
+            t > h ? $("#zms_top").show() : $("#zms_top").hide()
+    }
+
+    $(document).ready(function () {
+        b(),
+            $("#zms_top").click(function () {
+                $(document).scrollTop(0)
+            })
+    }),
+        $(window).scroll(function () {
+            b()
+        });
+</script>
+
 </body>
 </html>
