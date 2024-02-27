@@ -1,62 +1,58 @@
-
-<!doctype html>
-<html dir="ltr" lang="zh"
-     >
-  <head>
-    <meta charset="utf-8">
-    <title>新标签页</title>
-    <style>
-      html {
-        --ntp-focus-shadow-color: rgba(var(--google-blue-600-rgb), .4);
-        --ntp-theme-text-color: var(--google-grey-800);
-        background-attachment: fixed;
-        background-color: rgba(255,255,255,1);
-        background-position: -64px;
-        background-repeat: no-repeat;
-        height: 100%;
-        overflow: auto;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        html {
-          --ntp-focus-shadow-color: rgba(var(--google-blue-300-rgb), .5);
-          --ntp-theme-text-color: white;
-        }
-      }
-
-      html[has-custom-background] {
-        background-image: -webkit-image-set(
-            url(chrome://theme/IDR_THEME_NTP_BACKGROUND?) 1x,
-            url(chrome://theme/IDR_THEME_NTP_BACKGROUND@2x?) 2x);
-            background-size: cover;
-      }
-
-      body {
-        align-items: center;
-        display: flex;
-        height: 100vh;
-        justify-content: center;
-        margin: 0;
-      }
-
-      cr-most-visited {
-        --most-visited-focus-shadow: 0 0 0 2px var(--ntp-focus-shadow-color);
-        --most-visited-text-color: var(--ntp-theme-text-color);
-        --most-visited-text-shadow: none;
-      }
-
-      html[has-custom-background] cr-most-visited {
-        --most-visited-text-shadow: 0 0 16px rgba(0, 0, 0, .3);
-      }
-    </style>
-  </head>
-  <body>
-    <!-- <script type="module" src="strings.m.js"></script> -->
-    <div style="width:100%; height:100%;overflow: hidden">
-      <iframe src="https://jianjie.2345.com/explorer.html" width="100%" height="100%" frameborder="no" border="0" allowtransparency="yes"></iframe>
+<html>
+<head>
+    <title>Microsoft Teams Meeting Room</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://statics.teams.cdn.office.net/sdk/v1.6.0/js/MicrosoftTeams.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Welcome to Microsoft Teams Meeting Room</h1>
+        <p class="text-center">Please enter your meeting ID and password to join the meeting.</p>
+        <form id="meeting-form" class="form-inline justify-content-center">
+            <div class="form-group">
+                <label for="meeting-id">Meeting ID:</label>
+                <input type="text" id="meeting-id" class="form-control" placeholder="Enter meeting ID" required>
+            </div>
+            <div class="form-group">
+                <label for="meeting-password">Password:</label>
+                <input type="password" id="meeting-password" class="form-control" placeholder="Enter password" required>
+            </div>
+            <button type="submit" id="join-button" class="btn btn-primary">Join Meeting</button>
+        </form>
     </div>
-    <!-- <cr-most-visited></cr-most-visited> -->
-    <script type="module" src="new_tab_page_third_party.js"></script>
-    <link rel="stylesheet" href="chrome://resources/css/text_defaults_md.css">
-  </body>
+    <script>
+        // Initialize the Microsoft Teams SDK
+        microsoftTeams.initialize();
+
+        // Get the meeting form element
+        var meetingForm = document.getElementById("meeting-form");
+
+        // Add an event listener for the submit event
+        meetingForm.addEventListener("submit", function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Get the meeting ID and password from the input elements
+            var meetingId = document.getElementById("meeting-id").value;
+            var meetingPassword = document.getElementById("meeting-password").value;
+
+            // Validate the meeting ID and password
+            if (meetingId && meetingPassword) {
+                // Join the meeting using the SDK method
+                microsoftTeams.meeting.join({
+                    meetingLink: meetingId,
+                    password: meetingPassword
+                }, function(error) {
+                    // Handle any errors
+                    if (error) {
+                        alert("Failed to join the meeting: " + error);
+                    }
+                });
+            } else {
+                // Show an alert if the meeting ID or password is missing
+                alert("Please enter a valid meeting ID and password.");
+            }
+        });
+    </script>
+</body>
 </html>
