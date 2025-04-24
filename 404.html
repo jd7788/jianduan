@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock with Creative Heart Animation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        /* Google fonts import link */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.4s ease;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        section {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        section.dark {
+            background: rgba(36, 41, 45, 0.8);
+        }
+
+        section .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 220px;
+            max-width: 560px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        section.dark .container {
+            background: rgba(50, 56, 64, 0.8);
+        }
+
+        section .container .icons i {
+            position: absolute;
+            right: 17px;
+            top: 17px;
+            height: 30px;
+            width: 30px;
+            background: #24292D;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        section.dark .container .icons i {
+            background: #fff;
+            color: #323840;
+        }
+
+        .container .icons i.fa-sun {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        section.dark .container .icons i.fa-sun {
+            opacity: 1;
+            pointer-events: auto;
+            font-size: 16px;
+        }
+
+        section .container .time {
+            display: flex;
+            align-items: center;
+        }
+
+        .container .time .time-colon {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .time .time-colon .am_pm {
+            position: absolute;
+            top: 0;
+            right: -50px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        section.dark .time .time-colon .am_pm {
+            color: #fff;
+        }
+
+        .time .time-colon .time-text {
+            height: 100px;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(240, 248, 255, 0.8);
+            border-radius: 6px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        section.dark .time .time-colon .time-text {
+            background: rgba(36, 41, 45, 0.8);
+        }
+
+        .time .time-colon .time-text,
+        .time .time-colon .colon {
+            font-size: 35px;
+            font-weight: 600;
+        }
+
+        section.dark .time .time-text .num,
+        section.dark .time .colon {
+            color: #fff;
+        }
+
+        .time .time-colon .colon {
+            font-size: 40px;
+            margin: 0 10px;
+        }
+
+        .time .time-colon .time-text .text {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        section.dark .time .time-colon .text {
+            color: #fff;
+        }
+
+        html,
+        body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin: 0 auto;
+            color: pink;
+            font-size: 20px;
+            padding-right: 5px;
+            animation: mymove 2.5s infinite;
+            -webkit-animation: mymove 2.5s infinite;
+        }
+
+        @keyframes mymove {
+            50% {
+                font-size: 40px;
+            }
+        }
+
+        @-webkit-keyframes mymove {
+            50% {
+                font-size: 40px;
+            }
+        }
+
+        .middle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .middle2 {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .container span {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        .particle::before,
+        .particle::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 5px;
+            height: 8px;
+            background: currentColor;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .particle::before {
+            left: 5px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .particle::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="container">
+            <div class="icons">
+                <i class="fa-solid fa-moon"></i>
+                <i class="fa-solid fa-sun"></i>
+            </div>
+            <div class="time">
+                <div class="time-colon">
+                    <div class="time-text">
+                        <span class="num" id="hours">00</span>
+                        <span class="text">Hours</span>
+                    </div>
+                    <span class="colon">:</span>
+                </div>
+                <div class="time-colon">
+                    <div class="time-text">
+                        <span class="num" id="minutes">00</span>
+                        <span class="text">Minutes</span>
+                    </div>
+                    <span class="colon">:</span>
+                </div>
+                <div class="time-colon">
+                    <div class="time-text">
+                        <span class="num" id="seconds">00</span>
+                        <span class="text">Seconds</span>
+                    </div>
+                    <span class="am_pm" id="am-pm">AM</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="heart-container">
+        <div class="container">
+            <span>浪</span>
+            <span>漫</span>
+            <span>的</span>
+            <span>爱</span>
+            <span>心</span>
+        </div>
+        <div class="middle">
+            <div class="middle2">
+            </div>
+            <img src="https://pic.imgdb.cn/item/642547f5a682492fcc15cd5d.gif" width="1000" height="650" />
+        </div>
+    </div>
+    <audio autoplay="autoplay" loop="loop" preload="auto"
+        src="http://ws.stream.qqmusic.qq.com/C4000009nowb1Lxsk5.m4a?guid=291747946&vkey=927E1CB036619BB457EC5C1E98E58C4646FD00050805BB0984A5BFCA3496DCEB4584A8A036F397667725E74D8AC498ED6108144422F6FC6F&uin=&fromtag=120032">
+    </audio>
+    <script type="text/javascript" src="//js.users.51.la/21504121.js"></script>
+    <script>
+        const section = document.querySelector('section');
+        const icons = document.querySelector('.icons');
+        const moonIcon = icons.querySelector('.fa-moon');
+        const sunIcon = icons.querySelector('.fa-sun');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+        const amPmElement = document.getElementById('am-pm');
+
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const amPm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+
+            hoursElement.textContent = String(hours).padStart(2, '0');
+            minutesElement.textContent = String(minutes).padStart(2, '0');
+            secondsElement.textContent = String(seconds).padStart(2, '0');
+            amPmElement.textContent = amPm;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        icons.addEventListener('click', () => {
+            section.classList.toggle('dark');
+            moonIcon.classList.toggle('active');
+            sunIcon.classList.toggle('active');
+        });
+
+        const heartContainer = document.querySelector('.heart-container');
+        const particles = [];
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+            particle.style.color = randomColor;
+            const randomX = Math.random() * window.innerWidth;
+            const randomY = Math.random() * window.innerHeight;
+            particle.style.left = `${randomX}px`;
+            particle.style.top = `${randomY}px`;
+            const randomSpeedX = (Math.random() - 0.5) * 2;
+            const randomSpeedY = (Math.random() - 0.5) * 2;
+            particle.speedX = randomSpeedX;
+            particle.speedY = randomSpeedY;
+            let opacity = 0;
+            let life = 0;
+            particle.style.opacity = opacity;
+            heartContainer.appendChild(particle);
+            particles.push(particle);
+
+            const interval = setInterval(() => {
+                if (life < 50) {
+                    opacity += 0.02;
+                } else {
+                    opacity -= 0.02;
+                }
+                particle.style.opacity = opacity;
+                const randomDisturbanceX = (Math.random() - 0.5) * 0.5;
+                const randomDisturbanceY = (Math.random() - 0.5) * 0.5;
+                particle.speedX += randomDisturbanceX;
+                particle.speedY += randomDisturbanceY;
+                const x = parseFloat(particle.style.left) + particle.speedX;
+                const y = parseFloat(particle.style.top) + particle.speedY;
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                life++;
+                if (opacity <= 0) {
+                    clearInterval(interval);
+                    particle.remove();
+                    const index = particles.indexOf(particle);
+                    if (index > -1) {
+                        particles.splice(index, 1);
+                    }
+                }
+            }, 20);
+        }
+
+        setInterval(createParticle, 100);
+    </script>
+</body>
+
+</html>
+    
