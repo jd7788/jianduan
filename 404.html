@@ -1,0 +1,3230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#eef2f8">
+<meta name="color-scheme" content="light">
+<title>云上颂扬</title>
+<script src="lib/chart.umd.min.js" defer></script>
+<script src="lib/xlsx.full.min.js" defer></script>
+<script src="lib/lame.min.js"></script>
+<script src="lib/recorder.mp3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",system-ui,sans-serif;transition:all 0.2s ease;}
+body{background:#eef2f8;color:#2a3447;padding:15px;min-height:100vh;}
+/* iOS 沉浸式安全区域 */
+body{padding-top:calc(15px + env(safe-area-inset-top,0px));padding-bottom:calc(15px + env(safe-area-inset-bottom,0px));}
+@supports (padding-top:constant(safe-area-inset-top)){body{padding-top:calc(15px + constant(safe-area-inset-top));padding-bottom:calc(15px + constant(safe-area-inset-bottom));}}
+:root{
+  --neu-bg: #eef2f8;
+  --neu-light: #ffffff;
+  --neu-dark: #d1d9e6;
+  --neu-out: 5px 5px 10px var(--neu-dark), -5px -5px 10px var(--neu-light);
+  --neu-inset: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+  --neu-btn: 3px 3px 6px var(--neu-dark), -3px -3px 6px var(--neu-light);
+  --primary: #0891b2;
+  --primary-light: #0ea5e9;
+  --primary-fade: rgba(8,145,178,0.08);
+  --success: #0891b2;
+  --success-light: #0ea5e9;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --text-main: #2a3447;
+  --text-sub: #6b7280;
+  --text-tip: #9ca3af;
+  --bg-card: #f4f7fb;
+  --bg-page: #eef2f8;
+}
+    * {
+      transition:all 0.25s ease;
+    }
+
+    /* ====== 动效增强 ====== */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(16px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity:0; }
+      to   { opacity:1; }
+    }
+    @keyframes ripple {
+      to { transform:scale(4); opacity:0; }
+    }
+    @keyframes scaleIn {
+      from { opacity:0; transform:scale(0.92); }
+      to   { opacity:1; transform:scale(1); }
+    }
+    @keyframes slideRight {
+      from { opacity:0; transform:translateX(calc(-20px * var(--dir,1))); }
+      to   { opacity:1; transform:translateX(0); }
+    }
+    @keyframes slideDown {
+      from { opacity:0; transform:translateY(-12px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .tab-content { animation:fadeUp 0.35s ease both; }
+    .tab-content-inner { animation:fadeUp 0.35s ease both; }
+
+    .neu-btn { position:relative; overflow:hidden; }
+    .neu-btn::after {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(circle at var(--rx,50%) var(--ry,50%), rgba(8,145,178,0.25) 0%, transparent 60%);
+      opacity:0; transition:opacity 0.3s;
+      pointer-events:none;
+    }
+    .neu-btn:active::after { opacity:1; }
+
+    .nav-item { position:relative; overflow:hidden; }
+    .nav-item::after {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(circle at var(--rx,50%) var(--ry,50%), rgba(8,145,178,0.2) 0%, transparent 60%);
+      opacity:0; transition:opacity 0.3s;
+      pointer-events:none;
+    }
+    .nav-item:active::after { opacity:1; }
+
+    .stagger > * { animation:fadeUp 0.4s ease both; }
+    .stagger > *:nth-child(1) { animation-delay:0.02s; }
+    .stagger > *:nth-child(2) { animation-delay:0.06s; }
+    .stagger > *:nth-child(3) { animation-delay:0.10s; }
+    .stagger > *:nth-child(4) { animation-delay:0.14s; }
+    .stagger > *:nth-child(5) { animation-delay:0.18s; }
+    .stagger > *:nth-child(6) { animation-delay:0.22s; }
+    .stagger > *:nth-child(7) { animation-delay:0.26s; }
+    .stagger > *:nth-child(8) { animation-delay:0.30s; }
+    .stagger > *:nth-child(9) { animation-delay:0.34s; }
+    .stagger > *:nth-child(10){ animation-delay:0.38s; }
+    .stagger > *:nth-child(n+11){ animation-delay:0.42s; }
+
+    .table tbody tr { animation:fadeUp 0.3s ease both; }
+    .table tbody tr:nth-child(1) { animation-delay:0.02s; }
+    .table tbody tr:nth-child(2) { animation-delay:0.05s; }
+    .table tbody tr:nth-child(3) { animation-delay:0.08s; }
+    .table tbody tr:nth-child(4) { animation-delay:0.11s; }
+    .table tbody tr:nth-child(5) { animation-delay:0.14s; }
+    .table tbody tr:nth-child(6) { animation-delay:0.17s; }
+    .table tbody tr:nth-child(7) { animation-delay:0.20s; }
+    .table tbody tr:nth-child(8) { animation-delay:0.23s; }
+    .table tbody tr:nth-child(9) { animation-delay:0.26s; }
+    .table tbody tr:nth-child(10){ animation-delay:0.29s; }
+    .table tbody tr:nth-child(n+11){ animation-delay:0.32s; }
+.neu-card{
+  background:var(--neu-bg);
+  border-radius:18px;
+  box-shadow:var(--neu-out);
+  padding:24px;
+  margin-bottom:20px;
+  border:1px solid rgba(255,255,255,0.6);
+}
+.neu-input{
+  background:var(--neu-bg);
+  border-radius:12px;
+  border:1px solid var(--neu-dark);
+  outline:none;
+  padding:12px 16px;
+  color:var(--text-main);
+  font-size:14px;
+  caret-color:var(--primary);
+}
+.neu-input[type="number"]{
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.neu-input[type="number"]::-webkit-outer-spin-button,
+.neu-input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: inner-spin-button;
+  margin: 0;
+  opacity: 1;
+}
+.neu-input:focus{
+  box-shadow:var(--neu-inset);
+}
+.neu-btn{
+  background:var(--neu-bg);
+  border-radius:10px;
+  box-shadow:var(--neu-btn);
+  border:none;
+  padding:10px 22px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:500;
+  color:var(--text-sub);
+}
+.neu-btn:hover{
+  color:var(--primary);
+  transform:translateY(-1.5px);
+  box-shadow:5px 5px 12px var(--neu-dark), -5px -5px 12px var(--neu-light);
+}
+.neu-btn:active{
+  transform:translateY(0);
+  box-shadow:var(--neu-inset);
+  color:var(--primary);
+}
+.btn-primary{color:#f1f5f9;background:var(--primary);text-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.btn-primary:hover{background:var(--primary-light);color:#f1f5f9;}
+.btn-success{color:#f1f5f9;background:var(--success);text-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.btn-success:hover{background:var(--success-light);color:#f1f5f9;}
+.btn-warning{color:var(--text-main);background:var(--warning);}
+.btn-warning:hover{background:#eab308;color:var(--text-main);}
+.btn-danger{color:#f1f5f9;background:var(--danger);text-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.btn-outline{background:transparent;border:1px solid var(--text-tip);color:var(--text-sub);}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary);}
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  padding:18px;
+  background:var(--neu-bg);
+  border-radius:18px;
+  box-shadow:var(--neu-out);
+  margin-bottom:20px;
+}
+.nav-item{
+  padding:12px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:500;
+  color:var(--text-sub);
+  white-space:nowrap;
+  background:var(--neu-bg);
+  box-shadow:var(--neu-btn);
+}
+.nav-item.active{
+  box-shadow:var(--neu-inset);
+  color:var(--tab-active,hsl(var(--tab-h,200), var(--tab-s,70%), var(--tab-l,45%)));
+  font-weight:600;
+}
+.nav-item:hover:not(.active){
+  color:var(--tab-active,hsl(var(--tab-h,200), var(--tab-s,70%), var(--tab-l,45%)));
+}
+.nav-item.hide-nav{display:none !important;}
+
+/* ====== Tab 专属主题色（设于 nav-item 和内容区容器上） ====== */
+#stat,         .nav-item[data-tab="stat"]         { --tab-h:200; --tab-s:70%; --tab-l:45%; }
+#attendance,   .nav-item[data-tab="attendance"]   { --tab-h:160; --tab-s:55%; --tab-l:40%; }
+#comment,      .nav-item[data-tab="comment"]      { --tab-h: 40; --tab-s:80%; --tab-l:50%; }
+#groupCompare, .nav-item[data-tab="groupCompare"] { --tab-h:270; --tab-s:50%; --tab-l:50%; }
+#studentRecord,.nav-item[data-tab="studentRecord"]{ --tab-h:340; --tab-s:60%; --tab-l:45%; }
+#removal,      .nav-item[data-tab="removal"]      { --tab-h:  0; --tab-s:65%; --tab-l:50%; }
+#materialUpload,.nav-item[data-tab="materialUpload"]{ --tab-h:220; --tab-s:55%; --tab-l:45%; }
+#teacherMsgSend,.nav-item[data-tab="teacherMsgSend"]{ --tab-h:190; --tab-s:60%; --tab-l:40%; }
+#studentInbox, .nav-item[data-tab="studentInbox"] { --tab-h:155; --tab-s:50%; --tab-l:40%; }
+#schedule,     .nav-item[data-tab="schedule"]     { --tab-h:260; --tab-s:45%; --tab-l:50%; }
+#student,      .nav-item[data-tab="student"]      { --tab-h: 25; --tab-s:70%; --tab-l:50%; }
+#user,         .nav-item[data-tab="user"]         { --tab-h:320; --tab-s:55%; --tab-l:45%; }
+#export,       .nav-item[data-tab="export"]       { --tab-h:130; --tab-s:45%; --tab-l:40%; }
+#storage,      .nav-item[data-tab="storage"]      { --tab-h: 50; --tab-s:60%; --tab-l:45%; }
+#log,          .nav-item[data-tab="log"]          { --tab-h:  0; --tab-s: 0%; --tab-l:35%; }
+
+/* Tab 内容区主标题取对应 accent 色 */
+.tab-content > h3:first-child,
+.tab-content > .neu-card:first-child > h3:first-child {
+  color:hsl(var(--tab-h,200), var(--tab-s,70%), var(--tab-l,45%));
+  border-left:4px solid hsl(var(--tab-h,200), var(--tab-s,70%), var(--tab-l,45%));
+  padding-left:14px;
+}
+
+/* 主按钮用当前 tab 色 */
+.tab-content .btn-primary {
+  background:hsl(var(--tab-h,200), var(--tab-s,70%), var(--tab-l,45%));
+}
+.tab-content .btn-primary:hover {
+  background:hsl(var(--tab-h,200), var(--tab-s,70%), calc(var(--tab-l,45%) + 8%));
+}
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--neu-dark);
+}
+.table th{
+  background:rgba(255,255,255,0.5);
+  padding:14px;
+  text-align:center;
+  color:var(--text-main);
+  font-weight:600;
+  border:1px solid var(--neu-dark);
+}
+.table td{
+  padding:12px;
+  text-align:center;
+  background:var(--neu-bg);
+  border:1px solid var(--neu-dark);
+  color:var(--text-sub);
+}
+.container{max-width:1300px;margin:0 auto;padding:0 10px;}
+h2{font-size:22px;color:var(--text-main);margin-bottom:10px;font-weight:600;}
+h3{font-size:16px;color:var(--text-sub);margin:12px 0;font-weight:500;}
+.tip{color:var(--text-tip);font-size:13px;margin:8px 0;line-height:1.5;}
+.warn-tip{color:var(--danger);font-weight:500;}
+.flex-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:15px 0;}
+.chart-box{width:100%;height:420px;margin-top:15px;}
+.hide{display:none !important;}
+#loginPage{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:calc(100vh - 30px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+}
+#loginPage.hide{display:none !important;}
+.login-box{
+  width:100%;
+  max-width:420px;
+  padding:30px;
+  border-radius:22px;
+  background:var(--neu-bg);
+  box-shadow:var(--neu-out);
+}
+.login-box .neu-input{width:100%;}
+#warnBox{
+  border-radius:14px;
+  padding:16px 22px;
+  background:rgba(220,38,38,0.08);
+  box-shadow:var(--neu-out);
+  border:1px solid rgba(220,38,38,0.1);
+}
+textarea.neu-input{resize:none;min-height:60px;}
+select.neu-input{
+  appearance:none;
+  cursor:pointer;
+  text-align:center;
+  text-align-last:center;
+  min-width:140px;
+  max-width:100%;
+}
+input[type="date"].neu-input {
+  text-align: center;
+}
+
+/* ====== 自定义下拉菜单样式 ====== */
+.custom-select {
+  position: relative;
+  display: inline-block;
+  min-width: 140px;
+  max-width: 100%;
+}
+.custom-select select {
+  display: none;
+}
+.custom-select-trigger {
+  background: var(--neu-bg);
+  border-radius: 12px;
+  border: 1px solid var(--neu-dark);
+  padding: 12px 16px;
+  color: var(--text-main);
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.custom-select-trigger::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--text-sub);
+  pointer-events: none;
+  transition: transform 0.2s;
+}
+.custom-select.open .custom-select-trigger::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+.custom-select-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--neu-bg);
+  border-radius: 12px;
+  border: 1px solid var(--neu-dark);
+  box-shadow: var(--neu-out);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+}
+.custom-select.open .custom-select-options {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+.custom-select-option {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-main);
+  text-align: center;
+  transition: background 0.15s;
+}
+.custom-select-option:hover {
+  background: var(--primary-fade);
+  color: var(--primary);
+}
+.custom-select-option.selected {
+  background: var(--primary-fade);
+  color: var(--primary);
+  font-weight: 500;
+}
+/* 移动端自定义下拉菜单优化 */
+@media (max-width:768px){
+  .custom-select {
+    width: 100%;
+  }
+  .custom-select-options {
+    max-height: 200px;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+  }
+  #cPreset {
+    order: 4;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+#toast{
+  position:fixed;top:25px;left:50%;transform:translateX(-50%);
+  z-index:9999;padding:16px 32px;border-radius:14px;
+  font-size:15px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,0.15);
+  opacity:0;transition:opacity 0.35s ease, transform 0.35s ease;
+  pointer-events:none;max-width:90vw;text-align:center;
+  background:var(--neu-bg);color:var(--text-main);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast.toast-success{background:#d1fae5;color:#065f46;}
+#toast.toast-error{background:#fee2e2;color:#991b1b;}
+#toast.toast-warning{background:#fef3c7;color:#92400e;}
+#toast.toast-info{color:var(--text-main);}
+#loadingOverlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(238,242,248,0.7);z-index:9998;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.25s;
+}
+#loadingOverlay.show{opacity:1;pointer-events:auto;}
+.loading-spinner{
+  width:48px;height:48px;
+  border:4px solid var(--neu-dark);border-top-color:var(--primary);
+  border-radius:50%;animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.login-error{margin-top:12px;padding:10px;border-radius:10px;background:rgba(220,38,38,0.08);color:var(--danger);font-size:14px;text-align:center;display:none;}
+@media screen and (-webkit-min-device-pixel-ratio:2) and (max-width:768px){
+  *{-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;}
+  body{padding:10px;}
+  .neu-card,.nav,.login-box{border-radius:16px !important;}
+  .neu-btn{-webkit-appearance:none;appearance:none;border-radius:10px;}
+  .neu-input{-webkit-appearance:none;appearance:none;border-radius:12px;}
+  :root{
+    --neu-out: 4px 4px 8px var(--neu-dark), -4px -4px 8px var(--neu-light);
+    --neu-inset: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
+  }
+  .neu-btn,.nav-item{transform:translateZ(0);backface-visibility:hidden;}
+}
+@media (max-width:768px){
+  .nav{gap:6px;padding:12px;overflow-x:auto;flex-wrap:nowrap;justify-content:flex-start;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .nav::-webkit-scrollbar{display:none;}
+  .nav-item{padding:10px 14px;font-size:13px;white-space:nowrap;flex-shrink:0;}
+  .neu-card{padding:16px;}
+  .flex-row{gap:8px;}
+  .neu-input{width:100% !important;}
+  .neu-btn{padding:9px 16px;font-size:13px;min-height:42px;}
+  .chart-box{height:300px;}
+  .table{overflow-x:auto;display:block;-webkit-overflow-scrolling:touch;}
+  .table th,.table td{padding:10px 6px;font-size:13px;white-space:nowrap;}
+  .tab-content{animation-duration:0.3s;}
+  #logoutBtn{position:absolute !important;right:8px !important;top:auto !important;bottom:16px !important;padding:2px 8px !important;font-size:13px !important;min-height:auto !important;}
+}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+<div id="loadingOverlay"><div class="loading-spinner"></div></div>
+
+<div id="loginPage" class="hide">
+  <div class="login-box">
+    <h2 style="text-align:center;margin-bottom:25px;color:var(--text-main);">系统登录</h2>
+    <input type="text" id="username" class="neu-input" placeholder="请输入账号">
+    <input type="password" id="password" class="neu-input" placeholder="请输入密码">
+    <div id="loginError" class="login-error"></div>
+    <button class="neu-btn btn-primary" style="width:100%;margin-top:15px;color:#000;text-shadow:none;" id="loginBtn" onclick="login()">登录系统</button>
+    <p class="tip" style="text-align:center;margin-top:15px;">教学考勤作业管理系统 v2.0</p>
+  </div>
+</div>
+
+<div id="mainPage" class="container hide">
+  <div class="neu-card" style="padding:20px 24px;position:relative;">
+    <h2 style="margin:0;"><span style="color:#dc2626;font-size:26px;margin-right:10px;">✝</span>云上颂扬管理系统</h2>
+    <p class="tip" style="margin-top:6px;">圣乐团队<span id="userInfo" style="color:var(--primary);font-weight:500;"></span></p>
+    <button id="logoutBtn" class="neu-btn" style="position:absolute;right:24px;bottom:20px;color:var(--danger);padding:6px 16px;font-size:13px;" onclick="logout()">退出登录</button>
+  </div>
+
+  <div id="warnBox" class="warn-tip hide" style="margin-bottom:20px;"></div>
+
+  <div class="nav" id="mainNav">
+	<div class="nav-item active" data-tab="stat" onclick="switchTab('stat')">课时趋势</div>
+    <div class="nav-item" data-tab="attendance" onclick="switchTab('attendance')">考勤录入</div>
+	<div class="nav-item" data-tab="comment" onclick="switchTab('comment')">作业点评</div>
+    <div class="nav-item" data-tab="groupCompare" onclick="switchTab('groupCompare')">小组对比</div>
+	<div class="nav-item" data-tab="studentRecord" onclick="switchTab('studentRecord')">成长档案</div>
+	<div class="nav-item" data-tab="removal" onclick="switchTab('removal')">请离清退</div>    
+    <div class="nav-item admin-hide" data-tab="materialUpload" onclick="switchTab('materialUpload')">课堂资料</div>
+    <div class="nav-item" data-tab="teacherMsgSend" onclick="switchTab('teacherMsgSend')">通知点拨</div>
+    <div class="nav-item" data-tab="studentInbox" onclick="switchTab('studentInbox')">学生留言</div>
+    <div class="nav-item admin-hide" data-tab="schedule" onclick="switchTab('schedule')">课时配置</div>
+    <div class="nav-item admin-hide" data-tab="student" onclick="switchTab('student')">学员管理</div> 
+    <div class="nav-item admin-hide" data-tab="user" onclick="switchTab('user')">账号权限</div>
+    <div class="nav-item admin-hide" data-tab="export" onclick="switchTab('export')">数据导出</div>
+    <div class="nav-item admin-hide" data-tab="storage" onclick="switchTab('storage')">存储管理</div>
+    <div class="nav-item admin-hide" data-tab="log" onclick="switchTab('log')">操作日志</div>
+  </div>
+
+  <div id="stat" class="tab-content neu-card">
+    <h3>课时数据趋势统计</h3>
+    <div class="flex-row">
+      <select id="statSubj" class="neu-input" style="width:160px;">
+        <option value="0">全部学科</option>
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <select id="statGroup" class="neu-input" style="width:120px;">
+        <option value="0">全部小组</option>
+        <option value="1">第一小组</option>
+        <option value="2">第二小组</option>
+        <option value="3">第三小组</option>
+        <option value="4">第四小组</option>
+        <option value="5">第五小组</option>
+        <option value="6">第六小组</option>
+      </select>
+      <select id="statClassNo" class="neu-input" style="width:100px;">
+        <option value="0">全部课时</option>
+        <option value="1">第1课</option><option value="2">第2课</option>
+        <option value="3">第3课</option><option value="4">第4课</option>
+        <option value="5">第5课</option><option value="6">第6课</option>
+        <option value="7">第7课</option><option value="8">第8课</option>
+        <option value="9">第9课</option><option value="10">第10课</option>
+        <option value="11">第11课</option><option value="12">第12课</option>
+      </select>
+      <input type="text" id="statSno" class="neu-input" style="width:120px;" placeholder="学号(选填)">
+      <button class="neu-btn btn-primary" onclick="loadChart()">刷新数据</button>
+    </div>
+    <div id="statSummary" class="flex-row" style="justify-content:space-around;margin:10px 0 18px 0;"></div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="flex:2;min-width:300px;"><p class="tip">课时考勤/作业趋势</p><div class="chart-box" style="height:350px;"><canvas id="chartCanvas"></canvas></div></div>
+      <div style="flex:1;min-width:240px;"><p class="tip">考勤状态分布</p><div class="chart-box" style="height:350px;"><canvas id="pieCanvas"></canvas></div></div>
+    </div>
+  </div>
+
+  <div id="groupCompare" class="tab-content neu-card hide">
+    <h3>各小组数据横向对比</h3>
+    <div class="flex-row">
+      <select id="cmpSubj" class="neu-input" style="width:140px;">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <select id="cmpClassNo" class="neu-input" style="width:110px;">
+        <option value="0">全部课时</option>
+        <option value="1">第1课时</option>
+        <option value="2">第2课时</option>
+        <option value="3">第3课时</option>
+        <option value="4">第4课时</option>
+        <option value="5">第5课时</option>
+        <option value="6">第6课时</option>
+        <option value="7">第7课时</option>
+        <option value="8">第8课时</option>
+        <option value="9">第9课时</option>
+        <option value="10">第10课时</option>
+        <option value="11">第11课时</option>
+        <option value="12">第12课时</option>
+      </select>
+      <button class="neu-btn btn-primary" onclick="loadGroupCompare()">加载对比数据</button>
+    </div>
+    <div class="chart-box"><canvas id="cmpChart"></canvas></div>
+  </div>
+
+  <div id="attendance" class="tab-content neu-card hide">
+    <h3>课堂考勤录入管理</h3>
+    <div class="flex-row">
+      <select id="subjSelect" class="neu-input" style="width:160px;" onchange="loadDefaultAttendanceDate(this.value)">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <select id="classNo" class="neu-input" style="width:110px;" onchange="fillClassDate('subjSelect','classNo','classDate')">
+        <option value="1">第1课时</option>
+        <option value="2">第2课时</option>
+        <option value="3">第3课时</option>
+        <option value="4">第4课时</option>
+        <option value="5">第5课时</option>
+        <option value="6">第6课时</option>
+        <option value="7">第7课时</option>
+        <option value="8">第8课时</option>
+        <option value="9">第9课时</option>
+        <option value="10">第10课时</option>
+        <option value="11">第11课时</option>
+        <option value="12">第12课时</option>
+      </select>
+      <input type="date" id="classDate" class="neu-input" style="width:150px;">
+      <select id="attGroup" class="neu-input" style="width:120px;">
+        <option value="0">全员</option>
+        <option value="1">第1小组</option>
+        <option value="2">第2小组</option>
+        <option value="3">第3小组</option>
+        <option value="4">第4小组</option>
+        <option value="5">第5小组</option>
+        <option value="6">第6小组</option>
+      </select>
+      <button class="neu-btn btn-primary" onclick="loadStudentList()">加载学员列表</button>
+    </div>
+    <!-- 批量操作栏 -->
+    <div id="attBatchBar" class="flex-row" style="margin-bottom:15px;display:none;" gap="8px">
+      <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="attSelectAll" onclick="toggleSelectAll()"> 全选</label>
+      <span class="tip">批量设置：</span>
+      <select id="batchKq" class="neu-input" style="width:120px;">
+        <option value="0">考勤状态</option>
+        <option value="1">出勤</option>
+        <option value="2">迟到</option>
+        <option value="3">缺勤</option>
+      </select>
+      <select id="batchHw" class="neu-input" style="width:120px;">
+        <option value="0">作业状态</option>
+        <option value="1">完成</option>
+        <option value="2">未完成</option>
+        <option value="3">补交</option>
+      </select>
+      <button class="neu-btn btn-primary" onclick="batchApply()">应用选中</button>
+      <button class="neu-btn btn-success" onclick="batchSaveAll()">批量保存全部</button>
+    </div>
+    <table class="table" id="stuTable"></table>
+    <hr style="margin:30px 0;border:none;border-top:2px solid var(--neu-dark);opacity:0.3;">
+    <h3>批量导入历史考勤（Excel）</h3>
+    <p class="tip">自动识别格式：宽表格式（考勤/作业交替列）、长表格式（逐行记录）、标准考勤表（含分组/学号/姓名+课堂/作业/点评）。建议学号为3位数字。</p>
+    <div class="flex-row">
+      <input type="file" id="importFile" class="neu-input" style="width:300px;" accept=".xlsx,.xls">
+      <select id="importSubj" class="neu-input" style="width:160px;">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <button class="neu-btn btn-primary" onclick="parseImportExcel()">解析预览</button>
+      <button class="neu-btn btn-success" id="btnDoImport" onclick="doImport()" disabled>确认导入</button>
+    </div>
+    <div id="importPreview" class="hide" style="max-height:400px;overflow:auto;margin-top:10px;"></div>
+    <div id="importMapping" class="hide flex-row" style="margin-top:10px;flex-wrap:wrap;gap:8px;"></div>
+    <div id="importStatus" class="tip" style="margin-top:8px;"></div>
+  </div>
+
+  <div id="comment" class="tab-content neu-card hide">
+    <h3>作业点评录入管理</h3>
+    <div class="flex-row">
+      <select id="cSubjSelect" class="neu-input" style="width:160px;">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <select id="cClassNo" class="neu-input" style="width:120px;">
+        <option value="1">第1课时</option>
+        <option value="2">第2课时</option>
+        <option value="3">第3课时</option>
+        <option value="4">第4课时</option>
+        <option value="5">第5课时</option>
+        <option value="6">第6课时</option>
+        <option value="7">第7课时</option>
+        <option value="8">第8课时</option>
+        <option value="9">第9课时</option>
+        <option value="10">第10课时</option>
+        <option value="11">第11课时</option>
+        <option value="12">第12课时</option>
+      </select>
+      <input type="date" id="cClassDate" class="neu-input" style="width:170px;">
+      <select id="cPreset" class="neu-input" style="width:400px;" onchange="applyPreset()"></select>
+      <button class="neu-btn btn-primary" onclick="loadCommentStudent()">加载学员</button>
+    </div>
+    <div class="flex-row" style="gap:8px;" id="cmdBatch">
+      <span class="tip">批量操作：</span>
+      <button class="neu-btn btn-outline" onclick="batchSetRating(5)" style="padding:4px 12px;font-size:12px;">全5星</button>
+      <button class="neu-btn btn-outline" onclick="batchSetRating(4)" style="padding:4px 12px;font-size:12px;">全4星</button>
+      <button class="neu-btn btn-outline" onclick="batchSetRating(3)" style="padding:4px 12px;font-size:12px;">全3星</button>
+      <button class="neu-btn btn-success" onclick="batchSaveComment()" style="padding:4px 16px;font-size:12px;">批量保存</button>
+    </div>
+    <table class="table" id="commentTable"></table>
+  </div>
+
+  <div id="studentRecord" class="tab-content neu-card hide">
+    <h3>学员成长档案查询</h3>
+    <div class="flex-row">
+      <input type="number" id="recordSid" class="neu-input" style="width:160px;" placeholder="输入学员ID">
+      <select id="recordSubj" class="neu-input" style="width:160px;">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <button class="neu-btn btn-primary" onclick="loadStudentRecord()">查询成长档案</button>
+    </div>
+    <table class="table" id="recordTable"></table>
+  </div>
+
+  <div id="student" class="tab-content neu-card hide">
+    <h3>新增单个学员</h3>
+    <div class="flex-row">
+      <input type="text" id="stuNo" class="neu-input" style="width:160px;" placeholder="学号">
+      <input type="text" id="stuName" class="neu-input" style="width:160px;" placeholder="姓名">
+      <select id="stuGroup" class="neu-input" style="width:180px;">
+        <option value="1">第一小组</option>
+        <option value="2">第二小组</option>
+        <option value="3">第三小组</option>
+        <option value="4">第四小组</option>
+        <option value="5">第五小组</option>
+        <option value="6">第六小组</option>
+      </select>
+      <button class="neu-btn btn-success" onclick="addStudent()">提交新增</button>
+    </div>
+
+    <h3 style="margin-top:25px;">学员查询管理</h3>
+    <div class="flex-row" style="flex-wrap:wrap;">
+      <input type="text" id="searchStuNo" class="neu-input" style="flex:1;min-width:140px;max-width:200px;" placeholder="学号查询（可选）">
+      <select id="searchGroup" class="neu-input" style="flex:1;min-width:140px;max-width:200px;">
+        <option value="0">全部小组</option>
+        <option value="1">第一小组</option>
+        <option value="2">第二小组</option>
+        <option value="3">第三小组</option>
+        <option value="4">第四小组</option>
+        <option value="5">第五小组</option>
+        <option value="6">第六小组</option>
+      </select>
+      <button class="neu-btn btn-primary" style="min-width:100px;" onclick="searchStudent()">查询学员</button>
+    </div>
+    <div id="studentListContainer" style="margin-top:15px;"></div>
+
+    <h3 style="margin-top:25px;">Excel批量导入学员</h3>
+    <p class="tip">Excel格式：第一列学号、第二列姓名、第三列小组ID(1-6)</p>
+    <div class="flex-row">
+      <input type="file" id="excelFile" class="neu-input" style="width:320px;" accept=".xlsx,.xls" onchange="readExcel()">
+      <button class="neu-btn btn-success" onclick="batchImportStudent()">确认批量导入</button>
+    </div>
+  </div>
+
+  <div id="user" class="tab-content neu-card hide">
+    <h3>新增教师账号</h3>
+    <div class="flex-row" id="userForm">
+      <input type="text" id="newUser" class="neu-input" style="width:140px;" placeholder="账号">
+      <input type="password" id="newPwd" class="neu-input" style="width:140px;" placeholder="密码">
+      <select id="newRole" class="neu-input" style="width:160px;" onchange="toggleUserBind()">
+        <option value="subject_teacher">学科老师</option>
+        <option value="group_tutor">辅导老师</option>
+        <option value="group_leader">小组长</option>
+      </select>
+      <select id="bindSubj" class="neu-input" style="width:160px;">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <select id="bindGroup" class="neu-input" style="width:160px;">
+        <option value="0" disabled>选择小组</option>
+        <option value="1">第一小组</option>
+        <option value="2">第二小组</option>
+        <option value="3">第三小组</option>
+        <option value="4">第四小组</option>
+        <option value="5">第五小组</option>
+        <option value="6">第六小组</option>
+      </select>
+      <button class="neu-btn btn-primary" onclick="addUser()">创建账号</button>
+    </div>
+    <p class="tip" id="userBindTip">学科老师 → 选择任教学科；辅导老师 → 选择负责学科 + 小组；小组长 → 选择所属小组</p>
+    <h3 style="margin-top:25px;">账号列表（重置密码/禁用）</h3>
+    <button class="neu-btn btn-primary" onclick="loadUserList()">刷新账号列表</button>
+    <table class="table" id="userTable"></table>
+  </div>
+
+  <div id="log" class="tab-content neu-card hide">
+    <h3>全员操作日志溯源</h3>
+    <button class="neu-btn btn-primary" onclick="loadLogList()">刷新日志</button>
+    <table class="table" id="logTable"></table>
+  </div>
+
+  <div id="schedule" class="tab-content neu-card hide">
+    <h3>课时日期配置</h3>
+    <p class="tip">为三门学科预设各12个课时的授课日期，配置后考勤录入会自动带出日期</p>
+    <div class="flex-row">
+      <select id="schSubj" class="neu-input" style="width:160px;">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <button class="neu-btn btn-primary" onclick="loadSchedule()">加载课时列表</button>
+      <button class="neu-btn btn-success" onclick="saveAllSchedule()">一键保存全部</button>
+    </div>
+    <table class="table" id="scheduleTable"></table>
+  </div>
+
+  <div id="export" class="tab-content neu-card hide">
+    <h3>全量数据Excel期末归档导出</h3>
+    <p class="tip">导出内容：所有学员、所有学科、所有课时考勤/作业/点评完整台账，用于期末归档留存</p>
+    <button class="neu-btn btn-success" style="margin-top:15px;padding:12px 30px;font-size:16px;color:#000;text-shadow:none;" onclick="exportAllData()">一键导出期末归档台账</button>
+  </div>
+
+  <div id="storage" class="tab-content neu-card hide">
+    <h3>存储用量管理</h3>
+    <p class="tip">存储上限 8GB，用量超过 80% 时告警</p>
+    <div class="flex-row" style="gap:8px;">
+      <button class="neu-btn btn-primary" onclick="loadStorageStats()">刷新用量</button>
+      <button class="neu-btn" onclick="checkStorageHealth()">测速</button>
+      <button class="neu-btn" onclick="loadStorageFileList(1)">文件列表</button>
+    </div>
+    <div id="healthDisplay" class="hide" style="margin:10px 0;"></div>
+    <div id="storageStats" style="margin-top:15px;"></div>
+    <div id="storageByType" style="margin-top:15px;"></div>
+    <div id="storageFileList" style="margin-top:15px;"></div>
+  </div>
+
+  <div id="removal" class="tab-content neu-card hide">
+    <h3>请离清退记录管理</h3>
+    <div id="removalForm" class="admin-hide">
+      <div class="flex-row">
+        <input type="number" id="removalSid" class="neu-input" style="width:140px;" placeholder="学员ID">
+        <select id="removalReason" class="neu-input" style="width:150px;">
+          <option value="被清理">被清理</option>
+          <option value="不合格">不合格</option>
+          <option value="自愿请离">自愿请离</option>
+          <option value="其他">其他</option>
+        </select>
+        <input type="text" id="removalRemark" class="neu-input" style="width:240px;" placeholder="备注说明（选填）">
+        <button class="neu-btn btn-warning" onclick="addRemoval()">确认标记</button>
+      </div>
+    </div>
+    <p class="tip">各小组长和辅导老师只能查看本小组记录，学科老师和超级管理员可查看全局</p>
+    <table class="table" id="removalTable"></table>
+  </div>
+
+  <!-- 老师端：课堂资料上传 -->
+  <div id="materialUpload" class="tab-content neu-card hide">
+    <h3>课堂资料上传推送</h3>
+    <p class="tip">上传PPT/文档/图片/音频/视频等课程资料，供学员端查看和播放</p>
+    <div class="flex-row">
+      <select id="matSubj" class="neu-input" style="width:160px;">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <select id="matClassNo" class="neu-input" style="width:120px;">
+        <option value="0">通用（无课时）</option>
+        <option value="1">第1课时</option><option value="2">第2课时</option>
+        <option value="3">第3课时</option><option value="4">第4课时</option>
+        <option value="5">第5课时</option><option value="6">第6课时</option>
+        <option value="7">第7课时</option><option value="8">第8课时</option>
+        <option value="9">第9课时</option><option value="10">第10课时</option>
+        <option value="11">第11课时</option><option value="12">第12课时</option>
+      </select>
+      <input type="text" id="matTitle" class="neu-input" style="width:200px;" placeholder="资料标题（必填）">
+      <input type="file" id="matFile" class="neu-input" style="width:260px;" accept=".ppt,.pptx,.doc,.docx,.pdf,.jpg,.jpeg,.png,.gif,.bmp,.webp,.mp3,.wav,.wma,.ogg,.mp4,.avi,.mov,.wmv">
+      <button class="neu-btn btn-primary" onclick="uploadMaterial()">上传资料</button>
+    </div>
+    <div id="matUploadStatus" class="tip" style="margin:8px 0;"></div>
+    <hr style="margin:24px 0;border:none;border-top:2px solid var(--neu-dark);opacity:0.3;">
+    <h3>已上传资料列表</h3>
+    <div class="flex-row">
+      <select id="matListSubj" class="neu-input" style="width:160px;">
+        <option value="0">全部学科</option>
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <button class="neu-btn btn-primary" onclick="loadMaterialList()">刷新列表</button>
+    </div>
+    <table class="table" id="materialTable"></table>
+  </div>
+
+  <!-- 老师端：留言发送 -->
+  <div id="teacherMsgSend" class="tab-content neu-card hide">
+    <h3>留言发送模块</h3>
+    <p class="tip">向全体学员、指定小组或指定学员发送文字、文档、图片、音频和视频</p>
+    <div class="flex-row">
+      <select id="tMsgSubj" class="neu-input" style="width:160px;">
+        <option value="1">基础乐理</option>
+        <option value="2">基础视唱</option>
+        <option value="3">基础钢琴</option>
+      </select>
+      <select id="tMsgTarget" class="neu-input" style="width:160px;" onchange="toggleTargetSelect()">
+        <option value="all">全体学员</option>
+        <option value="groups">指定小组</option>
+        <option value="students">指定学员</option>
+      </select>
+      <select id="tMsgGroups" class="neu-input hide" style="width:200px;" multiple size="1">
+        <option value="1">第一小组</option>
+        <option value="2">第二小组</option>
+        <option value="3">第三小组</option>
+        <option value="4">第四小组</option>
+        <option value="5">第五小组</option>
+        <option value="6">第六小组</option>
+      </select>
+      <input type="text" id="tMsgStudents" class="neu-input hide" style="width:200px;" placeholder="学号，逗号分隔">
+    </div>
+    <input type="text" id="tMsgTitle" class="neu-input" style="width:100%;margin-bottom:8px;" placeholder="留言标题（选填）">
+    <textarea id="tMsgContent" class="neu-input" style="width:100%;" placeholder="请输入留言内容..."></textarea>
+    <div class="file-upload-area" onclick="document.getElementById('tMsgFile').click()" style="margin:8px 0;">
+      <p id="tMsgFileText" style="color:var(--text-tip);">点击上传附件（可选，文档/图片/音频/视频，≤100MB）</p>
+      <p id="tMsgFileName" class="hide" style="color:var(--primary);font-weight:500;"></p>
+    </div>
+    <input type="file" id="tMsgFile" class="hide" accept=".ppt,.pptx,.doc,.docx,.pdf,.jpg,.jpeg,.png,.gif,.mp3,.wav,.mp4,.avi,.mov" onchange="previewTeacherFile(this)">
+    <div class="flex-row" style="gap:8px;margin:6px 0;">
+      <button class="neu-btn" id="tRecBtn" onclick="toggleTeacherRecord()" style="padding:8px 20px;">🎤 录音留言</button>
+      <span id="tRecStatus" class="tip" style="font-size:13px;">点击开始录音（MP3格式）</span>
+    </div>
+    <div id="tRecPreview" class="hide flex-row" style="gap:8px;align-items:center;"></div>
+    <button class="neu-btn btn-primary" onclick="sendTeacherMessage()">发送留言</button>
+    <hr style="margin:24px 0;border:none;border-top:2px solid var(--neu-dark);opacity:0.3;">
+    <h3>已发送留言记录</h3>
+    <button class="neu-btn" onclick="loadTeacherMsgList()">刷新记录</button>
+    <table class="table" id="teacherMsgTable"></table>
+  </div>
+
+  <!-- 老师端：学生留言接收 -->
+  <div id="studentInbox" class="tab-content neu-card hide">
+    <h3>学生留言接收模块</h3>
+    <p class="tip">接收学生向本学科发送的文字建议、图片、语音或视频，可回复</p>
+    <button class="neu-btn btn-primary" onclick="loadStudentInbox()">刷新留言</button>
+    <div id="studentInboxList" class="stagger"></div>
+  </div>
+
+</div>
+
+<script>
+const API_BASE = "https://r1.zooom.dpdns.org";
+let token = "";
+let userInfo = null;
+let chartIns = null, cmpChartIns = null, pieChartIns = null;
+let excelBatchData = [];
+let chartCache = { key: "", data: null, timestamp: 0 };
+const CHART_CACHE_TTL = 60000; // 缓存有效期60秒
+
+const ROLE_MAP = {
+  admin: "超级管理员",
+  subject_teacher: "学科老师",
+  group_tutor: "辅导老师",
+  group_leader: "小组长"
+};
+
+function showToast(msg, type) {
+  const t = document.getElementById("toast");
+  t.className = "toast-" + (type || "info");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+function showLoading(show) {
+  document.getElementById("loadingOverlay").classList.toggle("show", show);
+}
+
+function todayBeijing() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Shanghai' });
+}
+function padNo(v) { return String(v || '').padStart(3, '0'); }
+async function loadDefaultAttendanceDate(subjId) {
+  const r = await apiFetch(`/api/class/list?subject_id=${subjId}`);
+  if (r.code !== 0 || !r.data || r.data.length === 0) return;
+  const today = todayBeijing();
+  const past = r.data.filter(d => d.class_date <= today).sort((a,b) => b.class_date.localeCompare(a.class_date));
+  let selected;
+  if (past.length > 0) {
+    selected = past[0];
+  } else {
+    const future = r.data.sort((a,b) => a.class_date.localeCompare(b.class_date));
+    selected = future[0];
+  }
+  document.getElementById("classDate").value = selected.class_date;
+  document.getElementById("classNo").value = selected.class_no;
+}
+
+async function loadDefaultCommentDate() {
+  const subj = document.getElementById("cSubjSelect").value;
+  const r = await apiFetch(`/api/class/list?subject_id=${subj}`);
+  if (r.code !== 0 || !r.data || r.data.length === 0) return;
+  const today = todayBeijing();
+  const past = r.data.filter(d => d.class_date <= today).sort((a,b) => b.class_date.localeCompare(a.class_date));
+  let selected;
+  if (past.length > 0) {
+    selected = past[0];
+  } else {
+    const future = r.data.sort((a,b) => a.class_date.localeCompare(b.class_date));
+    selected = future[0];
+  }
+  document.getElementById("cClassDate").value = selected.class_date;
+  document.getElementById("cClassNo").value = selected.class_no;
+}
+
+async function apiFetch(path, opts) {
+  try {
+    const res = await fetch(API_BASE + path, {
+      ...opts,
+      headers: { "Content-Type": "application/json", ...(token ? { "Authorization": token } : {}), ...(opts?.headers || {}) }
+    });
+    if (res.status === 401) {
+      showToast("登录已过期，请重新登录", "error");
+      logout();
+      return { code: 401, msg: "未登录" };
+    }
+    return await res.json();
+  } catch (e) {
+    return { code: -1, msg: "网络请求失败，请检查网络连接" };
+  }
+}
+
+function logout() {
+  token = "";
+  userInfo = null;
+  document.getElementById("mainPage").classList.add("hide");
+  document.getElementById("loginPage").classList.remove("hide");
+  document.getElementById("username").value = "";
+  document.getElementById("password").value = "";
+  document.getElementById("loginError").style.display = "none";
+}
+
+async function login() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const errEl = document.getElementById("loginError");
+  const btn = document.getElementById("loginBtn");
+  if (!username || !password) {
+    errEl.textContent = "请输入账号和密码";
+    errEl.style.display = "block";
+    return;
+  }
+  errEl.style.display = "none";
+  btn.disabled = true;
+  btn.textContent = "登录中...";
+  const res = await apiFetch("/api/login", {
+    method: "POST",
+    body: JSON.stringify({ username, password })
+  });
+  btn.disabled = false;
+  btn.textContent = "登录系统";
+  if (res.code !== 0) {
+    errEl.textContent = res.msg || "登录失败，请检查账号密码";
+    errEl.style.display = "block";
+    return;
+  }
+  token = res.data.token;
+  userInfo = res.data;
+  document.getElementById("loginPage").classList.add("hide");
+  document.getElementById("mainPage").classList.remove("hide");
+  applyRoleUI();
+  document.getElementById("userInfo").innerText = `当前登录：${username} | ${ROLE_MAP[userInfo.role] || userInfo.role}`;
+  loadDefaultAttendanceDate(document.getElementById("subjSelect").value);
+  switchTab("stat");
+  loadUnfinishedTip();
+}
+
+function toggleUserBind() {
+  const role = document.getElementById("newRole").value;
+  const bindSubj = document.getElementById("bindSubj");
+  const bindGroup = document.getElementById("bindGroup");
+  if (role === "subject_teacher") {
+    bindSubj.style.display = ""; bindGroup.style.display = "none";
+    bindGroup.value = "0";
+  } else if (role === "group_tutor") {
+    bindSubj.style.display = ""; bindGroup.style.display = "";
+  } else {
+    bindSubj.style.display = "none"; bindGroup.style.display = "";
+    bindSubj.value = "0";
+  }
+}
+
+function applyRoleUI() {
+  const isAdmin = userInfo.role === "admin";
+  const isSubjectTeacher = userInfo.role === "subject_teacher";
+  const isGroupLeader = userInfo.role === "group_leader";
+
+  document.querySelectorAll(".admin-hide").forEach(el => {
+    el.classList.toggle("hide-nav", !isAdmin);
+  });
+
+  if (isSubjectTeacher) {
+    document.getElementById("subjSelect").value = userInfo.subject_id || 1;
+    document.getElementById("cSubjSelect").value = userInfo.subject_id || 1;
+    document.getElementById("statSubj").value = userInfo.subject_id || 1;
+    document.getElementById("statSubj").disabled = true;
+  }
+  if (["group_tutor","group_leader"].includes(userInfo.role)) {
+    document.getElementById("statGroup").value = userInfo.group_id || 1;
+    document.getElementById("statGroup").disabled = true;
+  }
+  if (isGroupLeader) {
+    document.querySelector('.nav-item[data-tab="comment"]').classList.add("hide-nav");
+  }
+  // 课堂资料: admin / subject_teacher
+  if (!isAdmin && !isSubjectTeacher) {
+    document.querySelector('.nav-item[data-tab="materialUpload"]').classList.add("hide-nav");
+  }
+  // 留言发送: admin / subject_teacher
+  if (!isAdmin && !isSubjectTeacher) {
+    document.querySelector('.nav-item[data-tab="teacherMsgSend"]').classList.add("hide-nav");
+  }
+  // 学生留言: admin / subject_teacher / group_tutor
+  if (!isAdmin && !isSubjectTeacher && userInfo.role !== "group_tutor") {
+    document.querySelector('.nav-item[data-tab="studentInbox"]').classList.add("hide-nav");
+  }
+}
+
+window.onload = function () {
+  document.getElementById("loginPage").classList.remove("hide");
+  document.getElementById("mainPage").classList.add("hide");
+
+  document.getElementById("username").addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+  document.getElementById("password").addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+
+  if (document.getElementById("classDate")) {
+    loadDefaultAttendanceDate(1);
+  }
+
+  toggleUserBind();
+
+  ["subjSelect","classNo"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("change", () => fillClassDate("subjSelect","classNo","classDate"));
+  });
+  ["cSubjSelect","cClassNo"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("change", () => fillClassDate("cSubjSelect","cClassNo","cClassDate"));
+  });
+  const cSubjEl = document.getElementById("cSubjSelect");
+  if (cSubjEl) {
+    cSubjEl.addEventListener("change", updateCommentPresets);
+    setTimeout(updateCommentPresets, 100);
+  }
+  setTimeout(loadDefaultCommentDate, 150);
+
+  // 统计筛选器变更时清除图表缓存
+  ["statSubj","statGroup","statClassNo","statSno"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("change", () => { chartCache.timestamp = 0; });
+  });
+}
+
+async function loadUnfinishedTip() {
+  const res = await apiFetch("/api/stat/unfinished");
+  if (res.code !== 0 || !res.data || res.data.length === 0) return;
+  let html = "⚠️ 存在未完善数据的课时：";
+  res.data.forEach(item => html += `学科${item.subject_id}第${item.class_no}课时 `);
+  document.getElementById("warnBox").innerHTML = html;
+  document.getElementById("warnBox").classList.remove("hide");
+}
+
+const TAB_ORDER = ['stat','groupCompare','user','log','schedule','removal','storage','materialUpload','teacherMsgSend','studentInbox','studentResult'];
+
+function switchTab(tab) {
+  document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
+  const navItem = document.querySelector(`.nav-item[data-tab="${tab}"]`);
+  if (!navItem || navItem.classList.contains("hide-nav")) return;
+  navItem.classList.add("active");
+  // Tab 内容切换带滑动方向感知动画
+  const oldTab = document.querySelector(".tab-content:not(.hide)");
+  const newTab = document.getElementById(tab);
+  if (oldTab && oldTab !== newTab) {
+    newTab.style.animation = 'none';
+    newTab.classList.remove("hide");
+    // 根据 tab 顺序判断滑动方向
+    const oldIdx = TAB_ORDER.indexOf(oldTab.id);
+    const newIdx = TAB_ORDER.indexOf(tab);
+    if (oldIdx >= 0 && newIdx >= 0) {
+      const dir = newIdx > oldIdx ? 1 : -1;
+      newTab.style.animation = `slideRight 0.3s ease both`;
+      newTab.style.setProperty('--dir', dir);
+    }
+    oldTab.classList.add("hide");
+  } else {
+    document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hide"));
+    newTab.classList.remove("hide");
+    newTab.style.animation = 'fadeUp 0.35s ease both';
+  }
+  // 懒加载对应数据
+  const loadMap = {
+    stat: loadChart, groupCompare: loadGroupCompare, user: loadUserList,
+    log: loadLogList, schedule: loadSchedule, removal: loadRemovalList,
+    storage: loadStorageStats, materialUpload: loadMaterialList,
+    teacherMsgSend: loadTeacherMsgList, studentInbox: loadStudentInbox
+  };
+  if (loadMap[tab]) loadMap[tab]();
+}
+
+async function loadChart() {
+  const subj = document.getElementById("statSubj")?.value || userInfo.subject_id || 0;
+  const grp = document.getElementById("statGroup")?.value || userInfo.group_id || 0;
+  const cno = document.getElementById("statClassNo")?.value || 0;
+  const raw = document.getElementById("statSno")?.value || '';
+  const sno = raw ? padNo(raw) : '';
+  const params = `subject_id=${subj}&group_id=${grp}&class_no=${cno}&student_no=${sno}`;
+  const cacheKey = params + "|role=" + userInfo.role;
+
+  // 缓存命中且60秒内有效则跳过请求
+  if (chartCache.key === cacheKey && chartCache.data && (Date.now() - chartCache.timestamp) < CHART_CACHE_TTL) {
+    return renderChart(chartCache.data);
+  }
+
+  showLoading(true);
+  const res = await apiFetch(`/api/stat/chart?${params}`);
+  showLoading(false);
+  if (res.code !== 0) return;
+  chartCache = { key: cacheKey, data: res, timestamp: Date.now() };
+  renderChart(res);
+}
+
+function renderChart(res) {
+  const classData = (res.data && res.data.length > 0) ? res.data : [];
+  const s = res.summary || null;
+
+  // === 汇总卡片 ===
+  // 各项指标定义：
+  //   已考勤 = 有考勤记录的 DISTINCT 学员数
+  //   总学员 = 排除已请离后该条件下的有效学员总数
+  //   总考勤合格率 = Σ出勤人次 / Σ考勤总人次
+  //   总作业完成率 = Σ作业完成人次 / Σ有作业记录人次
+  //   总点评覆盖率 = 有点评学员数 / 有考勤学员数
+  //   均分 = 所有点评 rating 平均值
+  const sumEl = document.getElementById("statSummary");
+  if (s && s.att_total > 0) {
+    const kqRate = (s.att_ok / s.att_total * 100).toFixed(1);
+    const hwRate = s.hw_total > 0 ? (s.hw_ok / s.hw_total * 100).toFixed(1) : "0.0";
+    const cmtRate = s.att_students > 0 ? (s.cmt_students / s.att_students * 100).toFixed(1) : "0.0";
+    sumEl.innerHTML = `
+      <div class="neu-card" style="padding:10px 18px;text-align:center;margin:0;flex:1;"><span style="font-size:22px;font-weight:700;color:var(--primary);">${s.att_students}</span><br><span class="tip" style="font-size:11px;">考勤学员</span></div>
+      <div class="neu-card" style="padding:10px 18px;text-align:center;margin:0;flex:1;"><span style="font-size:22px;font-weight:700;color:#3b82f6;">${kqRate}%</span><br><span class="tip" style="font-size:11px;">考勤合格率</span></div>
+      <div class="neu-card" style="padding:10px 18px;text-align:center;margin:0;flex:1;"><span style="font-size:22px;font-weight:700;color:#f59e0b;">${hwRate}%</span><br><span class="tip" style="font-size:11px;">作业完成率</span></div>
+      <div class="neu-card" style="padding:10px 18px;text-align:center;margin:0;flex:1;"><span style="font-size:20px;font-weight:700;color:#8b5cf6;">${cmtRate}%</span><br><span class="tip" style="font-size:11px;">点评覆盖率 ${s.avg_rating>0?"丨均分"+s.avg_rating+"★":""}</span></div>
+    `;
+  } else {
+    sumEl.innerHTML = "<p class='tip' style='text-align:center;width:100%;padding:30px 0;'>暂无统计数据，请先录入考勤数据</p>";
+  }
+
+  // ====== 工具：计算三项比率 ======
+  function calcRates(item) {
+    const attD = (item.att_ok||0)+(item.att_late||0)+(item.att_absent||0);
+    const hwD  = (item.hw_ok||0)+(item.hw_no||0)+(item.hw_late||0);
+    return {
+      kq: item.att_total>0 ? (item.att_ok/item.att_total*100).toFixed(1) : '0.0',
+      hw: hwD>0  ? (item.hw_ok/hwD*100).toFixed(1) : '0.0',
+      cmt: item.att_total>0 ? ((item.cmt_students||0)/item.att_total*100).toFixed(1) : '0.0'
+    };
+  }
+
+  // === 折线图 / 柱状图 ===
+  const cno = Number(document.getElementById("statClassNo")?.value || 0);
+  const ctx = document.getElementById("chartCanvas").getContext("2d");
+  if (chartIns) chartIns.destroy();
+  const defaultItem = { att_total:1, att_ok:0, att_late:0, att_absent:0, hw_total:0, hw_ok:0, hw_no:0, hw_late:0, cmt_students:0 };
+  if (cno > 0) {
+    const item = classData.find(d=>d.class_no==cno) || defaultItem;
+    const r = calcRates(item);
+    chartIns = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["第"+cno+"课时"],
+        datasets: [
+          { label: "考勤合格率", data: [r.kq], backgroundColor:"#3b82f6", borderRadius:6 },
+          { label: "作业完成率", data: [r.hw], backgroundColor:"#f59e0b", borderRadius:6 },
+          { label: "点评覆盖率", data: [r.cmt], backgroundColor:"#8b5cf6", borderRadius:6 }
+        ]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        scales:{ y:{ min:0, max:100, ticks:{ callback:v=>v+"%" } } },
+        plugins:{
+          legend: {
+            position: 'bottom',
+            labels: {
+              display: true,
+              boxWidth: 12,
+              padding: 8,
+              usePointStyle: true,
+              pointStyle: 'circle',
+              font: { size: 11 }
+            }
+          },
+          tooltip:{ callbacks:{ label:ctx=>ctx.dataset.label+": "+ctx.parsed.y+"%" } }
+        }
+      }
+    });
+  } else {
+    const labels=[], kqR=[], hwR=[], cmtR=[];
+    for (let i=1; i<=12; i++) {
+      labels.push("第"+i+"课时");
+      const item = classData.find(d=>d.class_no==i) || defaultItem;
+      const r = calcRates(item);
+      kqR.push(r.kq); hwR.push(r.hw); cmtR.push(r.cmt);
+    }
+    chartIns = new Chart(ctx, {
+      type:"line",
+      data:{
+        labels,
+        datasets:[
+          { label:"考勤合格率", data:kqR, borderColor:"#3b82f6", backgroundColor:"rgba(59,130,246,0.08)", fill:true, tension:0.4 },
+          { label:"作业完成率", data:hwR, borderColor:"#f59e0b", backgroundColor:"rgba(245,158,11,0.08)", fill:true, tension:0.4 },
+          { label:"点评覆盖率", data:cmtR, borderColor:"#8b5cf6", backgroundColor:"rgba(139,92,246,0.08)", fill:true, tension:0.4, borderDash:[5,3] }
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        scales:{ y:{ min:0, max:100, ticks:{ callback:v=>v+"%" } } },
+        plugins:{
+          legend: {
+            position: 'bottom',
+            labels: {
+              display: true,
+              boxWidth: 12,
+              padding: 8,
+              usePointStyle: true,
+              pointStyle: 'circle',
+              font: { size: 11 }
+            }
+          },
+          tooltip:{ callbacks:{ label:ctx=>ctx.dataset.label+": "+ctx.parsed.y+"%" } }
+        }
+      }
+    });
+  }
+
+  // === 饼图：考勤状态分布 ===
+  let totalOk=0, totalLate=0, totalAbsent=0;
+  classData.forEach(d=>{ totalOk+=d.att_ok||0; totalLate+=d.att_late||0; totalAbsent+=d.att_absent||0; });
+  const pieCtx = document.getElementById("pieCanvas").getContext("2d");
+  if (pieChartIns) pieChartIns.destroy();
+  if (totalOk+totalLate+totalAbsent===0) {
+    pieChartIns=null;
+    const pc=document.getElementById("pieCanvas");
+    if (pc) pc.getContext("2d").clearRect(0,0,pc.width,pc.height);
+    return;
+  }
+  pieChartIns = new Chart(pieCtx, {
+    type:"doughnut",
+    data:{
+      labels:["出勤","迟到","缺勤"],
+      datasets:[{
+        data:[totalOk, totalLate, totalAbsent],
+        backgroundColor: ["#0891b2", "#d97706", "#dc2626"],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: "bottom" },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.label + ": " + ctx.parsed + " 人次 (" + (ctx.parsed / (totalOk+totalLate+totalAbsent)*100).toFixed(1) + "%)"
+          }
+        }
+      }
+    }
+  });
+}
+
+async function loadGroupCompare() {
+  const sid = document.getElementById("cmpSubj").value;
+  const cno = document.getElementById("cmpClassNo").value;
+  const res = await apiFetch(`/api/stat/group_compare?subject_id=${sid}&class_no=${cno}`);
+  const resData = (res.code === 0 && res.data) ? res.data : [];
+  const names = [], kqRate = [], hwRate = [];
+  resData.forEach(item => {
+    names.push(item.group_name || "第" + item.group_id + "组");
+    kqRate.push(Number(item.kq_ok) || 0);
+    hwRate.push(Number(item.hw_ok) || 0);
+  });
+  if (names.length === 0) {
+    showToast("暂无对比数据，请先录入考勤", "warning");
+    return;
+  }
+  const ctx = document.getElementById("cmpChart").getContext("2d");
+  if (cmpChartIns) cmpChartIns.destroy();
+  cmpChartIns = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: names,
+      datasets: [
+        { label: "小组考勤合格率%", data: kqRate, backgroundColor: "#3b82f6", borderRadius: 8 },
+        { label: "小组作业完成率%", data: hwRate, backgroundColor: "#f59e0b", borderRadius: 8 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { min: 0, max: 100, ticks: { callback: v => v + "%" } } },
+      plugins: {
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ": " + ctx.parsed.y + "%" } }
+      }
+    }
+  });
+}
+
+async function loadStudentRecord() {
+  const sid = document.getElementById("recordSid").value;
+  const subj = document.getElementById("recordSubj").value;
+  if (!sid) return showToast("请输入学员ID", "warning");
+  const res = await apiFetch(`/api/student/record?sid=${sid}&subject_id=${subj}`);
+  const resData = (res.code === 0 && res.data) ? res.data : [];
+  if (resData.length === 0) {
+    document.getElementById("recordTable").innerHTML = "<tr><td colspan='7' style='color:var(--text-tip);padding:20px;'>暂无该学员的成长档案数据</td></tr>";
+    return;
+  }
+  let html = "<tr><th>课时</th><th>授课日期</th><th>考勤状态</th><th>作业状态</th><th>评分</th><th>作业点评</th></tr>";
+  resData.forEach(item => {
+    let kqText = ["未录入", "出勤", "迟到", "缺勤"][item.status || 0];
+    let hwText = ["未录入", "完成", "未完成", "补交"][item.hw_status || 0];
+    const starHtml = item.rating ? "★".repeat(item.rating) + "☆".repeat(5-item.rating) : "-";
+    html += `<tr><td>第${item.class_no}课时</td><td>${item.class_date || "-"}</td><td>${kqText}</td><td>${hwText}</td><td style="color:var(--warning);font-size:16px;">${starHtml}</td><td>${item.comment_text || "无点评"}</td></tr>`;
+  });
+  document.getElementById("recordTable").innerHTML = html;
+}
+
+async function fillClassDate(selectId, classNoId, dateId) {
+  const subj = document.getElementById(selectId).value;
+  const cno = document.getElementById(classNoId).value;
+  if (!subj || !cno) return;
+  const res = await apiFetch(`/api/class/list?subject_id=${subj}`);
+  if (res.code === 0 && res.data) {
+    const found = res.data.find(d => d.class_no == cno);
+    if (found) document.getElementById(dateId).value = found.class_date;
+  }
+}
+
+async function loadSchedule() {
+  const subj = document.getElementById("schSubj").value;
+  const res = await apiFetch(`/api/class/list?subject_id=${subj}`);
+  const configured = (res.code === 0 && res.data) ? res.data : [];
+  let html = "<tr><th>课时</th><th>授课日期</th><th>操作</th></tr>";
+  for (let i = 1; i <= 12; i++) {
+    const item = configured.find(d => d.class_no == i);
+    const val = item ? item.class_date : "";
+    html += `<tr>
+      <td>第${i}课时</td>
+      <td><input type="date" id="sch_${i}" class="neu-input" style="width:100%;" value="${val}"></td>
+      <td><button class="neu-btn btn-primary" onclick="saveOneSchedule(${subj},${i})" style="padding:6px 14px;">保存</button></td>
+    </tr>`;
+  }
+  document.getElementById("scheduleTable").innerHTML = html;
+}
+
+async function saveOneSchedule(subj, cno) {
+  const d = document.getElementById("sch_" + cno).value;
+  if (!d) return showToast("请选择日期", "warning");
+  await apiFetch("/api/class/save", {
+    method: "POST",
+    body: JSON.stringify({ subject_id: subj, class_no: cno, class_date: d })
+  });
+  showToast("第" + cno + "课时日期已保存", "success");
+}
+
+async function saveAllSchedule() {
+  const subj = document.getElementById("schSubj").value;
+  const list = [];
+  for (let i = 1; i <= 12; i++) {
+    const d = document.getElementById("sch_" + i).value;
+    if (d) list.push({ class_no: i, class_date: d });
+  }
+  if (list.length === 0) return showToast("请先填写日期", "warning");
+  const res = await apiFetch("/api/class/saveall", {
+    method: "POST",
+    body: JSON.stringify({ subject_id: subj, list })
+  });
+  showToast(res.msg || "全部保存成功", res.code === 0 ? "success" : "error");
+}
+
+async function loadStudentList() {
+  showLoading(true);
+  const res = await apiFetch("/api/student/list");
+  let resData = (res.code === 0 && res.data) ? res.data : [];
+  const groupNames = {1:"第一小组",2:"第二小组",3:"第三小组",4:"第四小组",5:"第五小组",6:"第六小组"};
+  // 按角色过滤：小组长/辅导老师只看本小组
+  if (userInfo.group_id && (userInfo.role === "group_tutor" || userInfo.role === "group_leader")) {
+    resData = resData.filter(s => s.group_id == userInfo.group_id);
+  } else {
+    // 管理员：按下拉框选择的小组过滤
+    const gid = Number(document.getElementById("attGroup").value);
+    if (gid > 0) resData = resData.filter(s => s.group_id == gid);
+  }
+  // 学号从小到大排序
+  resData.sort((a, b) => parseInt(a.student_no) - parseInt(b.student_no));
+  showLoading(false);
+  if (resData.length === 0) {
+    document.getElementById("stuTable").innerHTML = "<tr><td colspan='6' style='color:var(--text-tip);padding:20px;'>暂无本小组学员数据</td></tr>";
+    return;
+  }
+  const gLabel = userInfo.group_id && (userInfo.role === "group_tutor" || userInfo.role === "group_leader") ? `（${groupNames[userInfo.group_id]}）` : '';
+  let html = `<tr><th><input type="checkbox" id="cbAll" onclick="toggleSelectAll()"></th><th>学号</th><th>姓名</th><th>小组</th><th>考勤状态</th><th>作业状态</th><th>操作</th></tr>`;
+  resData.forEach(stu => {
+    const gName = groupNames[stu.group_id] || '小组'+stu.group_id;
+    html += `<tr>
+      <td><input type="checkbox" class="cbStu" data-sid="${stu.id}"></td>
+      <td>${padNo(stu.student_no)}</td>
+      <td>${stu.student_name}</td>
+      <td style="font-size:13px;">${gName}</td>
+      <td><select id="kq_${stu.id}" class="neu-input"><option value="1">出勤</option><option value="2">迟到</option><option value="3">缺勤</option></select></td>
+      <td><select id="hw_${stu.id}" class="neu-input"><option value="1">完成</option><option value="2">未完成</option><option value="3">补交</option></select></td>
+      <td><button class="neu-btn btn-primary" onclick="saveAttendance(${stu.id})">保存</button></td>
+    </tr>`;
+  });
+  document.getElementById("stuTable").innerHTML = html;
+  document.getElementById("attBatchBar").style.display = "flex";
+}
+
+function adjustClassNo(delta) {
+  const el = document.getElementById("classNo");
+  let val = parseInt(el.value) || 1;
+  val += delta;
+  if (val < 1) val = 1;
+  if (val > 12) val = 12;
+  el.value = val;
+  fillClassDate("subjSelect", "classNo", "classDate");
+}
+
+async function saveAttendance(sid) {
+  const subj = document.getElementById("subjSelect").value;
+  const cno = document.getElementById("classNo").value;
+  const cdate = document.getElementById("classDate").value;
+  const kq = document.getElementById("kq_" + sid).value;
+  const hw = document.getElementById("hw_" + sid).value;
+  if (!cdate) return showToast("请填写授课日期", "warning");
+  showLoading(true);
+  const r1 = await apiFetch("/api/attendance/class/save", {
+    method: "POST",
+    body: JSON.stringify({ subject_id: subj, class_no: cno, class_date: cdate, student_id: sid, status: kq })
+  });
+  const r2 = await apiFetch("/api/attendance/homework/save", {
+    method: "POST",
+    body: JSON.stringify({ subject_id: subj, class_no: cno, class_date: cdate, student_id: sid, status: hw })
+  });
+  showLoading(false);
+  if (r1.code === 0 && r2.code === 0) {
+    showToast("保存成功，操作已记录日志", "success");
+  } else {
+    showToast("保存失败：" + (r1.msg || r2.msg || "接口异常"), "error");
+  }
+  loadUnfinishedTip();
+}
+
+// ---- 批量操作函数 ----
+function toggleSelectAll() {
+  const cbAll = document.getElementById("cbAll");
+  const attSelectAll = document.getElementById("attSelectAll");
+  const cbs = document.querySelectorAll(".cbStu");
+  
+  // 确定应该选中还是取消选中
+  const shouldCheck = cbAll ? cbAll.checked : (attSelectAll ? attSelectAll.checked : false);
+  
+  // 同步两个全选框的状态
+  if (cbAll) cbAll.checked = shouldCheck;
+  if (attSelectAll) attSelectAll.checked = shouldCheck;
+  
+  // 更新所有学员复选框
+  cbs.forEach(cb => cb.checked = shouldCheck);
+}
+
+function getSelectedStudents() {
+  const cbs = document.querySelectorAll(".cbStu:checked");
+  return Array.from(cbs).map(cb => Number(cb.dataset.sid));
+}
+
+function batchApply() {
+  const selected = getSelectedStudents();
+  if (selected.length === 0) {
+    showToast("请先选择学员", "warning");
+    return;
+  }
+  const kqVal = document.getElementById("batchKq").value;
+  const hwVal = document.getElementById("batchHw").value;
+  if (kqVal == 0 && hwVal == 0) {
+    showToast("请选择要设置的状态", "warning");
+    return;
+  }
+  selected.forEach(sid => {
+    if (kqVal > 0) {
+      const sel = document.getElementById("kq_" + sid);
+      if (sel) sel.value = kqVal;
+    }
+    if (hwVal > 0) {
+      const sel = document.getElementById("hw_" + sid);
+      if (sel) sel.value = hwVal;
+    }
+  });
+  showToast(`已为 ${selected.length} 名学员设置状态`, "success");
+}
+
+async function batchSaveAll() {
+  const selected = getSelectedStudents();
+  if (selected.length === 0) {
+    showToast("请先选择学员", "warning");
+    return;
+  }
+  const subj = document.getElementById("subjSelect").value;
+  const cno = document.getElementById("classNo").value;
+  const cdate = document.getElementById("classDate").value;
+  if (!cdate) return showToast("请填写授课日期", "warning");
+  
+  showLoading(true);
+  let ok = 0, fail = 0;
+  for (const sid of selected) {
+    const kq = document.getElementById("kq_" + sid)?.value;
+    const hw = document.getElementById("hw_" + sid)?.value;
+    try {
+      const r1 = await apiFetch("/api/attendance/class/save", {
+        method: "POST",
+        body: JSON.stringify({ subject_id: subj, class_no: cno, class_date: cdate, student_id: sid, status: kq })
+      });
+      const r2 = await apiFetch("/api/attendance/homework/save", {
+        method: "POST",
+        body: JSON.stringify({ subject_id: subj, class_no: cno, class_date: cdate, student_id: sid, status: hw })
+      });
+      if (r1.code === 0 && r2.code === 0) ok++;
+      else fail++;
+    } catch (e) {
+      fail++;
+    }
+  }
+  showLoading(false);
+  if (fail === 0) {
+    showToast(`全部 ${ok} 条记录保存成功`, "success");
+  } else {
+    showToast(`保存完成：成功 ${ok} 条，失败 ${fail} 条`, fail === selected.length ? "error" : "warning");
+  }
+  loadUnfinishedTip();
+}
+
+// ---- Excel批量导入考勤 ----
+let importData = null; // parsed rows
+let importMapping = []; // column mapping config
+const IMPORT_STATUS_MAP = {
+  '出勤':1,'✓':1,'√':1,'○':1,'到':1,'正常':1,'1':1,'上课':1,
+  '迟到':2,'△':2,'晚到':2,'2':2,'请假':2,
+  '缺勤':3,'×':3,'✗':3,'未到':3,'3':3,'旷课':3,'退出':3,'':null,
+  '完成':1,'交':1,
+  '未完成':2,'没交':2,'0':2,
+  '补交':3,'补作':3
+};
+
+function detectColumnType(header, colIdx, allRows) {
+  const h = (header || '').trim();
+  if (/学号|编号|ID|no|No|NO|number/i.test(h)) return 'student_no';
+  if (/姓名|名字|name|Name/i.test(h) && colIdx > 0) return 'ignore';
+  if (/课时|第.*课|日期|date/i.test(h)) return 'class_date';
+  // 检测是否包含考勤或作业字样
+  if (/考勤|出勤|迟到|缺勤|课堂|class/i.test(h)) return 'attendance';
+  if (/作业|homework|完成|未完成|补交/i.test(h)) return 'homework';
+  // 按数据内容推断：取前5行非空值，看状态匹配率
+  const vals = [];
+  for (let i = 1; i < Math.min(allRows.length, 6); i++) {
+    const v = String(allRows[i][colIdx] || '').trim();
+    if (v) vals.push(v);
+  }
+  if (vals.length === 0) return 'ignore';
+  // 统计匹配考勤状态的比例
+  let attCnt = 0, hwCnt = 0;
+  for (const v of vals) {
+    if (IMPORT_STATUS_MAP[v] !== undefined) attCnt++;
+    if (['完成','未完成','补交','交','没交'].includes(v)) hwCnt++;
+  }
+  if (attCnt > vals.length * 0.5) return 'attendance';
+  if (hwCnt > vals.length * 0.5) return 'homework';
+  // 看是否全是3位数字 → 学号
+  const numMatch = vals.filter(v => /^\d{3}$/.test(v));
+  if (numMatch.length === vals.length) return 'student_no';
+  return 'ignore';
+}
+
+// ---- 新考勤表格式（分组/学号/姓名 + 课堂/作业/点评）检测 ----
+const SUBJECT_KEYWORDS = {'基础乐理':1,'基础视唱':2,'基础钢琴':3};
+const NEW_ATTENDANCE_MAP = {
+  '上课':1,'出勤':1,'✓':1,'√':1,'○':1,'到':1,'正常':1,'1':1,
+  '请假':2,'迟到':2,'△':2,'晚到':2,'2':2,
+  '旷课':3,'缺勤':3,'退出':3,'×':3,'✗':3,'未到':3,'3':3,
+};
+const NEW_HOMEWORK_MAP = {
+  '完成':1,'交':1,
+  '未完成':2,'没交':2,'0':2,
+  '补作':3,'补交':3,
+};
+function matchComment(v) {
+  if (!v) return null;
+  const s = String(v).trim();
+  if (/^优秀/.test(s)) return {text:'优秀！',rating:5};
+  if (/^很棒/.test(s)) return {text:'很棒！',rating:4};
+  if (/继续加油/.test(s)) return {text:'继续加油',rating:3};
+  if (/需重做/.test(s)) return {text:'需重做',rating:1};
+  return null;
+}
+
+function detectNewFormat(rows) {
+  // 检测标题
+  for (let i = 0; i < Math.min(rows.length, 4); i++) {
+    const rowText = String(rows[i]?.join(' ') || '');
+    if (/2025.*2026.*考勤/.test(rowText)) return true;
+  }
+  // 检测表头关键字（允许分布在不同行）
+  let hasGroup = false, hasSno = false, hasName = false, hasType = false;
+  for (let i = 0; i < Math.min(rows.length, 8); i++) {
+    const r = rows[i]; if (!r) continue;
+    for (let c = 0; c < r.length; c++) {
+      const v = String(r[c] || '').trim();
+      if (/^(分组|小组|组别)$/.test(v)) hasGroup = true;
+      if (/^(学号|编号)$/.test(v)) hasSno = true;
+      if (/^姓名$/.test(v)) hasName = true;
+      if (/^课堂$/.test(v) || /^作业$/.test(v)) hasType = true;
+    }
+  }
+  return hasGroup && hasSno && hasName && hasType;
+}
+
+function parseNewFormatExcel(rows) {
+  // 检测学科（扫描所有行）
+  let subjId = 1;
+  for (let i = 0; i < Math.min(rows.length, 4); i++) {
+    const rowText = String(rows[i]?.join(' ') || '');
+    for (const [k,v] of Object.entries(SUBJECT_KEYWORDS)) {
+      if (rowText.includes(k)) { subjId = v; break; }
+    }
+    if (subjId > 1) break;
+  }
+  document.getElementById('importSubj').value = subjId;
+
+  // 扫描前8行，定位关键字出现的行列
+  let groupCol = -1, snoCol = -1, nameCol = -1, typeRow = -1, dateRow = -1;
+  const MAX_SCAN = Math.min(rows.length, 8);
+
+  for (let i = 0; i < MAX_SCAN; i++) {
+    const r = rows[i]; if (!r) continue;
+    for (let c = 0; c < r.length; c++) {
+      const v = String(r[c] || '').trim();
+      if (!v) continue;
+      if (/^(分组|小组|组别)$/.test(v) && groupCol === -1) { groupCol = c; }
+      if (/^学号$/.test(v) && snoCol === -1) { snoCol = c; }
+      if (/^姓名$/.test(v) && nameCol === -1) { nameCol = c; }
+      if (/^(课堂|考勤)$/.test(v) && typeRow === -1) { typeRow = i; }
+    }
+  }
+
+  // 如果学号列未找到，宽松匹配：找包含"学号"的单元格
+  if (snoCol === -1) {
+    for (let i = 0; i < MAX_SCAN; i++) {
+      const r = rows[i]; if (!r) continue;
+      for (let c = 0; c < r.length; c++) {
+        if (/学号|编号|NO|ID/i.test(String(r[c] || ''))) { snoCol = c; break; }
+      }
+      if (snoCol >= 0) break;
+    }
+  }
+
+  if (snoCol === -1) return showToast('未检测到学号列', 'error');
+
+  // 如果未精确匹配到"课堂"行，尝试按"课堂/作业/点评"三联列模式推断
+  if (typeRow === -1) {
+    for (let i = 0; i < MAX_SCAN; i++) {
+      const r = rows[i]; if (!r || r.length < 5) continue;
+      for (let c = 2; c < r.length - 2; c++) {
+        const a = String(r[c] || '').trim(), b = String(r[c+1] || '').trim(), d = String(r[c+2] || '').trim();
+        if ((a === '课堂' || a === '考勤') && (b === '作业') && (d === '点评')) { typeRow = i; break; }
+      }
+      if (typeRow >= 0) break;
+    }
+  }
+  if (typeRow === -1) return showToast('未检测到课堂/作业/点评列', 'error');
+
+  const typeRowData = rows[typeRow] || [];
+  dateRow = typeRow + 1;
+  if (dateRow >= rows.length) dateRow = -1;
+
+  // 检测列：从typeRow中找"课堂"所在列为起始，每3列一组
+  let firstAttCol = -1;
+  for (let c = 0; c < typeRowData.length; c++) {
+    const v = String(typeRowData[c] || '').trim();
+    if (/^课堂$/.test(v) || /^考勤$/.test(v)) { firstAttCol = c; break; }
+  }
+  if (firstAttCol === -1) {
+    for (let c = 0; c < typeRowData.length - 2; c++) {
+      const a = String(typeRowData[c] || '').trim(), b = String(typeRowData[c+1] || '').trim();
+      if (a === '课堂' || a === '考勤') { firstAttCol = c; break; }
+      if (b === '作业' && c + 2 < typeRowData.length && String(typeRowData[c+2] || '').trim() === '点评') { firstAttCol = c; break; }
+    }
+  }
+  if (firstAttCol === -1 || firstAttCol < 0) return showToast('未检测到课堂/作业/点评列', 'error');
+
+  // 构建课时列
+  const lessonCols = [];
+  for (let c = firstAttCol; c + 2 < typeRowData.length; c += 3) {
+    const label = String(typeRowData[c] || '').trim();
+    if (!label) break;
+    lessonCols.push({ class_no: lessonCols.length + 1, att_col: c, hw_col: c + 1, cmt_col: c + 2 });
+  }
+  if (lessonCols.length === 0) return showToast('未检测到课堂/作业/点评列', 'error');
+
+  // 数据行从 dateRow 后面开始
+  const dataStart = (dateRow >= 0) ? dateRow + 1 : typeRow + 2;
+  const dataRows = rows.slice(dataStart).filter(r => {
+    if (!r || r.length < 3) return false;
+    const v = String(r[snoCol] || '').trim();
+    return v && v !== '0' && /^\d/.test(v);
+  });
+
+  // 解析数据
+  importData = [];
+  importMapping = lessonCols.map(lc => ({ class_no: lc.class_no, att_col: lc.att_col, hw_col: lc.hw_col }));
+  const importComments = [];
+  const importRemovals = [];
+
+  for (const row of dataRows) {
+    const sno = String(row[snoCol] || '').trim().padStart(3, '0');
+    const name = (nameCol >= 0) ? String(row[nameCol] || '').trim() : '';
+    if (!sno || sno === '000') continue;
+    const rec = {
+      student_no: sno,
+      student_name: name,
+      group: (groupCol >= 0) ? String(row[groupCol] || '').trim() : '',
+      records: []
+    };
+    for (const lc of lessonCols) {
+      const attVal = String(row[lc.att_col] || '').trim();
+      const hwVal = String(row[lc.hw_col] || '').trim();
+      const cmtVal = (lc.cmt_col < row.length) ? String(row[lc.cmt_col] || '').trim() : '';
+      const cmtMatch = matchComment(cmtVal);
+      const cmtText = cmtMatch ? cmtMatch.text : '';
+      rec.records.push({
+        class_no: lc.class_no,
+        status: NEW_ATTENDANCE_MAP[attVal] !== undefined ? NEW_ATTENDANCE_MAP[attVal] : 0,
+        hw_status: NEW_HOMEWORK_MAP[hwVal] !== undefined ? NEW_HOMEWORK_MAP[hwVal] : 0,
+        comment_text: cmtText
+      });
+      if (cmtText) {
+        importComments.push({ student_no: sno, class_no: lc.class_no, comment_text: cmtText, rating: cmtMatch.rating });
+      }
+      // 标记退出学员
+      if (attVal === '退出' && !importRemovals.find(r => r.student_no === sno)) {
+        importRemovals.push({ student_no: sno, student_name: name, group: String(row[0] || '').trim() });
+      }
+    }
+    importData.push(rec);
+  }
+  window._importComments = importComments;
+  window._importRemovals = importRemovals;
+
+  // 提取日期行（Excel序列号 → 日期字符串）
+  function excelDateStr(v) {
+    if (!v) return '';
+    if (v instanceof Date) {
+      const y = v.getFullYear(), m = String(v.getMonth()+1).padStart(2,'0'), d = String(v.getDate()).padStart(2,'0');
+      return y+'-'+m+'-'+d;
+    }
+    const n = Number(v);
+    if (Number.isInteger(n) && n > 40000 && n < 60000) {
+      const d = new Date(Date.UTC(1899, 11, 30 + n));
+      const y = d.getUTCFullYear(), m = String(d.getUTCMonth()+1).padStart(2,'0'), dd = String(d.getUTCDate()).padStart(2,'0');
+      return y+'-'+m+'-'+dd;
+    }
+    return String(v).trim();
+  }
+  const dates = [];
+  if (dateRow >= 0 && dateRow < rows.length) {
+    const dateRowData = rows[dateRow] || [];
+    lessonCols.forEach(lc => {
+      dates.push(excelDateStr(dateRowData[lc.att_col]));
+    });
+  }
+  window._excelDates = []; // 供 doImport 使用
+  lessonCols.forEach(lc => {
+    const d = dates[lc.class_no - 1] || '';
+    window._excelDates.push({ class_no: lc.class_no, class_date: d });
+  });
+  renderNewFormatPreview(lessonCols, dates);
+  document.getElementById('btnDoImport').disabled = false;
+  showToast(`解析完成：检测到 ${importData.length} 名学员，${lessonCols.length} 个课时${importComments.length?'，含 '+importComments.length+' 条点评':''}`, 'success');
+}
+
+function renderNewFormatPreview(lessonCols, dates) {
+  const subj = document.getElementById('importSubj').value;
+  const subjName = {1:'基础乐理',2:'基础视唱',3:'基础钢琴'}[subj] || '';
+  const previewRows = importData;
+
+  let mapHtml = '<div class="flex-row" style="gap:6px;"><span class="tip">检测到新考勤表格式：</span>';
+  lessonCols.forEach(lc => {
+    mapHtml += `<span class="neu-card" style="padding:2px 10px;margin:0;font-size:12px;">课时${lc.class_no}</span>`;
+  });
+  mapHtml += '</div>';
+  document.getElementById('importMapping').innerHTML = mapHtml;
+  document.getElementById('importMapping').classList.remove('hide');
+
+  // 两行表头：课时+日期行 + 课堂/作业/点评行
+  let html = `<p class="tip">${subjName} · 共 ${importData.length} 名学员</p><table class="table" style="white-space:nowrap;">`;
+  // 第1行：课时标签 + 日期（colspan=3）
+  html += '<tr><th colspan="3" style="background:transparent;">学员信息</th>';
+  lessonCols.forEach((lc, idx) => {
+    const d = dates && dates[idx] ? dates[idx] : '';
+    html += `<th colspan="3">第${lc.class_no}课时<div style="font-size:12px;color:var(--text-tip);font-weight:400;">${d}</div></th>`;
+  });
+  html += '</tr>';
+  // 第2行：分组/学号/姓名 + 课堂/作业/点评
+  html += '<tr><th>分组</th><th>学号</th><th>姓名</th>';
+  lessonCols.forEach(() => { html += '<th>课堂</th><th>作业</th><th>点评</th>'; });
+  html += '</tr>';
+  // 数据行（颜色区分）
+  const attStyle = {1:'color:#0891b2;font-weight:600;',2:'color:#d97706;font-weight:600;',3:'color:#dc2626;font-weight:600;'};
+  const hwStyle = {1:'color:#0891b2;font-weight:600;',2:'color:#dc2626;font-weight:600;',3:'color:#2563eb;font-weight:600;'};
+  function cmtStyle(t) {
+    if (/优秀/.test(t)) return 'color:#d97706;font-weight:700;';
+    if (/很棒/.test(t)) return 'color:#0891b2;font-weight:600;';
+    if (/加油/.test(t)) return 'color:#d97706;font-weight:600;';
+    if (/重做/.test(t)) return 'color:#dc2626;font-weight:600;';
+    return '';
+  }
+  for (const row of previewRows) {
+    html += `<tr><td>${row.group||'-'}</td><td>${padNo(row.student_no)}</td><td>${row.student_name||''}</td>`;
+    for (const rec of row.records) {
+      const attText = {1:'出勤',2:'迟到',3:'缺勤'}[rec.status] || '-';
+      const hwText = {1:'完成',2:'未完成',3:'补交'}[rec.hw_status] || '-';
+      html += `<td style="${attStyle[rec.status]||''}">${attText}</td><td style="${hwStyle[rec.hw_status]||''}">${hwText}</td><td style="${cmtStyle(rec.comment_text)}">${rec.comment_text || '-'}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</table>';
+
+  if (window._importComments && window._importComments.length > 0) {
+    html += `<p class="tip" style="margin-top:6px;">✅ 含 ${window._importComments.length} 条点评数据，将在导入时一并保存</p>`;
+  }
+  if (window._importRemovals && window._importRemovals.length > 0) {
+    html += `<p class="warn-tip" style="margin-top:6px;">⚠️ ${window._importRemovals.length} 名学员标记为"退出"，将在导入时自动转入请离清退</p>`;
+  }
+  document.getElementById('importPreview').innerHTML = html;
+  document.getElementById('importPreview').classList.remove('hide');
+}
+
+function parseImportExcel() {
+  window._importComments = null;
+  window._importRemovals = null;
+  window._excelDates = null;
+  const file = document.getElementById('importFile').files[0];
+  if (!file) return showToast('请选择Excel文件', 'warning');
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      if (rows.length < 2) return showToast('数据行不足（至少需要表头+1行数据）', 'warning');
+
+      // 检测是否为标准考勤表（新格式）
+      if (detectNewFormat(rows)) return parseNewFormatExcel(rows);
+
+      // 自动检测：扫描每一行作为表头候选
+      let headerRow = 0;
+      for (let i = 0; i < Math.min(rows.length, 5); i++) {
+        const r = rows[i];
+        if (!r || r.length < 2) continue;
+        const joined = r.join(' ');
+        if (/学号|编号|课时|出勤|考勤|姓名/.test(joined)) { headerRow = i; break; }
+      }
+      const header = rows[headerRow];
+      const dataRows = rows.slice(headerRow + 1).filter(r => r.length > 0 && String(r[0] || '').trim());
+
+      // 检测每列类型
+      const colTypes = header.map((h, i) => detectColumnType(h, i, rows));
+      const stuCol = colTypes.indexOf('student_no');
+      if (stuCol === -1) return showToast('未检测到学号列，请确认表头包含"学号"或在首列', 'error');
+
+      // 找考勤/作业列，排序为课时1-12
+      const attCols = []; const hwCols = [];
+      colTypes.forEach((t, i) => { if (t === 'attendance') attCols.push(i); if (t === 'homework') hwCols.push(i); });
+      const totalCols = Math.max(attCols.length, hwCols.length);
+      if (totalCols === 0) return showToast('未检测到考勤/作业列，请确认单元格包含出勤/迟到/缺勤等状态', 'error');
+
+      // 构建映射配置
+      importMapping = [];
+      // 按课位列顺序：优先attendance，然后是homework，交替排列
+      for (let c = 0; c < totalCols; c++) {
+        const attCol = attCols[c] !== undefined ? attCols[c] : -1;
+        const hwCol = hwCols[c] !== undefined ? hwCols[c] : -1;
+        importMapping.push({ class_no: c + 1, att_col: attCol, hw_col: hwCol });
+      }
+
+      // 解析数据行
+      importData = [];
+      for (const row of dataRows) {
+        const sno = String(row[stuCol] || '').trim().padStart(3, '0');
+        if (!sno || sno === '000') continue;
+        const rec = { student_no: sno, records: [] };
+        for (const m of importMapping) {
+          const attVal = m.att_col >= 0 ? String(row[m.att_col] || '').trim() : '';
+          const hwVal = m.hw_col >= 0 ? String(row[m.hw_col] || '').trim() : '';
+          rec.records.push({
+            class_no: m.class_no,
+            status: IMPORT_STATUS_MAP[attVal] !== undefined ? IMPORT_STATUS_MAP[attVal] : 0,
+            hw_status: IMPORT_STATUS_MAP[hwVal] !== undefined ? IMPORT_STATUS_MAP[hwVal] : 0
+          });
+        }
+        importData.push(rec);
+      }
+
+      // 渲染预览
+      renderImportPreview(header, dataRows, stuCol);
+      document.getElementById('btnDoImport').disabled = false;
+      showToast(`解析完成：检测到 ${importData.length} 名学员，${totalCols} 个课时列`, 'success');
+    } catch (ex) {
+      showToast('Excel解析失败：' + ex.message, 'error');
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function renderImportPreview(header, rows, stuCol) {
+  const subj = document.getElementById('importSubj').value;
+  const subjName = {1:'基础乐理',2:'基础视唱',3:'基础钢琴'}[subj] || '学科' + subj;
+  // 映射说明
+  let mapHtml = '<div class="flex-row" style="gap:6px;"><span class="tip">检测映射：</span>';
+  importMapping.forEach(m => {
+    const attLabel = m.att_col >= 0 ? `<span style="color:var(--primary)">考勤</span>` : '';
+    const hwLabel = m.hw_col >= 0 ? `<span style="color:var(--success)">作业</span>` : '';
+    const sep = attLabel && hwLabel ? '+' : '';
+    mapHtml += `<span class="neu-card" style="padding:2px 10px;margin:0;font-size:12px;">课时${m.class_no}: ${attLabel}${sep}${hwLabel}</span>`;
+  });
+  mapHtml += '</div>';
+  document.getElementById('importMapping').innerHTML = mapHtml;
+  document.getElementById('importMapping').classList.remove('hide');
+
+  const previewRows = importData;
+  let html = `<p class="tip">${subjName} · 共 ${importData.length} 名学员</p><table class="table"><tr><th>学号</th>`;
+  importMapping.forEach(m => { html += `<th>课时${m.class_no}考勤</th><th>课时${m.class_no}作业</th>`; });
+  html += '</tr>';
+  const attStyle = {1:'color:#0891b2;font-weight:600;',2:'color:#d97706;font-weight:600;',3:'color:#dc2626;font-weight:600;'};
+  const hwStyle = {1:'color:#0891b2;font-weight:600;',2:'color:#dc2626;font-weight:600;',3:'color:#2563eb;font-weight:600;'};
+  for (const row of previewRows) {
+    html += `<tr><td>${padNo(row.student_no)}</td>`;
+    for (const rec of row.records) {
+      const attText = {1:'出勤',2:'迟到',3:'缺勤'}[rec.status] || '-';
+      const hwText = {1:'完成',2:'未完成',3:'补交'}[rec.hw_status] || '-';
+      html += `<td style="${attStyle[rec.status]||''}">${attText}</td><td style="${hwStyle[rec.hw_status]||''}">${hwText}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</table>';
+  document.getElementById('importPreview').innerHTML = html;
+  document.getElementById('importPreview').classList.remove('hide');
+}
+
+async function doImport() {
+  if (!importData || importData.length === 0) return;
+  const subj = document.getElementById('importSubj').value;
+  if (!confirm(`确认将 ${importData.length} 名学员的考勤数据导入「${{1:'基础乐理',2:'基础视唱',3:'基础钢琴'}[subj]}」？`)) return;
+
+  showLoading(true);
+
+  // 1. 自动提取学员并同步到系统
+  const stuMap = {};
+  importData.forEach(row => {
+    if (!row.student_no || stuMap[row.student_no]) return;
+    let gid = 1;
+    const gv = row.group;
+    if (gv) {
+      const pn = parseInt(gv);
+      if (pn >= 1 && pn <= 6) gid = pn;
+      else { const m = String(gv).match(/(\d+)/); if (m) { const g = parseInt(m[1]); if (g >= 1 && g <= 6) gid = g; } }
+    }
+    stuMap[row.student_no] = { no: row.student_no, name: row.student_name || '', gid };
+  });
+  const stuList = Object.values(stuMap);
+  if (stuList.length > 0) {
+    const batchRes = await apiFetch('/api/student/batchadd', { method: 'POST', body: JSON.stringify({ list: stuList }) });
+    if (batchRes.code !== 0) console.warn('[学员同步] 部分学员可能未写入:', batchRes.msg);
+  }
+
+  // 2a. 如果 Excel 中包含课时日期且 class_schedule 尚未配置，自动写入
+  if (window._excelDates && window._excelDates.length > 0) {
+    const existingRes = await apiFetch(`/api/class/list?subject_id=${subj}`);
+    const existing = (existingRes.code === 0 && existingRes.data) ? existingRes.data : [];
+    if (!existing.some(s => s.class_date)) {
+      const validDates = window._excelDates.filter(d => d.class_date);
+      if (validDates.length > 0) {
+        await apiFetch('/api/class/saveall', {
+          method: 'POST',
+          body: JSON.stringify({ subject_id: Number(subj), list: validDates })
+        });
+      }
+    }
+  }
+
+  // 2b. 拉取课时日期配置（含自动同步后的数据）
+  const scheduleRes = await apiFetch(`/api/class/list?subject_id=${subj}`);
+  const schedule = (scheduleRes.code === 0 && scheduleRes.data) ? scheduleRes.data : [];
+
+  // 3. 组装records（按分组归类，分批导入）
+  const recordsByGroup = {};
+  for (const row of importData) {
+    const g = row.group || '1';
+    if (!recordsByGroup[g]) recordsByGroup[g] = [];
+    for (const rec of row.records) {
+      if (rec.status === 0 && rec.hw_status === 0) continue;
+      const sched = schedule.find(s => s.class_no == rec.class_no);
+      recordsByGroup[g].push({ student_no: row.student_no, class_no: rec.class_no, class_date: sched ? sched.class_date : '', status: rec.status, hw_status: rec.hw_status });
+    }
+  }
+  const grpDist = {};
+  importData.forEach(row => { const g = row.group || '未知'; grpDist[g] = (grpDist[g] || 0) + 1; });
+  console.log('[导入] 学生分组分布:', grpDist, '分组详情:', Object.entries(recordsByGroup).map(([g,r]) => `组${g}:${r.length}条`));
+  const totalRecords = Object.values(recordsByGroup).flat();
+  if (totalRecords.length === 0) { showLoading(false); return showToast('无有效数据可导入', 'warning'); }
+
+  // 4. 导入考勤/作业（按组分批 + 每组再拆小块，避免 Worker 子请求超限）
+  function chunkArray(arr, size) { const res = []; for (let i = 0; i < arr.length; i += size) res.push(arr.slice(i, i + size)); return res; }
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+  let attOk = 0, attFail = 0;
+  for (const [g, recs] of Object.entries(recordsByGroup)) {
+    if (recs.length === 0) continue;
+    const chunks = chunkArray(recs, 60);
+    for (let ci = 0; ci < chunks.length; ci++) {
+      for (let retry = 0; retry < 3; retry++) {
+        const r = await apiFetch('/api/attendance/batch/import', { method: 'POST', body: JSON.stringify({ subject_id: Number(subj), records: chunks[ci] }) });
+        if (r && r.code === 0) { attOk += chunks[ci].length; break; }
+        if (retry < 2) await delay(1000 * (retry + 1));
+        if (retry === 2) attFail += chunks[ci].length;
+      }
+      await delay(500);
+    }
+  }
+  if (attFail > 0) { showLoading(false); return showToast(`导入完成：成功 ${attOk} 条，失败 ${attFail} 条`, 'warning'); }
+
+  // 5. 导入点评（批量，一次请求）
+  let cmtOk = 0, cmtFail = 0;
+  const cmts = window._importComments || [];
+  if (cmts.length > 0) {
+    const [stuRes, schRes2] = await Promise.all([apiFetch('/api/student/list'), apiFetch(`/api/class/list?subject_id=${subj}`)]);
+    const stuIdMap = {};
+    if (stuRes.code === 0 && stuRes.data) stuRes.data.forEach(s => { stuIdMap[s.student_no] = s.id; });
+    const comments = [];
+    for (const c of cmts) {
+      const sid = stuIdMap[c.student_no];
+      if (!sid) { cmtFail++; continue; }
+      comments.push({ student_id: sid, class_no: c.class_no, comment_text: c.comment_text, rating: c.rating });
+    }
+    if (comments.length > 0) {
+      const r = await apiFetch('/api/comment/batch/save', {
+        method: 'POST',
+        body: JSON.stringify({ subject_id: Number(subj), comments })
+      });
+      if (r.code === 0) { cmtOk = r.data?.ok || 0; cmtFail = r.data?.fail || 0; }
+      else cmtFail = comments.length;
+    }
+  }
+
+  // 6. 自动处理退出学员 → 请离清退（附带分组信息）
+  let rmOk = 0, rmFail = 0;
+  const removals = window._importRemovals || [];
+  if (removals.length > 0) {
+    const stuRes3 = await apiFetch('/api/student/list');
+    const stuIdMap3 = {};
+    if (stuRes3.code === 0 && stuRes3.data) stuRes3.data.forEach(s => { stuIdMap3[s.student_no] = s.id; });
+    const grpMap = {};
+    importData.forEach(row => { grpMap[row.student_no] = row.group; });
+    for (const r of removals) {
+      const sid = stuIdMap3[r.student_no];
+      if (!sid) { rmFail++; continue; }
+      const grp = grpMap[r.student_no] || '';
+      const rr = await apiFetch('/api/student/removal/add', {
+        method: 'POST',
+        body: JSON.stringify({ student_id: sid, group_id: Number(grp) || 0, reason: '自愿请离', remark: 'Excel导入自动标记' })
+      });
+      if (rr.code === 0) rmOk++; else rmFail++;
+    }
+  }
+
+  showLoading(false);
+  const stuMsg = stuList.length > 0 ? `，学员 ${stuList.length} 人已自动同步` : '';
+  const cmtMsg = cmts.length > 0 ? `，点评 ${cmtOk}/${cmts.length} 条${cmtFail>0?' 失败'+cmtFail:''}` : '';
+  const rmMsg = removals.length > 0 ? `，请离 ${rmOk}/${removals.length} 人${rmFail>0?' 失败'+rmFail:''}` : '';
+  const hasErr = attFail > 0 || cmtFail > 0 || rmFail > 0;
+  const grpInfo = Object.entries(grpDist).map(([g,c]) => `组${g}:${c}人`).join(' ');
+  const attMsg = `考勤 ${attOk}/${totalRecords.length} 条`;
+  showToast(`${attMsg}${stuMsg}${cmtMsg}${rmMsg} [${grpInfo}]`, hasErr ? 'warning' : 'success');
+  document.getElementById('importStatus').innerText = `✅ ${attMsg}${stuMsg}${cmtMsg}${rmMsg}`;
+  document.getElementById('btnDoImport').disabled = true;
+  importData = null;
+  window._importComments = null;
+  window._importRemovals = null;
+  window._excelDates = null;
+}
+
+async function loadCommentStudent() {
+  showLoading(true);
+  const subj = document.getElementById("cSubjSelect").value;
+  const cno = document.getElementById("cClassNo").value;
+  const res = await apiFetch("/api/student/list");
+  let resData = (res.code === 0 && res.data) ? res.data : [];
+  // 按角色过滤：小组长/辅导老师只看本小组
+  if (userInfo.group_id && (userInfo.role === "group_tutor" || userInfo.role === "group_leader")) {
+    resData = resData.filter(s => s.group_id == userInfo.group_id);
+  }
+  // 按学号排序（001、002、003...顺序）
+  resData.sort((a, b) => parseInt(a.student_no) - parseInt(b.student_no));
+  const dateRes = await apiFetch(`/api/class/list?subject_id=${subj}`);
+  const schedule = (dateRes.code === 0 && dateRes.data) ? dateRes.data : [];
+  const sched = schedule.find(d => d.class_no == cno);
+  if (sched) document.getElementById("cClassDate").value = sched.class_date;
+  showLoading(false);
+  if (resData.length === 0) {
+    document.getElementById("commentTable").innerHTML = "<tr><td colspan='4' style='color:var(--text-tip);padding:20px;'>暂无学员数据</td></tr>";
+    return;
+  }
+  const canComment = userInfo.role !== "group_leader";
+  let html = "<tr><th>学号姓名</th><th>评分</th><th>作业点评</th><th>操作</th></tr>";
+  resData.forEach(stu => {
+    const stars = Array.from({length:5},(_,i)=>`<span class="star" data-sid="${stu.id}" data-idx="${i+1}" onclick="setStar(${stu.id},${i+1})" style="cursor:pointer;font-size:22px;color:var(--warning);">${i<3?"★":"☆"}</span>`).join("");
+    html += `<tr>
+      <td style="white-space:nowrap;">${padNo(stu.student_no)}-${stu.student_name}</td>
+      <td><span id="stars_${stu.id}">${stars}</span></td>
+      <td><textarea id="cm_${stu.id}" class="neu-input" style="width:100%;height:50px;" ${canComment?"":"disabled placeholder='无点评权限'"}>${canComment?"":"无点评权限"}</textarea></td>
+      <td>${canComment ? `<button class="neu-btn btn-primary" onclick="saveComment(${stu.id})" style="padding:6px 14px;">保存</button>` : '<span style="color:var(--text-tip);font-size:13px;">仅查看</span>'}</td>
+    </tr>`;
+  });
+  document.getElementById("commentTable").innerHTML = html;
+}
+
+function setStar(sid, idx) {
+  const stars = document.getElementById("stars_" + sid);
+  if (!stars) return;
+  stars.dataset.rating = idx;
+  stars.innerHTML = Array.from({length:5},(_,i)=>
+    `<span class="star" data-sid="${sid}" data-idx="${i+1}" onclick="setStar(${sid},${i+1})" style="cursor:pointer;font-size:22px;color:var(--warning);">${i<idx?"★":"☆"}</span>`
+  ).join("");
+}
+
+const COMMENT_PRESETS = {
+  1: [ // 基础乐理 — 书写、准确率、知识理解
+    "课堂表现优秀，作业完成质量高",
+    "按时完成，表现良好",
+    "作业基本完成，需加强细节",
+    "课堂注意力需提升，作业有遗漏",
+    "作业质量高，思路清晰，书写规范",
+    "作业完成认真，准确率高",
+    "作业质量一般，存在多处粗心错误",
+    "作业质量较差，需重新订正后提交",
+    "进步明显，继续保持",
+    "缺勤未补，请及时联系老师",
+    "乐理知识掌握扎实，解题思路清晰",
+    "书写工整，谱例规范，逻辑性强",
+    "调式判断有误，需加强调性听辨练习",
+    "节奏型分析不够准确，建议多做节奏默写"
+  ],
+  2: [ // 基础视唱 — 音高、音准、节拍、节奏
+    "音准良好，节奏稳定，表现完整",
+    "旋律线条清晰，节拍感强",
+    "音高偏低的倾向明显，需加强气息支撑",
+    "节奏型转换不够流畅，建议分句慢练",
+    "视唱曲目完成度高，情感表达恰当",
+    "节拍不稳，建议配合节拍器练习",
+    "音程跳跃处音准偏差较大，需加强构唱练习",
+    "吸气换气位置不统一，影响乐句连贯性",
+    "弱起节奏把握准确，音乐表现力提升明显",
+    "多声部视唱声部平衡良好，和声听觉有进步"
+  ],
+  3: [ // 基础钢琴 — 指法、弹奏准确流畅、节奏合拍、和弦优美、速度表情
+    "指法规范，弹奏流畅，节奏准确",
+    "和弦连接优美，踏板使用恰当",
+    "快速段落手指跑动均匀，力度层次分明",
+    "节奏不稳，建议分段慢练配合节拍器",
+    "该曲应为欢快的情绪，弹奏速度偏慢，需提速",
+    "该曲应为舒缓的曲风，弹奏过快，建议放慢体会音乐",
+    "指法编排不合理，导致乐句中断，建议标注指法重新练习",
+    "左右手对位不齐，建议分手慢练后再合手",
+    "和弦转位指法生疏，建议单独练习和弦连接",
+    "旋律声部不够突出，需加强五指独立控制",
+    "弹奏准确，但音乐表现平淡，建议多听示范音频",
+    "琶音跑动不均匀，拇指转弯不自然",
+    "装饰音弹奏不够灵巧，需单独抽出慢练",
+    "背谱熟练，音乐完整性好，舞台自信明显提升"
+  ]
+};
+
+function updateCommentPresets() {
+  const sel = document.getElementById("cPreset");
+  const subj = parseInt(document.getElementById("cSubjSelect").value);
+  const presets = COMMENT_PRESETS[subj] || COMMENT_PRESETS[1];
+  sel.innerHTML = '<option value="">点评模板（可选）</option>' +
+    presets.map(p => `<option value="${p}">${p}</option>`).join("");
+  
+  // 如果已经转换为自定义下拉菜单，需要更新选项
+  const container = sel.parentNode;
+  if (container.classList.contains('custom-select')) {
+    const optionsContainer = container.querySelector('.custom-select-options');
+    const trigger = container.querySelector('.custom-select-trigger');
+    if (optionsContainer && trigger) {
+      optionsContainer.innerHTML = '';
+      const options = Array.from(sel.options);
+      options.forEach(opt => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'custom-select-option' + (opt.selected ? ' selected' : '');
+        optionDiv.textContent = opt.textContent;
+        optionDiv.dataset.value = opt.value;
+        optionDiv.onclick = function() {
+          sel.value = this.dataset.value;
+          trigger.textContent = this.textContent;
+          container.classList.remove('open');
+          sel.dispatchEvent(new Event('change'));
+        };
+        optionsContainer.appendChild(optionDiv);
+      });
+      const selectedOpt = options.find(o => o.selected) || options[0];
+      trigger.textContent = selectedOpt ? selectedOpt.textContent : '';
+    }
+  }
+}
+
+function applyPreset() {
+  const val = document.getElementById("cPreset").value;
+  if (!val) return;
+  document.querySelectorAll("textarea[id^='cm_']").forEach(el => { if (!el.disabled) el.value = val; });
+  document.getElementById("cPreset").value = "";
+}
+
+function batchSetRating(rating) {
+  document.querySelectorAll("[id^='stars_']").forEach(el => {
+    el.dataset.rating = rating;
+    const sid = el.id.replace("stars_","");
+    el.innerHTML = Array.from({length:5},(_,i)=>
+      `<span class="star" data-sid="${sid}" data-idx="${i+1}" onclick="setStar(${sid},${i+1})" style="cursor:pointer;font-size:22px;color:var(--warning);">${i<rating?"★":"☆"}</span>`
+    ).join("");
+  });
+}
+
+async function batchSaveComment() {
+  const subj = document.getElementById("cSubjSelect").value;
+  const cno = document.getElementById("cClassNo").value;
+  const rows = document.querySelectorAll("#commentTable tbody tr, #commentTable tr:not(:first-child)");
+  let ok = 0, fail = 0;
+  showLoading(true);
+  for (const row of rows) {
+    const btn = row.querySelector("button");
+    if (!btn) continue;
+    const onclick = btn.getAttribute("onclick") || "";
+    const m = onclick.match(/saveComment\((\d+)\)/);
+    if (!m) continue;
+    const sid = m[1];
+    const txt = document.getElementById("cm_" + sid)?.value;
+    const starsEl = document.getElementById("stars_" + sid);
+    const rating = parseInt(starsEl?.dataset?.rating) || 0;
+    if (!txt) continue;
+    const r = await apiFetch("/api/comment/save", {
+      method: "POST",
+      body: JSON.stringify({ subject_id: subj, class_no: cno, student_id: sid, comment_text: txt, rating })
+    });
+    if (r.code === 0) ok++; else fail++;
+  }
+  showLoading(false);
+  showToast(`批量保存完成：成功 ${ok} 条${fail?"，失败 "+fail+" 条":""}`, fail ? (ok>0?"warning":"error") : "success");
+}
+
+async function saveComment(sid) {
+  if (userInfo.role === "group_leader") return showToast("小组长无点评权限", "error");
+  const subj = document.getElementById("cSubjSelect").value;
+  const cno = document.getElementById("cClassNo").value;
+  const txt = document.getElementById("cm_" + sid).value;
+  const starsEl = document.getElementById("stars_" + sid);
+  const rating = parseInt(starsEl?.dataset?.rating) || 0;
+  if (!txt) return showToast("请填写点评内容", "warning");
+  showLoading(true);
+  const res = await apiFetch("/api/comment/save", {
+    method: "POST",
+    body: JSON.stringify({ subject_id: subj, class_no: cno, student_id: sid, comment_text: txt, rating })
+  });
+  showLoading(false);
+  showToast(res.code === 0 ? "点评成功，已记录操作日志" : (res.msg || "点评失败"), res.code === 0 ? "success" : "error");
+  if (res.code === 0) document.getElementById("cm_" + sid).value = "";
+}
+
+async function addStudent() {
+  const no = document.getElementById("stuNo").value;
+  const name = document.getElementById("stuName").value;
+  const gid = document.getElementById("stuGroup").value;
+  if (!no || !name) return showToast("请填写学号和姓名", "warning");
+  showLoading(true);
+  const res = await apiFetch("/api/student/add", {
+    method: "POST",
+    body: JSON.stringify({ student_no: no, student_name: name, group_id: gid })
+  });
+  showLoading(false);
+  showToast(res.msg || "新增成功", res.code === 0 ? "success" : "error");
+  if (res.code === 0) { document.getElementById("stuNo").value = ""; document.getElementById("stuName").value = ""; }
+}
+
+async function searchStudent() {
+  const stuNo = document.getElementById("searchStuNo").value.trim();
+  const groupId = document.getElementById("searchGroup").value;
+  showLoading(true);
+  let url = "/api/student/list";
+  const params = [];
+  if (stuNo) params.push(`student_no=${encodeURIComponent(stuNo)}`);
+  if (groupId && groupId != 0) params.push(`group_id=${groupId}`);
+  if (params.length > 0) url += "?" + params.join("&");
+  const res = await apiFetch(url);
+  showLoading(false);
+  const data = (res.code === 0 && res.data) ? res.data : [];
+  const groupNames = {1:"第一小组",2:"第二小组",3:"第三小组",4:"第四小组",5:"第五小组",6:"第六小组"};
+  const container = document.getElementById("studentListContainer");
+  if (data.length === 0) {
+    container.innerHTML = "<div style='color:var(--text-tip);padding:20px;text-align:center;'>暂无符合条件的学员</div>";
+    return;
+  }
+  data.sort((a, b) => parseInt(a.student_no) - parseInt(b.student_no));
+  const hasResetPwdPermission = userInfo.role === "admin";
+  let html = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">`;
+  data.forEach(stu => {
+    const gName = groupNames[stu.group_id] || '未分组';
+    const resetBtn = hasResetPwdPermission ? `<button class="neu-btn btn-warning" onclick="resetStuPwd(${stu.id}, '${stu.student_name}')" style="padding:6px 12px;font-size:13px;">重置密码</button>` : '';
+    html += `<div class="neu-card" style="padding:15px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-weight:500;color:var(--text-main);">${stu.student_name}</div>
+        <div style="font-size:13px;color:var(--text-tip);">学号：${String(stu.student_no).padStart(3, '0')} · ${gName}</div>
+      </div>
+      <div>${resetBtn}</div>
+    </div>`;
+  });
+  html += "</div>";
+  container.innerHTML = html;
+}
+
+function readExcel() {
+  const file = document.getElementById("excelFile").files[0];
+  if (!file) return showToast("请选择Excel文件", "warning");
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: "array" });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+    excelBatchData = [];
+    for (let i = 1; i < json.length; i++) {
+      if (!json[i][0]) continue;
+      excelBatchData.push({ no: String(json[i][0]), name: json[i][1] || "", gid: Number(json[i][2]) || 1 });
+    }
+    showToast("读取成功，共" + excelBatchData.length + "条学员数据", "success");
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+async function batchImportStudent() {
+  if (excelBatchData.length === 0) return showToast("请先选择并读取Excel文件", "warning");
+  showLoading(true);
+  const res = await apiFetch("/api/student/batchadd", {
+    method: "POST",
+    body: JSON.stringify({ list: excelBatchData })
+  });
+  showLoading(false);
+  showToast(res.msg || "批量导入成功", res.code === 0 ? "success" : "error");
+  if (res.code === 0) excelBatchData = [];
+}
+
+async function addUser() {
+  const username = document.getElementById("newUser").value;
+  const password = document.getElementById("newPwd").value;
+  const role = document.getElementById("newRole").value;
+  const subj = Number(document.getElementById("bindSubj").value);
+  const group = Number(document.getElementById("bindGroup").value);
+  if (!username || !password) return showToast("请填写账号和密码", "warning");
+  if (role === "group_tutor" && (!subj || !group)) return showToast("辅导老师请选择负责学科和小组", "warning");
+  if (role === "group_leader" && !group) return showToast("小组长请选择所属小组", "warning");
+  showLoading(true);
+  const res = await apiFetch("/api/user/add", {
+    method: "POST",
+    body: JSON.stringify({ username, password, role, subject_id: subj, group_id: group })
+  });
+  showLoading(false);
+  showToast(res.msg || "创建成功", res.code === 0 ? "success" : "error");
+  if (res.code === 0) { document.getElementById("newUser").value = ""; document.getElementById("newPwd").value = ""; loadUserList(); }
+}
+
+async function loadUserList() {
+  showLoading(true);
+  const res = await apiFetch("/api/user/list");
+  showLoading(false);
+  if (res.code !== 0 || !res.data) {
+    document.getElementById("userTable").innerHTML = "<tr><td colspan='6' style='color:var(--text-tip);padding:20px;'>暂无账号数据或权限不足</td></tr>";
+    return;
+  }
+  const subjNames = {1:"基础乐理",2:"基础视唱",3:"基础钢琴"};
+  const groupNames = {1:"第一小组",2:"第二小组",3:"第三小组",4:"第四小组",5:"第五小组",6:"第六小组"};
+  let html = "<tr><th>ID</th><th>账号</th><th>角色</th><th>绑定学科/小组</th><th>状态</th><th>操作</th></tr>";
+  res.data.forEach(item => {
+    const statusText = item.status === 1 ? "<span style='color:green'>正常</span>" : "<span style='color:red'>已禁用</span>";
+    let bindText = "";
+    if (item.role === "subject_teacher") bindText = "学科: " + (subjNames[item.subject_id] || "未绑定");
+    else if (item.role === "group_tutor") bindText = "学科: " + (subjNames[item.subject_id] || "未绑定") + " / 小组: " + (groupNames[item.group_id] || "未绑定");
+    else if (item.role === "group_leader") bindText = "小组: " + (groupNames[item.group_id] || "未绑定");
+    else bindText = `学科:${item.subject_id||0} / 小组:${item.group_id||0}`;
+    html += `<tr>
+      <td>${item.id}</td>
+      <td>${item.username}</td>
+      <td>${ROLE_MAP[item.role] || item.role}</td>
+      <td>${bindText}</td>
+      <td>${statusText}</td>
+      <td>
+        <button class="neu-btn btn-warning" onclick="resetPwd(${item.id})" style="padding:6px 14px;">重置密码</button>
+        <button class="neu-btn ${item.status === 1 ? 'btn-danger' : 'btn-primary'}" onclick="switchUserStatus(${item.id}, ${item.status === 1 ? 0 : 1})" style="padding:6px 14px;">${item.status === 1 ? "禁用" : "启用"}</button>
+      </td>
+    </tr>`;
+  });
+  document.getElementById("userTable").innerHTML = html;
+}
+
+async function resetPwd(uid) {
+  const newPwd = prompt("请输入新密码（默认123456）", "123456");
+  if (!newPwd) return;
+  showLoading(true);
+  const res = await apiFetch("/api/user/resetpwd", {
+    method: "POST",
+    body: JSON.stringify({ user_id: uid, new_pwd: newPwd })
+  });
+  showLoading(false);
+  showToast(res.msg || "密码重置成功", res.code === 0 ? "success" : "error");
+  loadUserList();
+}
+
+async function resetStuPwd(sid, name) {
+  if (!confirm(`确定要重置学员【${name}】的密码吗？\n\n重置后密码将恢复为默认密码：123456`)) return;
+  showLoading(true);
+  const res = await apiFetch("/api/student/resetpwd", {
+    method: "POST",
+    body: JSON.stringify({ student_id: sid })
+  });
+  showLoading(false);
+  showToast(res.msg || "密码重置成功", res.code === 0 ? "success" : "error");
+}
+
+async function switchUserStatus(uid, status) {
+  showLoading(true);
+  const res = await apiFetch("/api/user/switchstatus", {
+    method: "POST",
+    body: JSON.stringify({ user_id: uid, status: status })
+  });
+  showLoading(false);
+  showToast(res.msg || "状态修改成功", res.code === 0 ? "success" : "error");
+  loadUserList();
+}
+
+async function loadLogList() {
+  showLoading(true);
+  const res = await apiFetch("/api/log/list");
+  showLoading(false);
+  if (res.code !== 0 || !res.data) {
+    document.getElementById("logTable").innerHTML = "<tr><td colspan='5' style='color:var(--text-tip);padding:20px;'>暂无操作日志或权限不足</td></tr>";
+    return;
+  }
+  const typeMap = { attendance: "考勤操作", homework: "作业操作", comment: "点评操作", student: "学员操作" };
+  let html = "<tr><th>操作人</th><th>角色</th><th>操作类型</th><th>操作内容</th><th>操作时间</th></tr>";
+  res.data.forEach(item => {
+    html += `<tr>
+      <td>${item.username}</td>
+      <td>${ROLE_MAP[item.role] || item.role}</td>
+      <td>${typeMap[item.type] || item.type}</td>
+      <td style="max-width:400px;word-break:break-all">${item.content}</td>
+      <td>${item.create_time}</td>
+    </tr>`;
+  });
+  document.getElementById("logTable").innerHTML = html;
+}
+
+async function loadRemovalList() {
+  showLoading(true);
+  const res = await apiFetch("/api/student/removal/list");
+  showLoading(false);
+  if (res.code !== 0 || !res.data) {
+    document.getElementById("removalTable").innerHTML = "<tr><td colspan='6' style='color:var(--text-tip);padding:20px;'>暂无记录</td></tr>";
+    return;
+  }
+  const reasonColor = { "被清理":"color:#dc2626;font-weight:600;", "不合格":"color:#d97706;font-weight:600;", "自愿请离":"color:var(--text-sub);", "其他":"color:var(--text-tip);" };
+  let html = `<tr><th>原分组</th><th>原学号</th><th>姓名</th><th>请离日期</th><th>请离原因</th><th>操作</th></tr>`;
+  res.data.sort((a, b) => String(a.student_no || '').localeCompare(String(b.student_no || ''), undefined, { numeric: true }));
+  res.data.forEach(item => {
+    html += `<tr>
+      <td>${item.group_name || "—"}</td>
+      <td>${padNo(item.student_no)}</td>
+      <td>${item.student_name}</td>
+      <td style="font-size:13px;">${item.created_time}</td>
+      <td style="${reasonColor[item.reason]||'color:var(--text-sub);'}">${item.reason}</td>
+      <td>${userInfo.role === "admin" ? `<button class="neu-btn btn-success" onclick="restoreRemoval(${item.student_id})" style="padding:4px 10px;font-size:12px;">恢复</button>` : '<span class="tip">—</span>'}</td>
+    </tr>`;
+  });
+  document.getElementById("removalTable").innerHTML = html;
+}
+
+async function addRemoval() {
+  const student_id = document.getElementById("removalSid").value;
+  const reason = document.getElementById("removalReason").value;
+  const remark = document.getElementById("removalRemark").value;
+  if (!student_id) return showToast("请输入学员ID", "warning");
+  if (!confirm(`确认将学员ID ${student_id} 标记为「${reason}」？此学员将不再出现在考勤/作业/点评列表中`)) return;
+  showLoading(true);
+  const res = await apiFetch("/api/student/removal/add", {
+    method: "POST",
+    body: JSON.stringify({ student_id, reason, remark })
+  });
+  showLoading(false);
+  showToast(res.msg || "操作完成", res.code === 0 ? "success" : "error");
+  if (res.code === 0) {
+    document.getElementById("removalSid").value = "";
+    document.getElementById("removalRemark").value = "";
+    loadRemovalList();
+  }
+}
+
+async function restoreRemoval(student_id) {
+  if (!confirm(`确认恢复学员ID ${student_id}？此学员将重新出现在考勤/作业/点评列表中`)) return;
+  showLoading(true);
+  const res = await apiFetch("/api/student/removal/restore", {
+    method: "POST",
+    body: JSON.stringify({ student_id })
+  });
+  showLoading(false);
+  showToast(res.msg || "操作完成", res.code === 0 ? "success" : "error");
+  if (res.code === 0) loadRemovalList();
+}
+
+async function exportAllData() {
+  showLoading(true);
+  const res = await apiFetch("/api/export/all");
+  showLoading(false);
+  if (res.code !== 0) return showToast(res.msg || "暂无数据可导出", "warning");
+  if (!res.data || res.data.length === 0) return showToast("暂无数据可导出", "warning");
+  const exportData = res.data.map(item => ({
+    "学号": item.student_no || "",
+    "姓名": item.student_name || "",
+    "所属小组": item.group_name || "",
+    "学科名称": item.subject_name || "",
+    "课时": item.class_no || "",
+    "授课日期": item.class_date || "",
+    "考勤状态": item.status == 1 ? "出勤" : item.status == 2 ? "迟到" : item.status == 3 ? "缺勤" : "未录入",
+    "作业状态": item.hw_status == 1 ? "完成" : item.hw_status == 2 ? "未完成" : item.hw_status == 3 ? "补交" : "未录入",
+    "作业点评": item.comment_text || "无点评"
+  }));
+  const sheet = XLSX.utils.json_to_sheet(exportData);
+  const book = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(book, sheet, "期末全量台账");
+  XLSX.writeFile(book, "教学考勤作业期末归档台账.xlsx");
+  showToast("期末台账导出成功！", "success");
+}
+
+// ==================== 存储用量监控 ====================
+async function loadStorageStats() {
+  showLoading(true);
+  const res = await apiFetch("/api/storage/stats");
+  showLoading(false);
+  if (res.code !== 0) return showToast(res.msg || "获取失败", "error");
+  const d = res.data;
+  const statsEl = document.getElementById("storageStats");
+  const byTypeEl = document.getElementById("storageByType");
+  const limitGB = d.limitGB || 8;
+  const usedGB = (d.bytes / (1024*1024*1024)).toFixed(2);
+  const totalMB = (d.bytes / 1024 / 1024).toFixed(2);
+  const pct = d.usedPercent || 0;
+  const barColor = d.alert === 'danger' ? '#dc2626' : d.alert === 'warning' ? '#d97706' : '#0891b2';
+  const alertText = d.alert === 'danger' ? '<span style="color:#dc2626;font-weight:700;">⚠️ 存储即将用满，请及时清理！</span>'
+    : d.alert === 'warning' ? '<span style="color:#d97706;font-weight:600;">⚠️ 存储用量超过 80%，请注意控制</span>' : '';
+  statsEl.innerHTML = `
+    <div class="flex-row" style="justify-content:space-around;margin-bottom:12px;">
+      <div class="neu-card" style="padding:16px 24px;text-align:center;margin:0;flex:1;"><span style="font-size:28px;font-weight:700;color:var(--primary);">${d.files}</span><br><span class="tip">文件总数</span></div>
+      <div class="neu-card" style="padding:16px 24px;text-align:center;margin:0;flex:1;"><span style="font-size:28px;font-weight:700;color:var(--success);">${totalMB}MB</span><br><span class="tip">存储用量</span></div>
+      <div class="neu-card" style="padding:16px 24px;text-align:center;margin:0;flex:1;"><span style="font-size:20px;font-weight:700;color:var(--text-sub);">${d.backend || '用爱发电'}</span><br><span class="tip">后端类型</span></div>
+    </div>
+    <div style="background:var(--bg-card);border-radius:8px;padding:12px 16px;margin-bottom:8px;">
+      <div class="flex-row" style="justify-content:space-between;margin-bottom:4px;">
+        <span style="font-size:13px;color:var(--text-sub);">已用 ${usedGB}GB / ${limitGB}GB</span>
+        <span style="font-size:13px;font-weight:600;color:${barColor};">${pct}%</span>
+      </div>
+      <div style="width:100%;height:12px;background:var(--bg-page);border-radius:6px;overflow:hidden;">
+        <div style="width:${Math.min(pct,100)}%;height:100%;background:${barColor};border-radius:6px;transition:width .3s;"></div>
+      </div>
+    </div>
+    ${alertText ? `<div style="text-align:center;margin-bottom:8px;">${alertText}</div>` : ''}
+  `;
+  const typeNames = { ppt:"PPT", doc:"文档", image:"图片", audio:"音频", video:"视频", other:"其他" };
+  const typeIcons = { ppt:"📊", doc:"📄", image:"🖼️", audio:"🎵", video:"🎬", other:"📁" };
+  if (d.byType && d.byType.length > 0) {
+    let html = '<table class="table"><tr><th>类型</th><th>文件数</th><th>用量</th><th>占比</th></tr>';
+    d.byType.forEach(item => {
+      const mb = (item.total_bytes / 1024 / 1024).toFixed(2);
+      const pct2 = d.bytes > 0 ? (item.total_bytes / d.bytes * 100).toFixed(1) : '0';
+      html += `<tr><td>${typeIcons[item.file_type]||'📁'} ${typeNames[item.file_type]||item.file_type}</td><td>${item.cnt}</td><td>${mb}MB</td><td>${pct2}%</td></tr>`;
+    });
+    html += '</table>';
+    byTypeEl.innerHTML = html;
+  } else { byTypeEl.innerHTML = '<p class="tip" style="text-align:center;">暂无文件数据</p>'; }
+}
+
+// ==================== 文件列表与清理 ====================
+let storageFilePage = 1;
+async function loadStorageFileList(page) {
+  if (page) storageFilePage = page;
+  showLoading(true);
+  const res = await apiFetch(`/api/storage/file/list?page=${storageFilePage}&pageSize=20`);
+  showLoading(false);
+  if (res.code !== 0) return showToast(res.msg || "获取失败", "error");
+  const d = res.data;
+  const el = document.getElementById("storageFileList");
+  if (!d.rows || d.rows.length === 0) {
+    el.innerHTML = '<p class="tip" style="text-align:center;">暂无文件记录</p>';
+    return;
+  }
+  const totalPages = Math.ceil(d.total / d.pageSize);
+  let html = '<div class="flex-row" style="justify-content:space-between;align-items:center;margin-bottom:8px;">';
+  html += `<span style="font-size:13px;color:var(--text-sub);">共 ${d.total} 个文件，第 ${d.page}/${totalPages} 页</span>`;
+  html += `<button class="neu-btn btn-warning" onclick="deleteSelectedFiles()" style="font-size:13px;padding:6px 14px;">🗑️ 删除选中</button>`;
+  html += '</div>';
+  html += '<table class="table" style="font-size:13px;"><tr><th style="width:32px;"><input type="checkbox" id="fileSelectAll" onchange="toggleAllFiles(this)"></th><th>文件名</th><th>类型</th><th>大小</th><th>上传者</th><th>时间</th></tr>';
+  const typeNames = { ppt:"📊PPT", doc:"📄文档", image:"🖼️图片", audio:"🎵音频", video:"🎬视频", other:"📁其他" };
+  const userTypeNames = { admin:"管理员", teacher:"老师", student:"学生" };
+  d.rows.forEach(item => {
+    const sz = item.file_size > 1048576 ? (item.file_size/1048576).toFixed(1)+'MB' : item.file_size > 1024 ? (item.file_size/1024).toFixed(0)+'KB' : item.file_size+'B';
+    html += `<tr><td><input type="checkbox" class="fileCheckbox" value="${item.id}"></td>
+      <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${item.original_name||item.r2_key}">${item.original_name||item.r2_key}</td>
+      <td>${typeNames[item.file_type]||item.file_type}</td>
+      <td>${sz}</td>
+      <td>${userTypeNames[item.upload_user_type]||item.upload_user_type}#${item.upload_user}</td>
+      <td>${item.create_time||''}</td></tr>`;
+  });
+  html += '</table>';
+  // 分页
+  if (totalPages > 1) {
+    html += '<div class="flex-row" style="justify-content:center;gap:6px;margin-top:8px;">';
+    for (let p = 1; p <= totalPages; p++) {
+      if (p === d.page) html += `<span style="padding:4px 10px;background:var(--primary);color:#fff;border-radius:4px;font-size:13px;">${p}</span>`;
+      else html += `<span class="neu-btn" style="padding:4px 10px;font-size:13px;cursor:pointer;" onclick="loadStorageFileList(${p})">${p}</span>`;
+    }
+    html += '</div>';
+  }
+  el.innerHTML = html;
+}
+
+function toggleAllFiles(cb) {
+  document.querySelectorAll('.fileCheckbox').forEach(c => c.checked = cb.checked);
+}
+
+async function deleteSelectedFiles() {
+  const ids = Array.from(document.querySelectorAll('.fileCheckbox:checked')).map(c => parseInt(c.value));
+  if (ids.length === 0) return showToast('请先勾选要删除的文件', 'warning');
+  if (!confirm(`确认删除 ${ids.length} 个文件？此操作会同时从 R2 存储和数据库中移除，不可恢复！`)) return;
+  showLoading(true);
+  const res = await apiFetch('/api/storage/file/delete', { method: 'POST', body: JSON.stringify({ ids }) });
+  showLoading(false);
+  if (res.code !== 0) return showToast(res.msg || '删除失败', 'error');
+  showToast(res.msg, 'success');
+  loadStorageFileList(storageFilePage);
+  loadStorageStats();
+}
+
+async function checkStorageHealth() {
+  showLoading(true);
+  const res = await apiFetch("/api/storage/health");
+  showLoading(false);
+  const display = document.getElementById("healthDisplay");
+  if (res.code !== 0) { display.innerHTML = '<div class="neu-card" style="padding:16px;text-align:center;margin:0;"><span style="color:var(--danger);font-weight:600;">存储未配置</span></div>'; display.classList.remove('hide'); return; }
+  const h = res.data;
+  const label = h.status === 'ok' ? '正常' : '未配置';
+  const color = h.status === 'ok' ? 'var(--success)' : 'var(--text-tip)';
+  display.innerHTML = `<div class="flex-row" style="justify-content:space-around;">
+    <div class="neu-card" style="padding:12px 20px;text-align:center;margin:0;"><span style="font-size:20px;font-weight:700;color:${color};">${label}</span><br><span class="tip">${h.backend}</span></div>
+    <div class="neu-card" style="padding:12px 20px;text-align:center;margin:0;"><span style="font-size:20px;font-weight:700;color:var(--primary);">${h.latencyMs >= 0 ? h.latencyMs + 'ms' : '-'}</span><br><span class="tip">延迟</span></div>
+    <div class="neu-card" style="padding:12px 20px;text-align:center;margin:0;"><span style="font-size:16px;font-weight:600;color:var(--text-sub);">${h.bucket || '-'}</span><br><span class="tip">桶</span></div>
+  </div>`;
+  display.classList.remove('hide');
+}
+
+// ====== 图片压缩（客户端Canvas，减少存储用量） ======
+async function compressImageIfNeeded(file) {
+  if (!file || !file.type.startsWith('image/') || file.size < 200*1024) return file;
+  try {
+    const img = await createImageBitmap(file);
+    let w = img.width, h = img.height;
+    const MAX = 1920;
+    if (w > MAX || h > MAX) {
+      if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+      else { w = Math.round(w * MAX / h); h = MAX; }
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+    const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.7));
+    if (!blob) return file;
+    const compressed = new File([blob], file.name.replace(/\.[^.]+$/,'.jpg'), { type: 'image/jpeg' });
+    console.log(`图片压缩: ${(file.size/1024).toFixed(0)}KB -> ${(compressed.size/1024).toFixed(0)}KB`);
+    return compressed;
+  } catch(e) { return file; }
+}
+
+// ==================== 老师端：课堂资料上传 ====================
+let teacherFile = null;
+
+async function uploadMaterial() {
+  const subj = document.getElementById("matSubj").value;
+  const cno = document.getElementById("matClassNo").value;
+  const title = document.getElementById("matTitle").value.trim();
+  const fileInput = document.getElementById("matFile");
+  const file = fileInput.files[0];
+  if (!title && !file) return showToast("请填写标题或选择文件", "warning");
+  const isDocType = file && ['ppt','pptx','doc','docx','pdf','jpg','jpeg','png','gif','bmp','webp'].some(e => file.name.toLowerCase().endsWith('.'+e));
+  const maxSize = isDocType ? 30*1024*1024 : 100*1024*1024;
+  if (file && file.size > maxSize) return showToast(`文件超过${isDocType?'30MB（文档/图片）':'100MB（音视频）'}限制`, "error");
+  showLoading(true);
+  let fileUrl = "", fileType = "other", fileSize = 0, origName = "";
+  if (file) {
+    const compressed = file.type.startsWith('image/') ? await compressImageIfNeeded(file) : file;
+    const fd = new FormData();
+    fd.append("file", compressed);
+    fd.append("subject_id", subj);
+    fd.append("class_no", cno);
+    const uploadRes = await fetch(API_BASE + "/api/file/upload", { method: "POST", headers: { "Authorization": token }, body: fd });
+    const uploadData = await uploadRes.json();
+    if (uploadData.code !== 0) { showLoading(false); return showToast("文件上传失败", "error"); }
+    fileUrl = uploadData.data.url;
+    fileType = uploadData.data.file_type;
+    fileSize = uploadData.data.file_size;
+    origName = uploadData.data.original_name;
+  }
+  const finalTitle = title || origName || "未命名资料";
+  const res = await apiFetch("/api/teacher/material/upload", {
+    method: "POST",
+    body: JSON.stringify({ subject_id: subj, class_no: cno, title: finalTitle, file_type: fileType, file_url: fileUrl, file_size: fileSize, original_name: origName })
+  });
+  showLoading(false);
+  if (res.code === 0) {
+    showToast("资料上传成功", "success");
+    document.getElementById("matTitle").value = "";
+    document.getElementById("matFile").value = "";
+    document.getElementById("matUploadStatus").innerText = "✅ 已上传：" + finalTitle;
+    loadMaterialList();
+  } else { showToast(res.msg || "上传失败", "error"); }
+}
+
+async function loadMaterialList() {
+  const subj = document.getElementById("matListSubj").value;
+  showLoading(true);
+  const res = await apiFetch(`/api/teacher/material/list?subject_id=${subj}`);
+  showLoading(false);
+  const data = (res.code === 0 && res.data) ? res.data : [];
+  if (data.length === 0) {
+    document.getElementById("materialTable").innerHTML = "<tr><td colspan='6' style='color:var(--text-tip);padding:20px;'>暂无资料</td></tr>";
+    return;
+  }
+  const subjNames = {1:"基础乐理",2:"基础视唱",3:"基础钢琴"};
+  const typeNames = {ppt:"PPT",doc:"文档",image:"图片",audio:"音频",video:"视频",other:"其他"};
+  let html = "<tr><th>学科</th><th>课时</th><th>标题</th><th>类型</th><th>上传人</th><th>时间</th></tr>";
+  data.forEach(item => {
+    html += `<tr>
+      <td>${subjNames[item.subject_id] || item.subject_id}</td>
+      <td>${item.class_no > 0 ? '第' + item.class_no + '课时' : '通用'}</td>
+      <td>${item.title}</td>
+      <td>${typeNames[item.file_type] || item.file_type}</td>
+      <td>${item.username || ''}</td>
+      <td style="font-size:12px;">${item.create_time}</td>
+    </tr>`;
+  });
+  document.getElementById("materialTable").innerHTML = html;
+}
+
+// ==================== 老师端：留言发送 ====================
+let tMsgFileData = null;
+let tRecorder = null;
+let tRecBlob = null;
+
+let tIsRecording = false;
+
+async function toggleTeacherRecord() {
+  const btn = document.getElementById("tRecBtn");
+  const status = document.getElementById("tRecStatus");
+  if (tIsRecording) {
+    tRecorder.stop(function(blob, duration) {
+      tIsRecording = false;
+      tRecBlob = blob;
+      status.textContent = `录音完成 (${(blob.size/1024).toFixed(0)}KB, ${(duration/1000).toFixed(1)}秒)`;
+      btn.textContent = "🎤 重新录音";
+      const preview = document.getElementById("tRecPreview");
+      preview.innerHTML = '';
+      preview.classList.remove('hide');
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      audio.src = URL.createObjectURL(blob);
+      preview.appendChild(audio);
+      const rmBtn = document.createElement('span');
+      rmBtn.textContent = '× 删除';
+      rmBtn.style.cssText = 'cursor:pointer;color:var(--danger);font-size:13px;';
+      rmBtn.onclick = function() { tRecBlob = null; preview.classList.add('hide'); preview.innerHTML = ''; btn.textContent = "🎤 录音留言"; status.textContent = "点击开始录音（MP3格式）"; tIsRecording = false; };
+      preview.appendChild(rmBtn);
+    }, function(msg) { tIsRecording = false; status.textContent = "录音失败: " + msg; });
+    btn.textContent = "🎤 录音留言";
+    return;
+  }
+  if (!tRecorder) {
+    if (typeof Recorder === 'undefined') { showToast("录音库未加载", "error"); return; }
+    tRecorder = Recorder({ type: 'mp3', bitRate: 64, sampleRate: 16000 });
+  }
+  tRecorder.open(function() {
+    tRecorder.start();
+    tIsRecording = true;
+    btn.textContent = "⏹ 停止录音";
+    status.textContent = "录音中...";
+    document.getElementById("tRecPreview").classList.add("hide");
+  }, function(msg, isUser) { status.textContent = "打开麦克风失败: " + msg; });
+}
+
+function toggleTargetSelect() {
+  const val = document.getElementById("tMsgTarget").value;
+  document.getElementById("tMsgGroups").classList.toggle("hide", val !== "groups");
+  document.getElementById("tMsgStudents").classList.toggle("hide", val !== "students");
+}
+
+function previewTeacherFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 100 * 1024 * 1024) { showToast("文件超过100MB限制", "error"); return; }
+  tMsgFileData = file;
+  document.getElementById("tMsgFileText").classList.add("hide");
+  document.getElementById("tMsgFileName").classList.remove("hide");
+  document.getElementById("tMsgFileName").textContent = "已选择: " + file.name;
+}
+
+async function sendTeacherMessage() {
+  const subj = document.getElementById("tMsgSubj").value;
+  const target = document.getElementById("tMsgTarget").value;
+  const title = document.getElementById("tMsgTitle").value.trim();
+  const content = document.getElementById("tMsgContent").value.trim();
+  if (!content && !tMsgFileData && !title && !tRecBlob) return showToast("请输入留言内容或选择附件", "warning");
+  let targetIds = "";
+  if (target === "groups") {
+    const sel = document.getElementById("tMsgGroups");
+    targetIds = Array.from(sel.selectedOptions).map(o => o.value).join(",");
+    if (!targetIds) return showToast("请选择至少一个小组", "warning");
+  } else if (target === "students") {
+    targetIds = document.getElementById("tMsgStudents").value.trim();
+    if (!targetIds) return showToast("请输入学员学号", "warning");
+  }
+  showLoading(true);
+  let fileUrl = "", fileType = "text";
+  if (tRecBlob) {
+    const fd = new FormData();
+    fd.append("file", tRecBlob, "voice.mp3");
+    fd.append("subject_id", subj);
+    fd.append("class_no", "0");
+    const uploadRes = await fetch(API_BASE + "/api/file/upload", { method: "POST", headers: { "Authorization": token }, body: fd });
+    const uploadData = await uploadRes.json();
+    if (uploadData.code !== 0) { showLoading(false); return showToast("录音上传失败", "error"); }
+    fileUrl = uploadData.data.url;
+    fileType = "audio";
+  } else if (tMsgFileData) {
+    const compressed = tMsgFileData.type.startsWith('image/') ? await compressImageIfNeeded(tMsgFileData) : tMsgFileData;
+    const fd = new FormData();
+    fd.append("file", compressed);
+    fd.append("subject_id", subj);
+    fd.append("class_no", "0");
+    const uploadRes = await fetch(API_BASE + "/api/file/upload", { method: "POST", headers: { "Authorization": token }, body: fd });
+    const uploadData = await uploadRes.json();
+    if (uploadData.code !== 0) { showLoading(false); return showToast("文件上传失败", "error"); }
+    fileUrl = uploadData.data.url;
+    fileType = uploadData.data.file_type;
+  }
+  const res = await apiFetch("/api/teacher/message/send", {
+    method: "POST",
+    body: JSON.stringify({ subject_id: subj, title, content, file_type: fileType, file_url: fileUrl, target_type: target, target_ids: targetIds })
+  });
+  showLoading(false);
+  if (res.code === 0) {
+    showToast("留言发送成功", "success");
+    document.getElementById("tMsgTitle").value = "";
+    document.getElementById("tMsgContent").value = "";
+    document.getElementById("tMsgFile").value = "";
+    tMsgFileData = null;
+    tRecBlob = null;
+    document.getElementById("tRecPreview").classList.add("hide");
+    document.getElementById("tRecPreview").innerHTML = "";
+    document.getElementById("tRecBtn").textContent = "🎤 录音留言";
+    document.getElementById("tRecStatus").textContent = "点击开始录音（MP3格式）";
+    document.getElementById("tMsgFileText").classList.remove("hide");
+    document.getElementById("tMsgFileName").classList.add("hide");
+    loadTeacherMsgList();
+  } else { showToast(res.msg || "发送失败", "error"); }
+}
+
+async function loadTeacherMsgList() {
+  showLoading(true);
+  const res = await apiFetch("/api/teacher/message/list");
+  showLoading(false);
+  const data = (res.code === 0 && res.data) ? res.data : [];
+  if (data.length === 0) {
+    document.getElementById("teacherMsgTable").innerHTML = "<tr><td colspan='4' style='color:var(--text-tip);padding:20px;'>暂无发送记录</td></tr>";
+    return;
+  }
+  const targetLabels = { all:"全体学员", groups:"指定小组", students:"指定学员" };
+  let html = "<tr><th>目标</th><th>标题/内容</th><th>附件</th><th>发送时间</th></tr>";
+  data.forEach(item => {
+    const hasFile = item.file_url && item.file_type !== "text" ? "有" : "—";
+    html += `<tr>
+      <td>${targetLabels[item.target_type] || item.target_type}</td>
+      <td>${item.title || ''} ${item.content || ''}</td>
+      <td>${hasFile}</td>
+      <td style="font-size:12px;">${item.create_time}</td>
+    </tr>`;
+  });
+  document.getElementById("teacherMsgTable").innerHTML = html;
+}
+
+// ==================== 老师端：学生留言接收 ====================
+async function loadStudentInbox() {
+  showLoading(true);
+  const res = await apiFetch("/api/teacher/messages/students");
+  showLoading(false);
+  const data = (res.code === 0 && res.data) ? res.data : [];
+  const container = document.getElementById("studentInboxList");
+  if (data.length === 0) {
+    container.innerHTML = '<p class="tip" style="text-align:center;padding:20px;">暂无学生留言</p>';
+    return;
+  }
+  const statusBadge = {0:'<span class="badge badge-unread" style="background:var(--danger);color:#fff;padding:2px 10px;border-radius:10px;font-size:12px;">未读</span>',1:'<span class="badge" style="background:var(--neu-dark);color:var(--text-sub);padding:2px 10px;border-radius:10px;font-size:12px;">已读</span>',2:'<span class="badge" style="background:rgba(8,145,178,0.15);color:var(--success);padding:2px 10px;border-radius:10px;font-size:12px;">已回复</span>'};
+  let html = '';
+  data.forEach(item => {
+    const fileHtml = item.file_url && item.file_type !== "text" ? `<span class="msg-file" style="display:inline-block;margin-top:6px;padding:6px 12px;border-radius:8px;background:var(--primary-fade);color:var(--primary);font-size:13px;cursor:pointer;" onclick="previewTeacherFile('${item.file_url}','${item.file_type}')">查看附件</span>` : '';
+    const replyFileHtml = item.reply_file_url && item.reply_file_type !== "text" ? `<span class="msg-file" style="display:inline-block;margin-top:4px;padding:4px 10px;border-radius:8px;background:rgba(8,145,178,0.06);color:var(--success);font-size:12px;cursor:pointer;" onclick="previewTeacherFile('${item.reply_file_url}','${item.reply_file_type}')">📎 回复附件</span>` : '';
+    const replyForm = item.status !== 2 ? `<div style="margin-top:8px;">
+      <div style="display:flex;gap:8px;margin-bottom:4px;">
+        <input type="text" id="reply_${item.id}" class="neu-input" style="flex:1;" placeholder="输入回复内容...">
+        <input type="file" id="replyFile_${item.id}" class="hide" accept=".jpg,.jpeg,.png,.gif,.mp3,.wav,.mp4,.avi,.mov,.ppt,.pptx,.doc,.docx,.pdf" onchange="previewReplyFile(${item.id})">
+        <button class="neu-btn" onclick="document.getElementById('replyFile_${item.id}').click()" style="padding:6px 12px;font-size:13px;">📎</button>
+        <button class="neu-btn" id="replyRecBtn_${item.id}" onclick="toggleReplyRecord(${item.id})" style="padding:6px 12px;font-size:13px;">🎤</button>
+        <button class="neu-btn btn-primary" onclick="replyStudentMsg(${item.id})" style="padding:6px 14px;">回复</button>
+      </div>
+      <div id="replyFileName_${item.id}" class="tip" style="font-size:12px;"></div>
+      <div id="replyRecPreview_${item.id}" class="hide flex-row" style="gap:6px;align-items:center;margin-top:4px;"></div>
+    </div>` : '';
+    const replyHtml = item.reply_content ? `<div style="padding:10px;margin-top:8px;border-radius:10px;background:rgba(8,145,178,0.06);border-left:3px solid var(--success);font-size:13px;color:var(--text-sub);"><strong>已回复：</strong>${item.reply_content}</div>${replyFileHtml}` : '';
+    html += `<div style="padding:14px;border-radius:14px;background:var(--neu-bg);box-shadow:var(--neu-btn);margin-bottom:12px;border:1px solid rgba(255,255,255,0.4);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-weight:600;color:var(--primary);font-size:14px;">${padNo(item.student_no)} ${item.student_name} <span class="tip" style="font-size:12px;">${item.subject_name || '学科'+item.subject_id}</span></span>
+        <span>${statusBadge[item.status] || ''} <span style="font-size:12px;color:var(--text-tip);">${item.create_time}</span></span>
+      </div>
+      <div style="color:var(--text-sub);font-size:14px;line-height:1.6;">${item.content || ''}</div>
+      ${fileHtml}
+      ${replyHtml}
+      ${replyForm}
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ====== 回复录音状态 ======
+let replyRecorders = {};
+let replyRecBlobs = {};
+
+function previewReplyFile(msgId) {
+  const file = document.getElementById("replyFile_" + msgId).files[0];
+  if (!file) return;
+  document.getElementById("replyFileName_" + msgId).textContent = "已选: " + file.name;
+}
+
+async function toggleReplyRecord(msgId) {
+  const btn = document.getElementById("replyRecBtn_" + msgId);
+  const r = replyRecorders[msgId];
+  if (r && r.state === "recording") {
+    r.stop(function(blob, duration) {
+      replyRecBlobs[msgId] = blob;
+      document.getElementById("replyFileName_" + msgId).textContent = `录音完成 (${(blob.size/1024).toFixed(0)}KB, ${(duration/1000).toFixed(1)}秒)`;
+      btn.textContent = "🎤 重录";
+      const preview = document.getElementById("replyRecPreview_" + msgId);
+      preview.innerHTML = '';
+      preview.classList.remove('hide');
+      const audio = document.createElement('audio');
+      audio.controls = true; audio.src = URL.createObjectURL(blob);
+      preview.appendChild(audio);
+      const rmBtn = document.createElement('span');
+      rmBtn.textContent = '× 删除';
+      rmBtn.style.cssText = 'cursor:pointer;color:var(--danger);font-size:13px;';
+      rmBtn.onclick = function() { replyRecBlobs[msgId] = null; preview.classList.add('hide'); preview.innerHTML = ''; btn.textContent = "🎤 录音"; document.getElementById("replyFileName_" + msgId).textContent = ''; };
+      preview.appendChild(rmBtn);
+    }, function(msg) { document.getElementById("replyFileName_" + msgId).textContent = "录音失败: " + msg; });
+    btn.textContent = "🎤 录音";
+    return;
+  }
+  if (!r) {
+    if (typeof Recorder === 'undefined') { showToast("录音库未加载", "error"); return; }
+    replyRecorders[msgId] = Recorder({ type: 'mp3', bitRate: 64, sampleRate: 16000 });
+  }
+  replyRecorders[msgId].open(function() {
+    replyRecorders[msgId].start();
+    btn.textContent = "⏹ 停止";
+    document.getElementById("replyFileName_" + msgId).textContent = "录音中...";
+    document.getElementById("replyRecPreview_" + msgId).classList.add("hide");
+  }, function(msg) { document.getElementById("replyFileName_" + msgId).textContent = "麦克风失败: " + msg; });
+}
+
+async function replyStudentMsg(msgId) {
+  const reply = document.getElementById("reply_" + msgId).value.trim();
+  if (!reply && !replyRecBlobs[msgId] && !document.getElementById("replyFile_" + msgId).files[0]) return showToast("请输入回复内容或选择附件", "warning");
+  showLoading(true);
+  let fileUrl = "", fileType = "text";
+  const subj = document.querySelector('[id^="tMsgSubj"], #studentInboxList') ? 1 : 1;
+  if (replyRecBlobs[msgId]) {
+    const fd = new FormData();
+    fd.append("file", replyRecBlobs[msgId], "voice.mp3");
+    fd.append("subject_id", "1"); fd.append("class_no", "0");
+    const uploadRes = await fetch(API_BASE + "/api/file/upload", { method: "POST", headers: { "Authorization": token }, body: fd });
+    const uploadData = await uploadRes.json();
+    if (uploadData.code === 0) { fileUrl = uploadData.data.url; fileType = "audio"; }
+    else { showLoading(false); return showToast("录音上传失败", "error"); }
+  } else if (document.getElementById("replyFile_" + msgId).files[0]) {
+    const file = document.getElementById("replyFile_" + msgId).files[0];
+    const compressed = file.type.startsWith('image/') ? await compressImageIfNeeded(file) : file;
+    const fd = new FormData();
+    fd.append("file", compressed);
+    fd.append("subject_id", "1"); fd.append("class_no", "0");
+    const uploadRes = await fetch(API_BASE + "/api/file/upload", { method: "POST", headers: { "Authorization": token }, body: fd });
+    const uploadData = await uploadRes.json();
+    if (uploadData.code === 0) { fileUrl = uploadData.data.url; fileType = uploadData.data.file_type; }
+    else { showLoading(false); return showToast("文件上传失败", "error"); }
+  }
+  const res = await apiFetch("/api/teacher/message/reply", {
+    method: "POST",
+    body: JSON.stringify({ message_id: msgId, reply_content: reply || "", reply_file_url: fileUrl, reply_file_type: fileType })
+  });
+  showLoading(false);
+  if (res.code === 0) {
+    replyRecBlobs[msgId] = null;
+    showToast("回复成功", "success");
+    loadStudentInbox();
+  } else { showToast(res.msg || "回复失败", "error"); }
+}
+
+function previewTeacherFile(fileUrl, fileType) {
+  const url = fileUrl.startsWith("http") ? fileUrl : API_BASE + fileUrl;
+  window.open(url, "_blank");
+}
+
+// ====== 自定义下拉菜单组件 ======
+function initCustomSelects() {
+  const selects = document.querySelectorAll('select.neu-input');
+  selects.forEach(select => {
+    // 如果已经转换过则跳过
+    if (select.parentNode.classList.contains('custom-select')) return;
+    
+    // 创建自定义选择器容器
+    const container = document.createElement('div');
+    container.className = 'custom-select';
+    
+    // 创建触发器
+    const trigger = document.createElement('div');
+    trigger.className = 'custom-select-trigger';
+    
+    // 创建选项列表
+    const optionsContainer = document.createElement('div');
+    optionsContainer.className = 'custom-select-options';
+    
+    // 填充选项
+    const options = Array.from(select.options);
+    options.forEach(opt => {
+      const optionDiv = document.createElement('div');
+      optionDiv.className = 'custom-select-option' + (opt.selected ? ' selected' : '');
+      optionDiv.textContent = opt.textContent;
+      optionDiv.dataset.value = opt.value;
+      optionDiv.onclick = function() {
+        select.value = this.dataset.value;
+        trigger.textContent = this.textContent;
+        container.classList.remove('open');
+        // 触发原生change事件
+        select.dispatchEvent(new Event('change'));
+      };
+      optionsContainer.appendChild(optionDiv);
+    });
+    
+    // 设置初始选中值
+    const selectedOpt = options.find(o => o.selected) || options[0];
+    trigger.textContent = selectedOpt ? selectedOpt.textContent : '';
+    
+    // 添加点击事件
+    trigger.onclick = function(e) {
+      e.stopPropagation();
+      // 关闭其他下拉菜单
+      document.querySelectorAll('.custom-select.open').forEach(cs => {
+        if (cs !== container) cs.classList.remove('open');
+      });
+      container.classList.toggle('open');
+      
+      // 调整下拉菜单位置，防止超出视口
+      adjustDropdownPosition(container, optionsContainer);
+    };
+    
+    // 替换原生select
+    select.parentNode.insertBefore(container, select);
+    container.appendChild(select);
+    container.appendChild(trigger);
+    container.appendChild(optionsContainer);
+    
+    // 监听原生select变化（用于程序设置值）
+    select.addEventListener('change', function() {
+      const selected = options.find(o => o.value === this.value);
+      if (selected) {
+        trigger.textContent = selected.textContent;
+        optionsContainer.querySelectorAll('.custom-select-option').forEach(opt => {
+          opt.classList.toggle('selected', opt.dataset.value === this.value);
+        });
+      }
+    });
+  });
+}
+
+function adjustDropdownPosition(container, optionsContainer) {
+  const rect = container.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const dropdownHeight = Math.min(240, optionsContainer.scrollHeight);
+  
+  if (rect.bottom + dropdownHeight > viewportHeight) {
+    optionsContainer.style.top = 'auto';
+    optionsContainer.style.bottom = 'calc(100% + 4px)';
+  } else {
+    optionsContainer.style.top = 'calc(100% + 4px)';
+    optionsContainer.style.bottom = 'auto';
+  }
+  
+  // 下拉菜单与选择框对齐
+  optionsContainer.style.left = '0';
+  optionsContainer.style.right = '0';
+  optionsContainer.style.width = '100%';
+}
+
+// 点击外部关闭下拉菜单
+document.addEventListener('click', function(e) {
+  document.querySelectorAll('.custom-select.open').forEach(container => {
+    if (!container.contains(e.target)) {
+      container.classList.remove('open');
+    }
+  });
+});
+
+// 页面加载完成后初始化
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCustomSelects);
+} else {
+  initCustomSelects();
+}
+</script>
+
+</body>
+</html>
